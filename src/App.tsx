@@ -139,14 +139,17 @@ function App() {
         navScrolled ? 'bg-navy/90 backdrop-blur-md py-3' : 'bg-transparent py-5'
       }`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <svg viewBox="0 0 100 100" className="w-9 h-9" role="img" aria-label="Taller Mayor">
-              <rect width="100" height="100" rx="12" fill="#1A1F2E"/>
-              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
-              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
-              <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" strokeWidth="0.75"/>
+          <div className="flex items-center">
+            <svg height="44" viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg" aria-label="Taller Mayor Consultoría">
+              <g transform="translate(8,4) scale(0.52)">
+                <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+                <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+                <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" strokeWidth="2.5"/>
+              </g>
+              <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" strokeWidth="0.75" opacity={0.3}/>
+              <text x="72" y="30" fontFamily="Cabinet Grotesk,Helvetica Neue,sans-serif" fontSize="17" fontWeight="800" letterSpacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+              <text x="72" y="43" fontFamily="Cabinet Grotesk,Helvetica Neue,sans-serif" fontSize="8" fontWeight="500" letterSpacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
             </svg>
-            <span className="font-display font-bold text-lg tracking-tight">Taller Mayor</span>
           </div>
           
           {/* Desktop nav */}
@@ -218,7 +221,7 @@ function App() {
                 <span className="block text-amber">ordena.</span>
               </h1>
               
-              <p className="hero-subtext font-display text-xl sm:text-2xl text-gray-cool mb-6">
+              <p className="hero-subtext font-display text-xl sm:text-2xl text-amber mb-6">
                 Consultoría que escala.
               </p>
               
