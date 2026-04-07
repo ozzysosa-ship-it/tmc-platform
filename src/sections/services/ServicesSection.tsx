@@ -30,7 +30,7 @@ const SERVICES: ServiceData[] = [
       'Investigación de mercado y benchmarks del sector',
       'Informe de posicionamiento competitivo trimestral',
     ],
-    pricingAmount: 'UF 20–55 / mes',
+    pricingAmount: 'desde UF 20 / mes',
     pricingLabel: 'Retainer mensual',
   },
   {
@@ -44,11 +44,11 @@ const SERVICES: ServiceData[] = [
     deliverables: [
       'Seguimiento semanal de licitaciones (Mercado Público + privadas)',
       'Visitas técnicas + levantamiento de planos en terreno',
-      'Layouts de planta 2D/3D (AutoCAD / Revit)',
+      'Layouts de planta 2D/3D (AutoCAD / Solidworks / Inventor)',
       'Gestión activa del archivo de planos de la empresa',
       'Evaluación de CAPEX y OPEX por proyecto',
     ],
-    pricingAmount: 'UF 8–80 / proyecto',
+    pricingAmount: 'desde UF 8 / proyecto',
     pricingLabel: 'Por proyecto',
   },
   {
@@ -65,7 +65,7 @@ const SERVICES: ServiceData[] = [
       'Renders 3D de productos y equipos industriales',
       'Diseño de nuevas líneas de producto / ampliación de portafolio',
     ],
-    pricingAmount: 'UF 8–80 / entregable',
+    pricingAmount: 'desde UF 8 / entregable',
     pricingLabel: 'Por entregable',
   },
   {
@@ -75,14 +75,14 @@ const SERVICES: ServiceData[] = [
     title: 'I+D &\nFinanciamiento',
     tagline: 'Convierte tu innovación en beneficios tributarios concretos',
     description:
-      'Formulamos y gestionamos proyectos de I+D ante CORFO, Fi Group y otras instituciones. Convertimos el gasto en innovación de tu empresa en retorno tributario real, y te acompañamos en el proceso de registro de patentes cuando corresponde.',
+      'Formulamos y gestionamos proyectos de I+D ante CORFO y/u otras instituciones. Convertimos el gasto en innovación de tu empresa en retorno tributario real, y te acompañamos en el proceso de registro de patentes cuando corresponde.',
     deliverables: [
       'Formulación de proyectos CORFO (FON, FNDR, concursos sectoriales)',
       'Gestión Fi Group — beneficio tributario 35% sobre inversión en I+D',
       'Asesoría en patentes y registro de propiedad intelectual',
       'Seguimiento de ejecución y rendiciones',
     ],
-    pricingAmount: 'UF 30–100 / proyecto + fee de éxito',
+    pricingAmount: 'desde UF 30 / proyecto + fee de éxito',
     pricingLabel: 'Por proyecto',
   },
   {
@@ -92,15 +92,15 @@ const SERVICES: ServiceData[] = [
     title: 'Equipamiento Industrial\n& ROI Maquinaria',
     tagline: 'Compra la máquina correcta, con los números en la mano',
     description:
-      'Evaluamos la factibilidad técnica y económica de incorporar equipamiento industrial en tu taller. Mesa de corte láser, grabado láser, corte por agua, equipos de soldadura TIG, pulido y puente grúa. Te acompañamos desde la decisión de compra hasta la puesta en marcha.',
+      'Evaluamos la factibilidad técnica y económica de incorporar equipamiento industrial en tu taller. CNC, Corte Láser, grabado láser, corte por agua, equipos de soldadura, pulido y puente grúa, entre otros. Te acompañamos desde la decisión de compra hasta la puesta en marcha.',
     deliverables: [
       'Análisis de ROI por máquina (payback, TIR, VAN)',
       'Evaluación CAPEX/OPEX del equipamiento',
       'Comparativa técnica de proveedores',
       'Acompañamiento en implementación y puesta en marcha',
-      'Planificación del layout para integrar el nuevo equipo',
+      'Planificación del layout, obras civiles, instalaciones eléctricas y mecánicas para integrar el nuevo equipo',
     ],
-    pricingAmount: 'UF 15–40 / proyecto',
+    pricingAmount: 'desde UF 15 / proyecto',
     pricingLabel: 'Por proyecto',
   },
   {
@@ -110,15 +110,15 @@ const SERVICES: ServiceData[] = [
     title: 'PM Proyectos\nCAPEX',
     tagline: 'Quién conoce la línea de proceso desde adentro, la gestiona mejor',
     description:
-      'Gestionamos proyectos de inversión de alto valor en salas de proceso salmonero, talleres de manufactura en acero inoxidable y acero carbono, y ampliaciones de planta. Con experiencia directa en el portafolio Meritens y en proyectos del sur de Chile, somos el PM externo que elimina los tiempos muertos y el desperdicio de CAPEX.',
+      'Gestionamos proyectos de inversión de alto valor en salas de proceso salmonero, talleres de manufactura en acero inoxidable, proveedores de servicios de automatización y control con desarrollo propio o externo, y ampliaciones de planta. Con experiencia directa en portafolio actualizado acorde al rubro y en proyectos del sur de Chile, somos el PM externo que elimina los tiempos muertos y el desperdicio de CAPEX.',
     deliverables: [
       'PM integral de sala de proceso (desde especificación hasta commissioning)',
       'PM de taller de manufactura (layout, instalación, puesta en marcha)',
       'Reestructuración de planta según requerimientos de productividad',
-      'Coordinación de proveedores especializados (Kroma, Interroll, fabricantes nacionales)',
+      'Coordinación de proveedores especializados (fabricantes nacionales y fabricantes internacionales)',
       'Informes de avance y control de presupuesto en tiempo real',
     ],
-    pricingAmount: '4–6% del CAPEX total',
+    pricingAmount: 'desde 4% del CAPEX total',
     pricingLabel: '% del CAPEX',
   },
 ];
