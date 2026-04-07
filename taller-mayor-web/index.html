@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Consultoría especializada en maestranzas y fábricas de equipos de sala de proceso para la industria salmonera chilena. Branding técnico, ingeniería de procesos, automatización y PM externo.">
+  <title>Taller Mayor Consultoría — Ingeniería que ordena. Consultoría que escala.</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/logo/favicon.svg">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    /* ─── Design Tokens ─── */
+    :root {
+      --color-bg:          #0E1117;
+      --color-surface:     #1A1F2E;
+      --color-surface-2:   #222838;
+      --color-surface-3:   #2A3040;
+      --color-border:      rgba(200,146,42,.15);
+      --color-text:        #E8E6E1;
+      --color-text-muted:  #8A8F9E;
+      --color-text-faint:  #4A4F5E;
+      --color-accent:      #C8922A;
+      --color-accent-h:    #E0A030;
+      --color-accent-dim:  rgba(200,146,42,.10);
+      --text-xs:   clamp(.75rem,  .70rem + .25vw, .875rem);
+      --text-sm:   clamp(.875rem, .80rem + .35vw, 1rem);
+      --text-base: clamp(1rem,    .95rem + .25vw, 1.125rem);
+      --text-lg:   clamp(1.125rem,1rem   + .75vw, 1.5rem);
+      --text-xl:   clamp(1.5rem,  1.2rem + 1.25vw,2.25rem);
+      --text-2xl:  clamp(2rem,    1.2rem + 2.5vw, 3.5rem);
+      --text-hero: clamp(2.5rem,  1rem   + 4vw,   5rem);
+      --sp1:.25rem;--sp2:.5rem;--sp3:.75rem;--sp4:1rem;--sp6:1.5rem;
+      --sp8:2rem;--sp12:3rem;--sp16:4rem;--sp24:6rem;
+      --font-d:'Cabinet Grotesk','Helvetica Neue',sans-serif;
+      --font-b:'Satoshi','Inter',sans-serif;
+      --r-sm:.25rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem;
+      --ease:180ms cubic-bezier(.16,1,.3,1);
+    }
+
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body {
+      background:var(--color-bg);
+      color:var(--color-text);
+      font-family:var(--font-b);
+      font-size:var(--text-base);
+      line-height:1.65;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+
+    /* ─── Skip link ─── */
+    .skip-link {
+      position:absolute;left:-9999px;top:auto;
+      background:var(--color-accent);color:#0E1117;
+      padding:var(--sp2) var(--sp4);font-weight:700;z-index:999;
+    }
+    .skip-link:focus { left:var(--sp4);top:var(--sp4); }
+
+    /* ─── Container ─── */
+    .container { max-width:1180px; margin:0 auto; padding:0 var(--sp6); }
+
+    /* ─── NAV ─── */
+    #nav {
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      padding:var(--sp4) 0;
+      transition:background var(--ease),backdrop-filter var(--ease),border-color var(--ease);
+      border-bottom:1px solid transparent;
+    }
+    #nav.scrolled {
+      background:rgba(34,40,56,.9);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      border-color:var(--color-border);
+    }
+    .nav-inner {
+      display:flex;align-items:center;justify-content:space-between;gap:var(--sp8);
+    }
+    .logo-link { display:flex;align-items:center;text-decoration:none;flex-shrink:0; }
+    .logo-svg  { height:44px;width:auto; }
+    .nav-links { display:flex;align-items:center;gap:var(--sp8); }
+    .nav-link  {
+      color:var(--color-text-muted);text-decoration:none;font-size:var(--text-sm);
+      transition:color var(--ease);font-weight:500;
+    }
+    .nav-link:hover,.nav-link:focus-visible { color:var(--color-text); }
+    .btn-nav {
+      background:var(--color-accent);color:#0E1117;
+      padding:var(--sp2) var(--sp6);border-radius:var(--r-md);
+      text-decoration:none;font-size:var(--text-sm);font-weight:700;
+      transition:background var(--ease);line-height:1;
+    }
+    .btn-nav:hover,.btn-nav:focus-visible { background:var(--color-accent-h); }
+    .hamburger {
+      display:none;flex-direction:column;justify-content:center;gap:5px;
+      width:36px;height:36px;
+      background:none;border:none;cursor:pointer;padding:4px;
+    }
+    .hamburger span {
+      display:block;width:100%;height:2px;background:var(--color-text);
+      border-radius:1px;transition:transform var(--ease),opacity var(--ease);
+      transform-origin:center;
+    }
+    .hamburger[aria-expanded="true"] span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .hamburger[aria-expanded="true"] span:nth-child(2) { opacity:0; }
+    .hamburger[aria-expanded="true"] span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+    /* ─── Mobile Menu Overlay ─── */
+    #mobileMenu {
+      position:fixed;inset:0;z-index:99;
+      background:var(--color-surface);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:var(--sp8);
+      opacity:0;visibility:hidden;pointer-events:none;
+      transition:opacity var(--ease),visibility var(--ease);
+    }
+    #mobileMenu.open { opacity:1;visibility:visible;pointer-events:all; }
+    .mob-link {
+      font-family:var(--font-d);font-size:var(--text-2xl);font-weight:800;
+      color:var(--color-text);text-decoration:none;letter-spacing:-.01em;
+      transition:color var(--ease);
+    }
+    .mob-link:hover { color:var(--color-accent); }
+    .mob-cta {
+      background:var(--color-accent);color:#0E1117;
+      padding:var(--sp3) var(--sp12);border-radius:var(--r-md);
+      font-size:var(--text-lg);font-weight:700;text-decoration:none;
+      transition:background var(--ease);margin-top:var(--sp4);
+    }
+    .mob-cta:hover { background:var(--color-accent-h); }
+
+    /* ─── Buttons ─── */
+    .btn-primary {
+      display:inline-flex;align-items:center;
+      background:var(--color-accent);color:#0E1117;
+      padding:var(--sp3) var(--sp8);border-radius:var(--r-md);
+      font-weight:700;font-size:var(--text-sm);text-decoration:none;
+      transition:background var(--ease);
+    }
+    .btn-primary:hover,.btn-primary:focus-visible { background:var(--color-accent-h); }
+    .btn-ghost {
+      display:inline-flex;align-items:center;
+      border:1px solid var(--color-border);color:var(--color-text-muted);
+      padding:var(--sp3) var(--sp8);border-radius:var(--r-md);
+      font-size:var(--text-sm);text-decoration:none;
+      transition:border-color var(--ease),color var(--ease);
+    }
+    .btn-ghost:hover,.btn-ghost:focus-visible {
+      border-color:rgba(200,146,42,.5);color:var(--color-text);
+    }
+
+    /* ─── Fade-up animation ─── */
+    .fade-up {
+      opacity:0;transform:translateY(24px);
+      transition:opacity 500ms ease, transform 500ms ease;
+    }
+    .fade-up.visible { opacity:1;transform:translateY(0); }
+    .fade-up.d1 { transition-delay:100ms; }
+    .fade-up.d2 { transition-delay:200ms; }
+    .fade-up.d3 { transition-delay:300ms; }
+    .fade-up.d4 { transition-delay:400ms; }
+    @media(prefers-reduced-motion:reduce) {
+      .fade-up { opacity:1;transform:none;transition:none; }
+      #nav,#nav.scrolled { transition:none; }
+    }
+
+    /* ─── HERO ─── */
+    #inicio {
+      min-height:100vh;display:flex;flex-direction:column;
+      justify-content:center;padding-top:80px;
+      background:var(--color-bg);position:relative;
+    }
+    .hero-grid {
+      display:grid;grid-template-columns:60fr 40fr;
+      gap:var(--sp16);align-items:center;padding:var(--sp16) var(--sp6);
+    }
+    .hero-headline {
+      font-family:var(--font-d);font-size:var(--text-hero);font-weight:800;
+      line-height:1.08;letter-spacing:-.02em;
+      margin-bottom:var(--sp6);
+    }
+    .hero-headline span { display:block; }
+    .hero-headline .accent { color:var(--color-accent); }
+    .hero-body {
+      font-size:var(--text-base);color:var(--color-text-muted);
+      max-width:440px;margin-bottom:var(--sp8);line-height:1.75;
+    }
+    .hero-ctas { display:flex;gap:var(--sp4);flex-wrap:wrap; }
+    .hero-ctas .btn-primary {
+      font-family:var(--font-d);font-weight:700;
+      background:#C8922A;color:#0E1117;
+    }
+    .hero-ctas .btn-ghost {
+      border-color:#8A8F9E;color:#E8E6E1;background:none;
+    }
+    .hero-visual { display:flex;align-items:center;justify-content:flex-end; }
+    .hero-visual svg { width:100%;max-width:420px;height:auto; }
+
+    .scroll-indicator {
+      position:absolute;bottom:var(--sp8);left:50%;transform:translateX(-50%);
+      display:flex;flex-direction:column;align-items:center;
+      color:var(--color-accent);opacity:.7;
+    }
+    .scroll-indicator i { animation:bobble 2s ease-in-out infinite; }
+    @keyframes bobble {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(6px); }
+    }
+
+    /* ─── SECTION PROBLEM ─── */
+    #problemas {
+      background:var(--color-surface);
+      padding:var(--sp24) 0;
+    }
+    .section-label {
+      font-size:var(--text-xs);font-weight:700;letter-spacing:.12em;
+      color:var(--color-accent);text-transform:uppercase;
+      margin-bottom:var(--sp4);display:block;
+    }
+    .section-heading {
+      font-family:var(--font-d);font-size:var(--text-2xl);font-weight:800;
+      letter-spacing:-.02em;line-height:1.15;margin-bottom:var(--sp12);
+      max-width:640px;
+    }
+    .problem-grid {
+      display:grid;grid-template-columns:60fr 40fr;
+      gap:var(--sp6);align-items:start;
+    }
+    .problem-card {
+      background:var(--color-surface-2);
+      border-radius:var(--r-lg);
+      padding:var(--sp8);
+      border-left:1px solid var(--color-accent);
+      position:relative;
+      overflow:hidden;
+    }
+    .problem-card::before {
+      content:'';position:absolute;inset:0;left:0;
+      background:linear-gradient(135deg,var(--color-accent-dim) 0%,transparent 60%);
+      pointer-events:none;
+    }
+    .problem-large { padding:var(--sp12); }
+    .problem-stack { display:flex;flex-direction:column;gap:var(--sp6); }
+    .problem-card h3 {
+      font-family:var(--font-d);font-size:var(--text-lg);font-weight:700;
+      margin-bottom:var(--sp3);letter-spacing:-.01em;
+    }
+    .problem-card p { color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.7; }
+    .problem-large h3 { font-size:var(--text-xl); }
+    .problem-large p  { font-size:var(--text-base); }
+
+    /* ─── SECTION SERVICES ─── */
+    #servicios {
+      background:var(--color-surface-2);
+      padding:var(--sp24) 0;
+    }
+    .section-sub {
+      color:var(--color-text-muted);font-size:var(--text-base);
+      margin-bottom:var(--sp12);
+    }
+    .services-grid {
+      display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp6);
+    }
+    .service-card {
+      background:var(--color-surface);border:1px solid var(--color-border);
+      border-radius:var(--r-xl);padding:var(--sp8);
+      cursor:pointer;
+      transition:transform var(--ease),border-color var(--ease),box-shadow var(--ease);
+      position:relative;overflow:hidden;
+    }
+    .service-card:hover,.service-card:focus-within {
+      transform:scale(1.02);
+      border-color:rgba(200,146,42,.4);
+      box-shadow:0 8px 32px rgba(0,0,0,.4);
+    }
+    .service-tag {
+      display:inline-block;font-size:var(--text-xs);font-weight:700;
+      letter-spacing:.08em;text-transform:uppercase;
+      color:var(--color-accent);background:var(--color-accent-dim);
+      padding:var(--sp1) var(--sp3);border-radius:var(--r-sm);
+      margin-bottom:var(--sp4);
+    }
+    .service-card h3 {
+      font-family:var(--font-d);font-size:var(--text-xl);font-weight:800;
+      letter-spacing:-.01em;margin-bottom:var(--sp2);
+    }
+    .service-card > p { color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6; }
+    .service-deliverables {
+      list-style:none;
+      max-height:0;overflow:hidden;opacity:0;
+      transition:max-height 350ms cubic-bezier(.16,1,.3,1),opacity 300ms ease,margin-top 300ms ease;
+      margin-top:0;
+    }
+    .service-card:hover .service-deliverables,
+    .service-card:focus-within .service-deliverables,
+    .service-deliverables.open {
+      max-height:140px;opacity:1;margin-top:var(--sp6);
+    }
+    .service-deliverables li {
+      font-size:var(--text-sm);color:var(--color-text-muted);
+      padding:var(--sp1) 0;display:flex;gap:var(--sp2);align-items:flex-start;
+      line-height:1.5;
+    }
+    .service-deliverables li::before {
+      content:'';display:inline-block;width:4px;height:4px;min-width:4px;
+      border-radius:50%;background:var(--color-accent);margin-top:.45em;
+    }
+
+    /* ─── SECTION FOUNDER ─── */
+    #nosotros {
+      background:var(--color-surface);
+      padding:var(--sp24) 0;
+    }
+    .founder-grid {
+      display:grid;grid-template-columns:40fr 60fr;
+      gap:var(--sp16);align-items:center;
+    }
+    .founder-photo {
+      aspect-ratio:3/4;border-radius:var(--r-lg);
+      background:linear-gradient(160deg,rgba(200,146,42,.25) 0%,rgba(200,146,42,.06) 60%,var(--color-surface-3) 100%);
+      border:1px solid var(--color-border);
+      position:relative;overflow:hidden;
+    }
+    .founder-photo::after {
+      content:'';position:absolute;inset:0;
+      background:repeating-linear-gradient(
+        -45deg,
+        transparent 0,transparent 12px,
+        rgba(200,146,42,.04) 12px,rgba(200,146,42,.04) 13px
+      );
+    }
+    .eyebrow {
+      display:block;font-size:var(--text-xs);font-weight:700;
+      letter-spacing:.14em;color:var(--color-accent);text-transform:uppercase;
+      margin-bottom:var(--sp4);
+    }
+    .founder-text h2 {
+      font-family:var(--font-d);font-size:var(--text-2xl);font-weight:800;
+      letter-spacing:-.02em;line-height:1.15;margin-bottom:var(--sp6);
+    }
+    .founder-text p { color:var(--color-text-muted);line-height:1.75;margin-bottom:var(--sp6); }
+    .linkedin-link {
+      color:var(--color-accent);text-decoration:none;font-size:var(--text-sm);font-weight:600;
+      transition:color var(--ease),gap var(--ease);
+      display:inline-flex;align-items:center;gap:var(--sp2);
+    }
+    .linkedin-link:hover { color:var(--color-accent-h); }
+
+    /* ─── SECTION CONTACT ─── */
+    #contacto {
+      background:var(--color-bg);
+      padding:var(--sp24) 0;
+    }
+    .contact-inner { max-width:580px;margin:0 auto; }
+    .contact-inner h2 {
+      font-family:var(--font-d);font-size:var(--text-2xl);font-weight:800;
+      letter-spacing:-.02em;line-height:1.2;margin-bottom:var(--sp4);
+    }
+    .contact-inner > p {
+      color:var(--color-text-muted);margin-bottom:var(--sp8);
+    }
+    form { display:flex;flex-direction:column;gap:var(--sp6); }
+    .field {
+      display:flex;flex-direction:column;gap:var(--sp2);
+    }
+    .field label {
+      font-size:var(--text-sm);font-weight:600;color:var(--color-text-muted);letter-spacing:.02em;
+    }
+    .field input,.field textarea {
+      background:var(--color-surface);
+      color:var(--color-text);
+      border:1px solid var(--color-border);
+      border-radius:var(--r-md);
+      padding:var(--sp3) var(--sp4);
+      font-family:var(--font-b);font-size:var(--text-base);
+      transition:border-color var(--ease);
+      outline:none;width:100%;
+    }
+    .field input::placeholder,.field textarea::placeholder { color:var(--color-text-faint); }
+    .field input:focus,.field textarea:focus { border-color:rgba(200,146,42,.6); }
+    .field input.error,.field textarea.error { border-color:rgba(220,60,60,.7); }
+    .field textarea { resize:vertical;min-height:100px;line-height:1.6; }
+    .field-error {
+      font-size:var(--text-xs);color:rgba(220,100,80,1);
+      display:none;
+    }
+    .field-error.visible { display:block; }
+    .btn-submit {
+      background:var(--color-accent);color:#0E1117;
+      border:none;border-radius:var(--r-md);
+      padding:var(--sp4) var(--sp8);
+      font-family:var(--font-b);font-size:var(--text-base);font-weight:700;
+      cursor:pointer;
+      transition:background var(--ease);
+      align-self:stretch;
+    }
+    .btn-submit:hover { background:var(--color-accent-h); }
+    .btn-submit:focus-visible { outline:2px solid var(--color-accent);outline-offset:2px; }
+    .btn-submit:disabled { opacity:.6;cursor:not-allowed; }
+    .contact-alt {
+      text-align:center;margin-top:var(--sp6);font-size:var(--text-sm);
+      color:var(--color-text-muted);
+    }
+    .contact-alt a {
+      color:var(--color-accent);text-decoration:none;transition:color var(--ease);
+    }
+    .contact-alt a:hover { color:var(--color-accent-h); }
+    .form-success {
+      display:none;text-align:center;padding:var(--sp8);
+      background:var(--color-surface);border-radius:var(--r-xl);
+      border:1px solid rgba(200,146,42,.3);
+    }
+    .form-success.visible { display:block; }
+    .form-success p { color:var(--color-text-muted); }
+    .form-success strong { color:var(--color-accent); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background:var(--color-surface);border-top:1px solid var(--color-border);
+      padding:var(--sp8) 0;
+    }
+    .footer-inner {
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      gap:var(--sp4);
+    }
+    .footer-brand { display:flex;flex-direction:column;gap:var(--sp1); }
+    .footer-tagline {
+      font-size:var(--text-xs);color:var(--color-text-faint);letter-spacing:.06em;
+    }
+    .footer-info { font-size:var(--text-xs);color:var(--color-text-faint);letter-spacing:.04em; }
+    .footer-social a {
+      color:var(--color-text-faint);transition:color var(--ease);
+      display:inline-flex;align-items:center;
+    }
+    .footer-social a:hover { color:var(--color-accent); }
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:768px) {
+      .nav-links { display:none; }
+      .hamburger  { display:flex; }
+      .hero-grid  { grid-template-columns:1fr;gap:var(--sp8);text-align:center;padding:var(--sp12) var(--sp6); }
+      .hero-headline { font-size:clamp(2.2rem,8vw,3rem); }
+      .hero-body  { max-width:100%; }
+      .hero-ctas  { justify-content:center; }
+      .hero-visual { display:none; }
+      .problem-grid { grid-template-columns:1fr; }
+      .services-grid { grid-template-columns:1fr; }
+      .founder-grid { grid-template-columns:1fr; }
+      .founder-photo { aspect-ratio:4/3;max-width:320px; }
+      .btn-submit { width:100%; }
+      .footer-inner { flex-direction:column;align-items:flex-start; }
+      .service-deliverables { max-height:140px!important;opacity:1!important;margin-top:var(--sp4)!important; }
+    }
+    @media(max-width:480px) {
+      .container { padding:0 var(--sp4); }
+      .hero-headline { font-size:clamp(2rem,7vw,2.8rem); }
+      .section-heading { font-size:clamp(1.6rem,6vw,2.5rem); }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- ─── NAV ─── -->
+  <nav id="nav" aria-label="Navegación principal">
+    <div class="container nav-inner">
+      <a href="#inicio" class="logo-link" aria-label="Taller Mayor Consultoría — inicio">
+        <!-- Inline SVG Logo — canonical from assets/logo/logo-primary.svg -->
+        <svg class="logo-svg" viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Navy background -->
+          <rect width="300" height="60" fill="#1A1F2E" rx="0"/>
+          <!-- TM mark group (scaled to 52×52, centered vertically in 60px) -->
+          <g transform="translate(4, 4) scale(0.52)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.4"/>
+            <g stroke="#C8922A" stroke-width="1" opacity="0.4">
+              <line x1="30" y1="41" x2="30" y2="47"/>
+              <line x1="62" y1="41" x2="62" y2="47"/>
+            </g>
+            <g stroke="#C8922A" stroke-width="1.2" opacity="0.35">
+              <line x1="4" y1="6" x2="4" y2="14"/><line x1="0" y1="10" x2="8" y2="10"/>
+              <line x1="96" y1="6" x2="96" y2="14"/><line x1="92" y1="10" x2="100" y2="10"/>
+              <line x1="4" y1="86" x2="4" y2="94"/><line x1="0" y1="90" x2="8" y2="90"/>
+              <line x1="96" y1="86" x2="96" y2="94"/><line x1="92" y1="90" x2="100" y2="90"/>
+            </g>
+          </g>
+          <!-- Amber vertical separator -->
+          <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity="0.35"/>
+          <!-- Wordmark -->
+          <text x="74" y="29" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+          <text x="74" y="45" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="9.5" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+        </svg>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#servicios" class="nav-link">Servicios</a>
+        <a href="#nosotros" class="nav-link">Quiénes somos</a>
+        <a href="#contacto" class="btn-nav">Conversemos</a>
+      </div>
+
+      <button class="hamburger" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ─── MOBILE MENU ─── -->
+  <div id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+    <a href="#servicios" class="mob-link">Servicios</a>
+    <a href="#nosotros"  class="mob-link">Quiénes somos</a>
+    <a href="#contacto"  class="mob-cta">Conversemos</a>
+  </div>
+
+  <!-- ─── MAIN ─── -->
+  <main id="main">
+
+    <!-- ─ HERO ─ -->
+    <section id="inicio" aria-labelledby="hero-h1">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1 class="hero-headline fade-up" id="hero-h1">
+            <span>Ingeniería que ordena.</span>
+            <span class="accent">Consultoría que escala.</span>
+          </h1>
+          <p class="hero-body fade-up d1">
+            Para maestranzas y fábricas de equipos de salas de proceso
+            que crecieron más rápido que su estructura.
+          </p>
+          <div class="hero-ctas fade-up d2">
+            <a href="#contacto" class="btn-primary">Conversemos</a>
+            <a href="#servicios" class="btn-ghost">Ver servicios</a>
+          </div>
+        </div>
+
+        <div class="hero-visual fade-up d3" aria-hidden="true">
+          <!-- ── Technical Drawing Illustration ── -->
+          <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hatch" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="7" stroke="#2A3040" stroke-width="1"/>
+              </pattern>
+              <marker id="arr" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M 0,0 L 6,3 L 0,6 Z" fill="#C8922A"/>
+              </marker>
+              <marker id="arrL" viewBox="0 0 6 6" refX="1" refY="3" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M 6,0 L 0,3 L 6,6 Z" fill="#C8922A"/>
+              </marker>
+            </defs>
+
+            <!-- Drawing border -->
+            <rect x="3" y="3" width="394" height="474" stroke="#C8922A" stroke-width="0.5" fill="none" stroke-dasharray="5 4" opacity="0.2"/>
+            <rect x="10" y="10" width="380" height="460" stroke="#C8922A" stroke-width="0.25" fill="none" opacity="0.12"/>
+
+            <!-- Subtle grid -->
+            <g stroke="#2A3040" stroke-width="0.4" opacity="0.6">
+              <line x1="10" y1="90"  x2="390" y2="90"/>
+              <line x1="10" y1="170" x2="390" y2="170"/>
+              <line x1="10" y1="250" x2="390" y2="250"/>
+              <line x1="10" y1="330" x2="390" y2="330"/>
+              <line x1="10" y1="410" x2="390" y2="410"/>
+              <line x1="90"  y1="10" x2="90"  y2="470"/>
+              <line x1="170" y1="10" x2="170" y2="470"/>
+              <line x1="250" y1="10" x2="250" y2="470"/>
+              <line x1="330" y1="10" x2="330" y2="470"/>
+            </g>
+
+            <!-- I-beam cross section outline -->
+            <!-- Top flange -->
+            <path d="M 80,80 L 320,80 L 320,120 L 240,120 L 240,120 L 240,340 L 320,340 L 320,380 L 80,380 L 80,340 L 160,340 L 160,120 L 80,120 Z" stroke="#5A6070" stroke-width="1.5" fill="url(#hatch)"/>
+
+            <!-- Top flange (solid fill overlay — lighter) -->
+            <rect x="80"  y="80"  width="240" height="40" fill="#1E2535" stroke="#5A6070" stroke-width="1.5"/>
+            <rect x="80"  y="340" width="240" height="40" fill="#1E2535" stroke="#5A6070" stroke-width="1.5"/>
+            <rect x="160" y="120" width="80"  height="220" fill="#1E2535" stroke="#5A6070" stroke-width="1.5"/>
+
+            <!-- Hatching on flanges -->
+            <rect x="80"  y="80"  width="240" height="40" fill="url(#hatch)" opacity="0.6"/>
+            <rect x="80"  y="340" width="240" height="40" fill="url(#hatch)" opacity="0.6"/>
+            <rect x="160" y="120" width="80"  height="220" fill="url(#hatch)" opacity="0.35"/>
+
+            <!-- Centerlines (amber dashed) -->
+            <line x1="200" y1="55" x2="200" y2="425" stroke="#C8922A" stroke-width="0.75" stroke-dasharray="9 4" opacity="0.65"/>
+            <line x1="50"  y1="230" x2="350" y2="230" stroke="#C8922A" stroke-width="0.75" stroke-dasharray="9 4" opacity="0.65"/>
+
+            <!-- Dimension: vertical right (total height) -->
+            <line x1="345" y1="80" x2="345" y2="380" stroke="#C8922A" stroke-width="0.7"
+              marker-start="url(#arrL)" marker-end="url(#arr)" opacity="0.8"/>
+            <line x1="320" y1="80" x2="352" y2="80" stroke="#C8922A" stroke-width="0.5" opacity="0.6"/>
+            <line x1="320" y1="380" x2="352" y2="380" stroke="#C8922A" stroke-width="0.5" opacity="0.6"/>
+            <text x="362" y="234" fill="#C8922A" font-size="9" font-family="monospace" opacity="0.8" transform="rotate(90,362,234)">300 mm</text>
+
+            <!-- Dimension: horizontal bottom (flange width) -->
+            <line x1="80" y1="405" x2="320" y2="405" stroke="#C8922A" stroke-width="0.7"
+              marker-start="url(#arrL)" marker-end="url(#arr)" opacity="0.8"/>
+            <line x1="80"  y1="380" x2="80"  y2="412" stroke="#C8922A" stroke-width="0.5" opacity="0.6"/>
+            <line x1="320" y1="380" x2="320" y2="412" stroke="#C8922A" stroke-width="0.5" opacity="0.6"/>
+            <text x="200" y="420" fill="#C8922A" font-size="9" font-family="monospace" opacity="0.8" text-anchor="middle">240 mm</text>
+
+            <!-- Dimension: web width -->
+            <line x1="160" y1="428" x2="240" y2="428" stroke="#C8922A" stroke-width="0.6"
+              marker-start="url(#arrL)" marker-end="url(#arr)" opacity="0.7"/>
+            <line x1="160" y1="340" x2="160" y2="435" stroke="#C8922A" stroke-width="0.5" opacity="0.5" stroke-dasharray="3 2"/>
+            <line x1="240" y1="340" x2="240" y2="435" stroke="#C8922A" stroke-width="0.5" opacity="0.5" stroke-dasharray="3 2"/>
+            <text x="200" y="442" fill="#C8922A" font-size="8" font-family="monospace" opacity="0.7" text-anchor="middle">80 mm</text>
+
+            <!-- Detail circle A (top-right junction) -->
+            <circle cx="240" cy="120" r="18" stroke="#C8922A" stroke-width="0.7" fill="none" opacity="0.6"/>
+            <line x1="254" y1="106" x2="290" y2="72" stroke="#C8922A" stroke-width="0.6" opacity="0.5"/>
+            <circle cx="300" cy="62" r="13" stroke="#C8922A" stroke-width="0.7" fill="none" opacity="0.5"/>
+            <text x="300" y="67" fill="#C8922A" font-size="9" font-family="monospace" opacity="0.8" text-anchor="middle" font-weight="bold">A</text>
+
+            <!-- Surface finish symbol -->
+            <g stroke="#8A8F9E" stroke-width="0.7" fill="none" opacity="0.6">
+              <path d="M 200,80 L 206,70 L 212,80"/>
+              <line x1="206" y1="70" x2="206" y2="62"/>
+            </g>
+            <text x="216" y="68" fill="#8A8F9E" font-size="7" font-family="monospace" opacity="0.6">Ra 1.6</text>
+
+            <!-- Corner registration marks -->
+            <g stroke="#C8922A" stroke-width="0.8" opacity="0.3">
+              <line x1="10" y1="20" x2="10" y2="30"/> <line x1="5"  y1="25" x2="20" y2="25"/>
+              <line x1="390" y1="20" x2="390" y2="30"/><line x1="380" y1="25" x2="395" y2="25"/>
+              <line x1="10"  y1="460" x2="10"  y2="470"/><line x1="5" y1="465" x2="20" y2="465"/>
+            </g>
+
+            <!-- Title block -->
+            <rect x="170" y="448" width="220" height="22" stroke="#C8922A" stroke-width="0.4" fill="none" opacity="0.3"/>
+            <line x1="248" y1="448" x2="248" y2="470" stroke="#C8922A" stroke-width="0.4" opacity="0.3"/>
+            <text x="208" y="462" fill="#8A8F9E" font-size="6.5" font-family="monospace" opacity="0.7" text-anchor="middle">TMC-STRUCT-01 · Rev.A</text>
+            <text x="315" y="458" fill="#C8922A" font-size="6.5" font-family="monospace" opacity="0.8" text-anchor="middle" font-weight="bold">TALLER MAYOR</text>
+            <text x="315" y="467" fill="#8A8F9E" font-size="5.5" font-family="monospace" opacity="0.6" text-anchor="middle">CONSULTORÍA</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="scroll-indicator" aria-hidden="true">
+        <i data-lucide="chevron-down" style="width:24px;height:24px;"></i>
+      </div>
+    </section>
+
+    <!-- ─ PROBLEM ─ -->
+    <section id="problemas" aria-labelledby="prob-h2">
+      <div class="container">
+        <span class="section-label fade-up">El diagnóstico</span>
+        <h2 class="section-heading fade-up d1" id="prob-h2">Lo que frena a los talleres con potencial</h2>
+
+        <div class="problem-grid">
+          <article class="problem-card problem-large fade-up d1">
+            <h3>Operación sin estructura</h3>
+            <p>
+              El taller creció sin diseñar cómo trabaja. Cada proyecto se improvisa desde cero.
+              Las órdenes de trabajo viven en papel o en la cabeza del encargado.
+              El tiempo y el margen se pierden antes de entregar la primera pieza.
+            </p>
+            <p style="margin-top:1rem;font-size:.875rem;color:var(--color-text-faint);">
+              Sin procesos documentados, no hay forma de escalar sin caos.
+            </p>
+          </article>
+
+          <div class="problem-stack">
+            <article class="problem-card fade-up d2">
+              <h3>Imagen que no proyecta</h3>
+              <p>
+                La capacidad técnica existe. La marca no la comunica.
+                Los clientes grandes no llaman porque no perciben contraparte seria.
+              </p>
+            </article>
+            <article class="problem-card fade-up d3">
+              <h3>Proyectos que no escalan</h3>
+              <p>
+                Sin portafolio estructurado. Sin métricas de desempeño.
+                El crecimiento depende del boca a boca y de la disponibilidad del dueño.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─ SERVICES ─ -->
+    <section id="servicios" aria-labelledby="svc-h2">
+      <div class="container">
+        <span class="section-label fade-up">Cómo trabajamos</span>
+        <h2 class="section-heading fade-up d1" id="svc-h2">Cuatro líneas. Un ciclo de crecimiento completo.</h2>
+
+        <div class="services-grid">
+
+          <article class="service-card fade-up d1" tabindex="0" aria-label="Branding Técnico — Proyecto fijo">
+            <span class="service-tag">Proyecto fijo</span>
+            <h3>Branding Técnico</h3>
+            <p>Redefinimos tu identidad comercial para que proyecte la capacidad real del taller.</p>
+            <ul class="service-deliverables" aria-label="Entregables">
+              <li>Diagnóstico de marca actual y posicionamiento competitivo</li>
+              <li>Identidad visual completa: logo, paleta, tipografía, sistema</li>
+              <li>Kit comercial: página web, presentación, firma de email</li>
+            </ul>
+          </article>
+
+          <article class="service-card fade-up d2" tabindex="0" aria-label="Ingeniería de Procesos — Diagnóstico + implementación">
+            <span class="service-tag">Diagnóstico + implementación</span>
+            <h3>Ingeniería de Procesos</h3>
+            <p>Diseñamos cómo opera tu taller. Flujos documentados, cuellos de botella eliminados.</p>
+            <ul class="service-deliverables" aria-label="Entregables">
+              <li>Levantamiento de flujo actual de OT y mantención</li>
+              <li>Diseño del flujo objetivo con puntos de control digitales</li>
+              <li>Implementación + capacitación del equipo operativo</li>
+            </ul>
+          </article>
+
+          <article class="service-card fade-up d3" tabindex="0" aria-label="Automatización e IA — Retainer mensual">
+            <span class="service-tag">Retainer mensual</span>
+            <h3>Automatización e IA</h3>
+            <p>Herramientas que reducen trabajo manual y entregan datos para tomar decisiones.</p>
+            <ul class="service-deliverables" aria-label="Entregables">
+              <li>Automatización de flujos internos (OT, notificaciones, reportes)</li>
+              <li>Dashboard operacional en tiempo real</li>
+              <li>Integración de IA para gestión de conocimiento técnico</li>
+            </ul>
+          </article>
+
+          <article class="service-card fade-up d4" tabindex="0" aria-label="PM Externo — Por proyecto">
+            <span class="service-tag">Por proyecto</span>
+            <h3>PM Externo</h3>
+            <p>Gestionamos tus proyectos grandes con metodología y accountability directo.</p>
+            <ul class="service-deliverables" aria-label="Entregables">
+              <li>Plan de proyecto con hitos, responsables y métricas de avance</li>
+              <li>Gestión de contratos y coordinación con cliente / subcontratistas</li>
+              <li>Informes de estado semanales + cierre formal documentado</li>
+            </ul>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─ FOUNDER ─ -->
+    <section id="nosotros" aria-labelledby="fnd-h2">
+      <div class="container founder-grid">
+        <div class="founder-photo fade-up" aria-hidden="true" role="presentation"></div>
+
+        <div class="founder-text">
+          <span class="eyebrow fade-up">Experiencia directa en el rubro</span>
+          <h2 class="fade-up d1" id="fnd-h2">
+            El conocimiento que no se construye desde afuera.
+          </h2>
+          <p class="fade-up d2">
+            Taller Mayor Consultoría nace desde adentro de la industria salmonera chilena.
+            Su fundador es ingeniero civil electrónico con maestría en gestión de proyectos,
+            con experiencia directa en la operación de referencia del sector.
+          </p>
+          <p class="fade-up d2">
+            No es consultoría genérica aplicada a un rubro desconocido.
+            Es el conocimiento de cómo se ve una maestranza cuando funciona bien
+            — porque ese fue el trabajo de primera línea.
+          </p>
+          <a href="https://linkedin.com/in/oswaldososa" target="_blank" rel="noopener noreferrer"
+             class="linkedin-link fade-up d3">
+            Conecta en LinkedIn &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─ CONTACT ─ -->
+    <section id="contacto" aria-labelledby="ctc-h2">
+      <div class="container">
+        <div class="contact-inner">
+          <span class="section-label fade-up" style="text-align:center;display:block;">Hablemos</span>
+          <h2 class="fade-up d1" id="ctc-h2">
+            ¿Tu operación creció más rápido que tu estructura?
+          </h2>
+          <p class="fade-up d1">Partamos con 30 minutos de conversación. Sin costo.</p>
+
+          <form id="contactForm" novalidate class="fade-up d2" aria-label="Formulario de contacto">
+            <div class="field">
+              <label for="f-nombre">Nombre</label>
+              <input type="text" id="f-nombre" name="nombre" autocomplete="name"
+                     placeholder="Tu nombre" aria-required="true" aria-describedby="err-nombre"/>
+              <span class="field-error" id="err-nombre" role="alert">Ingresa tu nombre.</span>
+            </div>
+
+            <div class="field">
+              <label for="f-empresa">Empresa</label>
+              <input type="text" id="f-empresa" name="empresa" autocomplete="organization"
+                     placeholder="Nombre de tu taller o empresa" aria-required="true" aria-describedby="err-empresa"/>
+              <span class="field-error" id="err-empresa" role="alert">Ingresa el nombre de tu empresa.</span>
+            </div>
+
+            <div class="field">
+              <label for="f-desafio">Tu mayor desafío hoy</label>
+              <textarea id="f-desafio" name="desafio" rows="3"
+                        placeholder="Cuéntanos el problema que más te preocupa en la operación." aria-required="true" aria-describedby="err-desafio"></textarea>
+              <span class="field-error" id="err-desafio" role="alert">Describe brevemente tu desafío.</span>
+            </div>
+
+            <button type="submit" class="btn-submit">Enviar mensaje</button>
+          </form>
+
+          <div class="form-success fade-up" id="formSuccess" aria-live="polite">
+            <strong>Mensaje recibido.</strong>
+            <p>Oswaldo revisará tu caso y te responde en menos de 24 horas.</p>
+          </div>
+
+          <p class="contact-alt fade-up d3">
+            O escríbenos a <a href="mailto:contacto@tallermayor.cl">contacto@tallermayor.cl</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── FOOTER ─── -->
+  <footer aria-label="Pie de página">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <svg height="26" viewBox="0 0 220 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g transform="translate(2,2) scale(0.4)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2"/>
+          </g>
+          <line x1="46" y1="7" x2="46" y2="37" stroke="#C8922A" stroke-width="0.75" opacity="0.35"/>
+          <text x="54" y="20" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="13" font-weight="800" letter-spacing="1.8" fill="#E8E6E1">TALLER MAYOR</text>
+          <text x="54" y="33" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="7" font-weight="500" letter-spacing="3.5" fill="#8A8F9E">CONSULTORÍA</text>
+        </svg>
+        <span class="footer-tagline">Ingeniería que ordena. Consultoría que escala.</span>
+      </div>
+
+      <span class="footer-info">Chile &middot; Industria Salmonera &middot; 2026</span>
+
+      <div class="footer-social">
+        <a href="https://linkedin.com/in/oswaldososa" target="_blank" rel="noopener noreferrer"
+           aria-label="LinkedIn de Taller Mayor Consultoría">
+          <i data-lucide="linkedin" style="width:20px;height:20px;"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── SCRIPTS ─── -->
+  <script>
+    // --- Lucide icons ---
+    lucide.createIcons();
+
+    // --- Nav scroll behavior ---
+    const nav = document.getElementById('nav');
+    function updateNav() {
+      nav.classList.toggle('scrolled', window.scrollY > 48);
+    }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+
+    // --- Mobile Menu ---
+    const menuBtn    = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function openMenu() {
+      menuBtn.setAttribute('aria-expanded', 'true');
+      mobileMenu.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      menuBtn.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    // Close menu on any link click inside overlay
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', closeMenu);
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
+    });
+
+    // --- IntersectionObserver for fade-up ---
+    const reduces = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduces) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+      // Trigger hero immediately
+      document.querySelectorAll('#inicio .fade-up').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), i * 120);
+      });
+    }
+
+    // --- Form validation ---
+    const form = document.getElementById('contactForm');
+    const successBox = document.getElementById('formSuccess');
+
+    function validateField(id, errId, minLen = 2) {
+      const input = document.getElementById(id);
+      const err   = document.getElementById(errId);
+      const val   = input.value.trim();
+      const ok    = val.length >= minLen;
+      input.classList.toggle('error', !ok);
+      err.classList.toggle('visible', !ok);
+      return ok;
+    }
+
+    // Live validation on blur
+    ['f-nombre','f-empresa','f-desafio'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('blur', () => {
+        const errId = id.replace('f-', 'err-');
+        validateField(id, errId, id === 'f-desafio' ? 10 : 2);
+      });
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const v1 = validateField('f-nombre',  'err-nombre',  2);
+      const v2 = validateField('f-empresa', 'err-empresa', 2);
+      const v3 = validateField('f-desafio', 'err-desafio', 10);
+
+      if (v1 && v2 && v3) {
+        const btn = form.querySelector('.btn-submit');
+        btn.disabled = true;
+        btn.textContent = 'Enviando…';
+
+        // Simulate send (replace with real endpoint)
+        setTimeout(() => {
+          form.style.display = 'none';
+          successBox.classList.add('visible');
+        }, 800);
+      }
+    });
+
+    // --- Smooth scroll for anchors on mobile menu ---
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
