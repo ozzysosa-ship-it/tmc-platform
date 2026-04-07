@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TMC — Tarjeta de Visita</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --navy:  #1A1F2E;
+      --amber: #C8922A;
+      --white: #E8E6E1;
+      --muted: #8A8F9E;
+      --font-d: 'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+      --font-b: 'Satoshi', 'Inter', sans-serif;
+    }
+    /* ── Download Panel ──────────────────────────── */
+    #download-panel {
+      background: #1A1F2E;
+      border-bottom: 1px solid rgba(200,146,42,.15);
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+    }
+    #download-panel .dp-label {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #C8922A;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    #download-panel button {
+      font-family: 'Satoshi', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #E8E6E1;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 180ms ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    #download-panel button:hover {
+      background: rgba(200,146,42,.12);
+      border-color: rgba(200,146,42,.4);
+      color: #C8922A;
+    }
+    #download-panel button.primary {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: #C8922A;
+    }
+    @media print { #download-panel { display: none; } }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #2A2A2A;
+      font-family: var(--font-b);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 40px;
+      padding: 40px 20px;
+      padding-top: 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+    h2 {
+      color: #666;
+      font-family: var(--font-b);
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: -24px;
+    }
+
+    /* Card: 90mm × 50mm at 96dpi = 340.2 × 189px; we use ×2 for clarity */
+    .card {
+      width: 340px;
+      height: 189px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.6);
+    }
+
+    /* ── FRONT ── */
+    .card-front {
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 28px;
+    }
+    .card-mark {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      opacity: .08;
+    }
+    .front-name {
+      font-family: var(--font-d);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -.01em;
+      margin-bottom: 3px;
+    }
+    .front-title {
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--amber);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .front-details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .front-details a, .front-details span {
+      font-size: 9px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .02em;
+    }
+    .amber-rule {
+      width: 32px;
+      height: 1.5px;
+      background: var(--amber);
+      margin-bottom: 12px;
+    }
+    /* Crop marks */
+    .crop {
+      position: absolute;
+      background: rgba(200,146,42,.3);
+    }
+    .crop-tl-h { top: 0; left: 3px; width: 8px; height: .5px; }
+    .crop-tl-v { top: 3px; left: 0; width: .5px; height: 8px; }
+    .crop-tr-h { top: 0; right: 3px; width: 8px; height: .5px; }
+    .crop-tr-v { top: 3px; right: 0; width: .5px; height: 8px; }
+    .crop-bl-h { bottom: 0; left: 3px; width: 8px; height: .5px; }
+    .crop-bl-v { bottom: 3px; left: 0; width: .5px; height: 8px; }
+    .crop-br-h { bottom: 0; right: 3px; width: 8px; height: .5px; }
+    .crop-br-v { bottom: 3px; right: 0; width: .5px; height: 8px; }
+
+    /* ── BACK ── */
+    .card-back {
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .back-wordmark {
+      font-family: var(--font-d);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+    .back-sub {
+      font-size: 7px;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .back-tagline {
+      font-size: 8.5px;
+      color: var(--muted);
+      letter-spacing: .04em;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .back-rule {
+      width: 24px;
+      height: 1px;
+      background: var(--amber);
+    }
+
+    /* Bleed note */
+    .note {
+      font-size: 10px;
+      color: #555;
+      font-family: monospace;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="download-panel">
+    <span class="dp-label">Descargar Tarjeta</span>
+    <button class="primary" onclick="exportPNG('card-front', 'tmc-tarjeta-frente-300dpi.png', 1063, 591)">Frente 300dpi</button>
+    <button class="primary" onclick="exportPNG('card-back', 'tmc-tarjeta-dorso-300dpi.png', 1063, 591)">Dorso 300dpi</button>
+    <button onclick="exportPNG('card-front', 'tmc-tarjeta-frente-2x.png', 680, 378)">Frente 2x</button>
+    <button onclick="exportPNG('card-back', 'tmc-tarjeta-dorso-2x.png', 680, 378)">Dorso 2x</button>
+  </div>
+
+  <h2>Tarjeta — Frente</h2>
+  <div id="card-front" class="card card-front">
+    <!-- Crop marks -->
+    <div class="crop crop-tl-h"></div><div class="crop crop-tl-v"></div>
+    <div class="crop crop-tr-h"></div><div class="crop crop-tr-v"></div>
+    <div class="crop crop-bl-h"></div><div class="crop crop-bl-v"></div>
+    <div class="crop crop-br-h"></div><div class="crop crop-br-v"></div>
+
+    <!-- Large mark watermark -->
+    <svg class="card-mark" width="56" height="56" viewBox="0 0 100 100">
+      <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+      <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+      <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+    </svg>
+
+    <div class="front-name">Oswaldo Sosa</div>
+    <div class="front-title">Fundador · Taller Mayor Consultoría</div>
+    <div class="amber-rule"></div>
+    <div class="front-details">
+      <a href="mailto:contacto@tallermayor.cl">contacto@tallermayor.cl</a>
+      <a href="https://tallermayor.cl">tallermayor.cl</a>
+      <span>linkedin.com/in/oswaldososa</span>
+    </div>
+  </div>
+
+  <h2>Tarjeta — Dorso</h2>
+  <div id="card-back" class="card card-back">
+    <div class="crop crop-tl-h"></div><div class="crop crop-tl-v"></div>
+    <div class="crop crop-tr-h"></div><div class="crop crop-tr-v"></div>
+    <div class="crop crop-bl-h"></div><div class="crop crop-bl-v"></div>
+    <div class="crop crop-br-h"></div><div class="crop crop-br-v"></div>
+
+    <svg width="28" height="28" viewBox="0 0 100 100">
+      <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+      <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+      <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2"/>
+    </svg>
+
+    <div class="back-wordmark">TALLER MAYOR</div>
+    <div class="back-sub">Consultoría</div>
+    <div class="back-rule"></div>
+    <div class="back-tagline">Ingeniería que ordena.<br>Consultoría que escala.</div>
+  </div>
+
+  <p class="note">Sangría: 3mm · Tamaño de impresión: 90mm × 50mm · Resolución mínima: 300 dpi</p>
+
+  <script>
+    function downloadBlob(blob, filename) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+
+    async function exportPNG(elementId, filename, targetWidth, targetHeight) {
+      const el = document.getElementById(elementId);
+      const scale = targetWidth / el.offsetWidth;
+      const canvas = await html2canvas(el, {
+        scale,
+        useCORS: true,
+        backgroundColor: null,
+        width: el.offsetWidth,
+        height: el.offsetHeight
+      });
+      canvas.toBlob(blob => downloadBlob(blob, filename), 'image/png');
+    }
+  </script>
+
+</body>
+</html>

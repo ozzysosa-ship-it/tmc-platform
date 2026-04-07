@@ -15,7 +15,7 @@
 
 /* ── HEADER ── */
 .services-label {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -26,7 +26,7 @@
 }
 
 .services-title {
-  font-family: 'Sora', sans-serif;
+  font-family: 'Cabinet Grotesk', sans-serif;
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
   line-height: 1.1;
@@ -35,7 +35,7 @@
 }
 
 .services-subtitle {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-size: 1.125rem;
   color: rgba(245, 244, 240, 0.55);
   line-height: 1.6;
@@ -86,7 +86,7 @@
 }
 
 .service-num {
-  font-family: 'Sora', sans-serif;
+  font-family: 'Cabinet Grotesk', sans-serif;
   font-size: 0.875rem;
   font-weight: 700;
   color: rgba(245, 244, 240, 0.55);
@@ -100,7 +100,7 @@
 }
 
 .service-name {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
   color: rgba(245, 244, 240, 0.55);
@@ -128,7 +128,7 @@
 }
 
 .panel-num {
-  font-family: 'Sora', sans-serif;
+  font-family: 'Cabinet Grotesk', sans-serif;
   font-size: clamp(5rem, 10vw, 8rem);
   font-weight: 800;
   color: rgba(200, 146, 42, 0.18);
@@ -139,7 +139,7 @@
 }
 
 .panel-title {
-  font-family: 'Sora', sans-serif;
+  font-family: 'Cabinet Grotesk', sans-serif;
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
   line-height: 1.15;
@@ -148,7 +148,7 @@
 }
 
 .panel-tagline {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-size: 1rem;
   color: #E5B84A;
   font-weight: 500;
@@ -156,7 +156,7 @@
 }
 
 .panel-description {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-size: 1rem;
   color: rgba(245, 244, 240, 0.55);
   line-height: 1.7;
@@ -177,7 +177,7 @@
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-size: 0.875rem;
   color: rgba(245, 244, 240, 0.55);
 }
@@ -209,7 +209,7 @@
 }
 
 .pricing-amount {
-  font-family: 'Sora', sans-serif;
+  font-family: 'Cabinet Grotesk', sans-serif;
   font-size: clamp(1.25rem, 2vw, 1.5rem);
   font-weight: 700;
   color: #C8922A;
@@ -217,7 +217,7 @@
 }
 
 .pricing-label {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-size: 0.75rem;
   color: rgba(245, 244, 240, 0.55);
   text-transform: uppercase;
@@ -231,7 +231,7 @@
   padding: 0.75rem 1.5rem;
   background: #C8922A;
   color: #1A1F2E;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   border-radius: 9999px;
@@ -328,7 +328,7 @@
   }
 
   .accordion-num {
-    font-family: 'Sora', sans-serif;
+    font-family: 'Cabinet Grotesk', sans-serif;
     font-size: clamp(3rem, 15vw, 4rem);
     font-weight: 800;
     color: #C8922A;
@@ -336,7 +336,7 @@
   }
 
   .accordion-name {
-    font-family: 'Sora', sans-serif;
+    font-family: 'Cabinet Grotesk', sans-serif;
     font-size: 1.125rem;
     font-weight: 600;
     color: #F5F4F0;

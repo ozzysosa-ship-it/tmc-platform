@@ -1,0 +1,10 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TMC favicon">
+  <title>TMC</title>
+  <rect width="32" height="32" fill="#1A1F2E"/>
+  <!-- T: crossbar + stem (simplified for 32px) -->
+  <path d="M 1,6 L 13,6 L 13,9 L 9,9 L 9,25 L 5,25 L 5,9 L 1,9 Z" fill="#E8E6E1"/>
+  <!-- M: V-notch solid (simplified for 32px) -->
+  <path d="M 17,25 L 17,8 L 19,6 L 21,6 L 25,13 L 29,6 L 31,6 L 31,8 L 31,25 Z" fill="#E8E6E1"/>
+  <!-- Amber datum at y=13 -->
+  <line x1="1" y1="13" x2="31" y2="13" stroke="#C8922A" stroke-width="0.75"/>
+</svg>

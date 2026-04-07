@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taller Mayor Consultoría — Guía de Marca 2026</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    /* ── Download Panel ────────────────────────────── */
+    #download-panel {
+      background: #1A1F2E;
+      border-bottom: 1px solid rgba(200,146,42,.15);
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    #download-panel .dp-label {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #C8922A;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    #download-panel button {
+      font-family: 'Satoshi', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #E8E6E1;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 180ms ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    #download-panel button:hover {
+      background: rgba(200,146,42,.12);
+      border-color: rgba(200,146,42,.4);
+      color: #C8922A;
+    }
+    #download-panel button.primary {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: #C8922A;
+    }
+    @media print { #download-panel { display: none; } }
+
+    /* ── Design Tokens ─────────────────────────────── */
+    :root {
+      --bg:       #0E1117;
+      --surf:     #1A1F2E;
+      --surf2:    #222838;
+      --surf3:    #2A3040;
+      --amber:    #C8922A;
+      --amber-h:  #E0A030;
+      --white:    #E8E6E1;
+      --muted:    #8A8F9E;
+      --faint:    #4A4F5E;
+      --red:      #C04040;
+      --font-d:   'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+      --font-b:   'Satoshi', 'Inter', sans-serif;
+      --ease:     180ms cubic-bezier(.16,1,.3,1);
+    }
+
+    /* ── Reset ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-b);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ─────────────────────────────────────── */
+    .guide-container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 40px 120px;
+    }
+
+    /* ── Nav ─────────────────────────────────────────── */
+    .guide-nav {
+      position: sticky;
+      top: 0;
+      background: rgba(14,17,23,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,146,42,.12);
+      z-index: 100;
+      padding: 0 40px;
+    }
+    .guide-nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      height: 52px;
+    }
+    .nav-brand {
+      font-family: var(--font-d);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--white);
+      margin-right: auto;
+    }
+    .nav-brand span { color: var(--amber); }
+    .guide-nav a {
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: color var(--ease);
+      white-space: nowrap;
+    }
+    .guide-nav a:hover { color: var(--amber); }
+
+    /* ── Chapter ─────────────────────────────────────── */
+    .chapter {
+      padding-top: 96px;
+    }
+    .chapter-number {
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--amber);
+      letter-spacing: .16em;
+      margin-bottom: 8px;
+    }
+    .chapter-title {
+      font-family: var(--font-d);
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .chapter-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 48px;
+      max-width: 540px;
+      line-height: 1.6;
+    }
+    .chapter-rule {
+      height: 1px;
+      background: rgba(200,146,42,.15);
+      margin-bottom: 48px;
+    }
+
+    /* ── Cover ─────────────────────────────────────── */
+    .cover {
+      padding: 80px 0 64px;
+      border-bottom: 1px solid rgba(200,146,42,.12);
+      margin-bottom: 0;
+    }
+    .cover-label {
+      font-size: 10px;
+      color: var(--amber);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .cover-title {
+      font-family: var(--font-d);
+      font-size: 60px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+    .cover-title span { color: var(--amber); }
+    .cover-meta {
+      font-size: 12px;
+      color: var(--faint);
+      letter-spacing: .08em;
+    }
+
+    /* ── Logo Section ───────────────────────────────── */
+    .logo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .logo-swatch {
+      background: var(--surf);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 6px;
+      padding: 48px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .logo-swatch.dark { background: #0E1117; }
+    .logo-swatch.light { background: #F0EDE6; }
+    .logo-swatch.amber-bg { background: var(--amber); }
+    .swatch-label {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-family: monospace;
+    }
+    .logo-swatch.light .swatch-label { color: #6A6260; }
+    .logo-swatch.amber-bg .swatch-label { color: rgba(255,255,255,.6); }
+
+    .rule-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .rule-list li {
+      display: flex;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .rule-list li::before {
+      content: attr(data-marker);
+      flex-shrink: 0;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+    .rule-list li[data-marker="✓"]::before { color: #4CAF80; }
+    .rule-list li[data-marker="✗"]::before { color: var(--red); }
+
+    .usage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .usage-card {
+      border-radius: 6px;
+      padding: 28px 24px 20px;
+      position: relative;
+    }
+    .usage-card.correct { background: rgba(76,175,128,.06); border: 1px solid rgba(76,175,128,.2); }
+    .usage-card.incorrect { background: rgba(192,64,64,.06); border: 1px solid rgba(192,64,64,.2); }
+    .usage-tag {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .usage-card.correct .usage-tag { color: #4CAF80; }
+    .usage-card.incorrect .usage-tag { color: var(--red); }
+    .usage-card.incorrect svg, .usage-card.incorrect .logo-text { opacity: 0.6; }
+    .incorrect-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .incorrect-line {
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 2px;
+      background: rgba(192,64,64,.5);
+      transform: translateY(-50%) rotate(-8deg) scaleX(1.2);
+    }
+    .usage-reason {
+      font-size: 11px;
+      color: var(--faint);
+      margin-top: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    /* ── Color Section ───────────────────────────────── */
+    .color-palette {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .color-swatch {
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .color-chip {
+      height: 96px;
+    }
+    .color-info {
+      background: var(--surf);
+      padding: 12px;
+    }
+    .color-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .color-hex {
+      font-family: monospace;
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .color-use {
+      font-size: 9px;
+      color: var(--faint);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .color-pair {
+      background: var(--surf2);
+      border-radius: 6px;
+      padding: 20px 24px;
+      border: 1px solid rgba(255,255,255,.04);
+    }
+    .color-pair p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── Typography Section ────────────────────────── */
+    .type-specimen {
+      margin-bottom: 40px;
+    }
+    .type-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .type-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--amber);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .type-source {
+      font-size: 10px;
+      color: var(--faint);
+      letter-spacing: .04em;
+    }
+    .type-rule {
+      height: 1px;
+      background: rgba(255,255,255,.06);
+      margin-bottom: 24px;
+    }
+    .type-scale {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+    }
+    .type-size-label {
+      font-family: monospace;
+      font-size: 10px;
+      color: var(--faint);
+      width: 72px;
+      flex-shrink: 0;
+    }
+    .font-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 32px;
+    }
+    .font-table th {
+      text-align: left;
+      font-size: 10px;
+      color: var(--faint);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 10px 0;
+    }
+    .font-table td {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      font-size: 13px;
+      color: var(--muted);
+      vertical-align: top;
+    }
+    .font-table td:first-child { font-family: monospace; color: var(--faint); font-size: 11px; width: 120px; }
+    .font-table td:nth-child(2) { color: var(--white); padding-right: 24px; }
+
+    /* ── Tone of Voice ───────────────────────────────── */
+    .tone-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .tone-col {}
+    .tone-col-head {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .tone-col-head.do { color: #4CAF80; }
+    .tone-col-head.dont { color: var(--red); }
+    .tone-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .tone-list li {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      display: flex;
+      gap: 10px;
+    }
+    .tone-list li::before {
+      content: attr(data-icon);
+      flex-shrink: 0;
+      font-size: 14px;
+    }
+    .tone-examples {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .tone-example {
+      background: var(--surf);
+      border-radius: 6px;
+      padding: 20px;
+      border-left: 3px solid transparent;
+    }
+    .tone-example.good { border-left-color: #4CAF80; }
+    .tone-example.bad  { border-left-color: var(--red); }
+    .tone-example .tone-tag {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .tone-example.good .tone-tag { color: #4CAF80; }
+    .tone-example.bad  .tone-tag { color: var(--red); }
+    .tone-example blockquote {
+      font-size: 12px;
+      color: var(--white);
+      line-height: 1.6;
+      quotes: none;
+    }
+    .tone-example blockquote::before, .tone-example blockquote::after { content: none; }
+
+    /* ── Brand Values card  ────────────────────────── */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .value-card {
+      background: var(--surf);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 6px;
+      padding: 24px;
+    }
+    .value-num {
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--amber);
+      margin-bottom: 10px;
+    }
+    .value-title {
+      font-family: var(--font-d);
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .value-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── Misuse Section ──────────────────────────── */
+    .misuse-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .misuse-card {
+      background: var(--surf);
+      border-radius: 6px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(192,64,64,.2);
+    }
+    .misuse-card::before {
+      content: 'INCORRECTO';
+      position: absolute;
+      top: 14px; right: 14px;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      color: var(--red);
+      font-family: monospace;
+    }
+    .misuse-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+    .misuse-example {
+      font-size: 12px;
+      color: rgba(232,230,225,.35);
+      line-height: 1.5;
+      margin-bottom: 10px;
+      text-decoration: line-through;
+      text-decoration-color: rgba(192,64,64,.5);
+    }
+    .misuse-reason {
+      font-size: 11px;
+      color: var(--faint);
+    }
+
+    /* ── Footer ─────────────────────────────────────── */
+    .guide-footer {
+      margin-top: 96px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(200,146,42,.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--faint);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Download Panel ─────────────────────────────── -->
+  <div id="download-panel">
+    <span class="dp-label">Descargar Logos</span>
+    <button class="primary" onclick="exportLogoSVG('dark')">SVG Dark</button>
+    <button class="primary" onclick="exportLogoSVG('light')">SVG Light</button>
+    <button class="primary" onclick="exportLogoSVG('monogram')">SVG Monograma</button>
+    <button class="primary" onclick="exportLogoSVG('amber')">SVG Amber</button>
+    <button onclick="svgToPNG(getLogoSVG('dark'), 2400, 600, 'tmc-logo-2400x600.png')">PNG 2400×600</button>
+    <button onclick="svgToPNG(getLogoSVG('dark'), 1200, 300, 'tmc-logo-1200x300.png')">PNG 1200×300</button>
+    <button onclick="svgToPNG(getLogoSVG('dark'), 600, 150, 'tmc-logo-600x150.png')">PNG 600×150</button>
+    <button onclick="svgToPNG(getLogoSVG('monogram'), 1024, 1024, 'tmc-monogram-1024.png')">Mono 1024</button>
+    <button onclick="svgToPNG(getLogoSVG('monogram'), 512, 512, 'tmc-monogram-512.png')">Mono 512</button>
+    <button onclick="svgToPNG(getLogoSVG('monogram'), 256, 256, 'tmc-monogram-256.png')">Mono 256</button>
+    <button onclick="svgToPNG(getLogoSVG('monogram'), 128, 128, 'tmc-monogram-128.png')">Mono 128</button>
+    <button onclick="svgToPNG(getLogoSVG('monogram'), 64, 64, 'tmc-monogram-64.png')">Mono 64</button>
+    <button onclick="svgToPNG(getLogoSVG('monogram'), 32, 32, 'tmc-monogram-32.png')">Mono 32</button>
+    <button onclick="svgToPNG(getLogoSVG('monogram'), 16, 16, 'tmc-monogram-16.png')">Mono 16</button>
+  </div>
+
+  <!-- ── Nav ───────────────────────────────────────── -->
+  <nav class="guide-nav" aria-label="Índice de la guía de marca">
+    <div class="guide-nav-inner">
+      <div class="nav-brand"><svg width="160" height="32" viewBox="0 0 300 60" aria-label="Taller Mayor Consultoría"><rect width="300" height="60" fill="none"/><g transform="translate(8,4) scale(0.52)"><path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/><path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/><line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/></g><line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/><text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text><text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text></svg></div>
+      <a href="#logos">1 · Logos</a>
+      <a href="#colores">2 · Colores</a>
+      <a href="#tipografia">3 · Tipografía</a>
+      <a href="#tono">4 · Tono</a>
+      <a href="#uso-incorrecto">5 · Uso incorrecto</a>
+    </div>
+  </nav>
+
+  <div class="guide-container">
+
+    <!-- ── Cover ──────────────────────────────────── -->
+    <div class="cover">
+      <div class="cover-label">Taller Mayor Consultoría · Guía de Marca</div>
+      <div class="cover-title">Brand<br>Identity<br><span>Guide</span></div>
+      <div class="cover-meta">Versión 1.0 · Chile · 2026 · Uso interno y para proveedores</div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+         CAPÍTULO 1 · LOGOS
+    ═══════════════════════════════════════════════ -->
+    <section id="logos" class="chapter">
+      <div class="chapter-number">01 ·</div>
+      <h2 class="chapter-title">Sistema de Logos</h2>
+      <p class="chapter-sub">La marca visual de Taller Mayor se construye sobre un monograma de precisión técnica. Tres variantes cubre todos los casos de uso.</p>
+      <div class="chapter-rule"></div>
+
+      <!-- Marca oficial -->
+      <h3 style="font-family:var(--font-d);font-size:18px;font-weight:700;color:var(--white);margin-bottom:20px;letter-spacing:-.01em;">Variantes oficiales</h3>
+      <div class="logo-grid">
+
+        <!-- Dark version -->
+        <div class="logo-swatch dark">
+          <svg viewBox="0 0 300 60" width="288" height="58" aria-label="Logo principal Taller Mayor" role="img">
+            <defs>
+              <marker id="g1" viewBox="0 0 100 100" refX="50" refY="50" markerWidth="3" markerHeight="3">
+                <circle cx="50" cy="50" r="40" fill="#C8922A" opacity=".4"/>
+              </marker>
+            </defs>
+            <rect width="300" height="60" fill="#0E1117"/>
+            <!-- TM mark at 0.52 scale -->
+            <g transform="translate(8,4) scale(0.52)">
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+              <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+            </g>
+            <!-- Vertical separator -->
+            <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+            <!-- Wordmark -->
+            <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+            <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+          </svg>
+          <div class="swatch-label">Versión oscura · Uso primario</div>
+        </div>
+
+        <!-- Light version -->
+        <div class="logo-swatch light">
+          <svg viewBox="0 0 300 60" width="288" height="58" aria-label="Logo versión clara Taller Mayor" role="img">
+            <g transform="translate(8,4) scale(0.52)">
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+              <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+            </g>
+            <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".4"/>
+            <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+            <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#5A5F70">CONSULTORÍA</text>
+          </svg>
+          <div class="swatch-label" style="color:#6A6260;">Versión clara · Uso sobre fondos blancos</div>
+        </div>
+
+        <!-- Mark only -->
+        <div class="logo-swatch">
+          <div style="display:flex;gap:32px;align-items:center;">
+            <svg viewBox="0 0 100 100" width="80" aria-label="Monograma TM" role="img">
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+              <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+            </svg>
+            <svg viewBox="0 0 100 100" width="52" aria-label="Monograma TM tamaño reducido" role="img">
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+              <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+            </svg>
+            <svg viewBox="0 0 100 100" width="32" aria-label="Monograma TM tamaño ícono" role="img">
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+              <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="swatch-label">Monograma TM · Escalas: 64px · 40px · 24px</div>
+        </div>
+
+        <!-- Amber version -->
+        <div class="logo-swatch amber-bg">
+          <svg viewBox="0 0 100 100" width="64" aria-label="Monograma TM sobre ámbar" role="img">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="rgba(26,31,46,.4)" stroke-width="1.5"/>
+          </svg>
+          <div class="swatch-label" style="color:rgba(255,255,255,.5);">Monograma sobre ámbar · Solo casos especiales</div>
+        </div>
+
+      </div>
+
+      <!-- Usage rules -->
+      <h3 style="font-family:var(--font-d);font-size:18px;font-weight:700;color:var(--white);margin:40px 0 20px;letter-spacing:-.01em;">Reglas de uso</h3>
+      <div class="usage-grid">
+        <div>
+          <ul class="rule-list">
+            <li data-marker="✓">Usar siempre la versión oficial (SVG o PDF con fuentes embebidas).</li>
+            <li data-marker="✓">Respetar el área de protección: mínimo la altura de la "M" en todos los costados.</li>
+            <li data-marker="✓">Sobre fondos oscuros: versión principal. Sobre fondos claros: versión clara.</li>
+            <li data-marker="✓">Tamaño mínimo en impresión: 20mm de ancho para la marca completa; 6mm para el monograma.</li>
+          </ul>
+        </div>
+        <div>
+          <ul class="rule-list">
+            <li data-marker="✗">No modificar proporciones, colores ni tipografía del logo.</li>
+            <li data-marker="✗">No aplicar sombras, efectos de relieves ni gradientes sobre el logo.</li>
+            <li data-marker="✗">No usar el logo sobre fondos con poco contraste (grises medios).</li>
+            <li data-marker="✗">No recrear la marca con otra fuente tipográfica.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Incorrect usage examples -->
+      <h3 style="font-family:var(--font-d);font-size:18px;font-weight:700;color:var(--white);margin:40px 0 20px;letter-spacing:-.01em;">Ejemplos de uso incorrecto</h3>
+      <div class="usage-grid">
+        <!-- Stretched -->
+        <div class="usage-card incorrect">
+          <div class="usage-tag">✗ Estirado</div>
+          <svg viewBox="0 0 300 60" width="200" style="transform:scaleX(1.3);transform-origin:left;" aria-hidden="true">
+            <rect width="300" height="60" fill="#1A1F2E"/>
+            <g transform="translate(8,4) scale(0.52)">
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+            </g>
+            <text x="72" y="30" font-family="sans-serif" font-size="17" font-weight="800" fill="#E8E6E1">TALLER MAYOR</text>
+            <text x="72" y="43" font-family="sans-serif" font-size="8" fill="#8A8F9E">CONSULTORÍA</text>
+          </svg>
+          <div class="incorrect-overlay"><div class="incorrect-line"></div></div>
+          <div class="usage-reason">⚠ Nunca alterar las proporciones del logo.</div>
+        </div>
+        <!-- Wrong color -->
+        <div class="usage-card incorrect">
+          <div class="usage-tag">✗ Color incorrecto</div>
+          <svg viewBox="0 0 300 60" width="200" aria-hidden="true">
+            <rect width="300" height="60" fill="#1A1F2E"/>
+            <g transform="translate(8,4) scale(0.52)">
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#4488AA"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#4488AA"/>
+              <line x1="4" y1="44" x2="96" y2="44" stroke="#44AAFF" stroke-width="2.5"/>
+            </g>
+            <text x="72" y="30" font-family="sans-serif" font-size="17" font-weight="800" fill="#4488AA">TALLER MAYOR</text>
+            <text x="72" y="43" font-family="sans-serif" font-size="8" fill="#4488AA">CONSULTORÍA</text>
+          </svg>
+          <div class="incorrect-overlay"><div class="incorrect-line"></div></div>
+          <div class="usage-reason">⚠ El ámbar es el único color de acento aprobado.</div>
+        </div>
+        <!-- Low contrast -->
+        <div class="usage-card incorrect">
+          <div class="usage-tag">✗ Bajo contraste</div>
+          <div style="background:#3A3A3A;padding:16px;border-radius:4px;">
+            <svg viewBox="0 0 300 60" width="200" aria-hidden="true">
+              <g transform="translate(8,4) scale(0.52)">
+                <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#555"/>
+                <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#555"/>
+                <line x1="4" y1="44" x2="96" y2="44" stroke="#777" stroke-width="2.5"/>
+              </g>
+              <text x="72" y="30" font-family="sans-serif" font-size="17" font-weight="800" fill="#555">TALLER MAYOR</text>
+              <text x="72" y="43" font-family="sans-serif" font-size="8" fill="#555">CONSULTORÍA</text>
+            </svg>
+          </div>
+          <div class="incorrect-overlay"><div class="incorrect-line"></div></div>
+          <div class="usage-reason">⚠ No usar sobre fondos grises intermedios. El contraste mínimo es 4.5:1.</div>
+        </div>
+        <!-- Added effects -->
+        <div class="usage-card incorrect">
+          <div class="usage-tag">✗ Efectos no aprobados</div>
+          <svg viewBox="0 0 300 60" width="200" aria-hidden="true">
+            <defs>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <rect width="300" height="60" fill="#1A1F2E"/>
+            <g filter="url(#glow)" transform="translate(8,4) scale(0.52)">
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+              <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+            </g>
+            <text filter="url(#glow)" x="72" y="30" font-family="sans-serif" font-size="17" font-weight="800" fill="#E8E6E1">TALLER MAYOR</text>
+          </svg>
+          <div class="incorrect-overlay"><div class="incorrect-line"></div></div>
+          <div class="usage-reason">⚠ Sin sombras, brillo, ni filtros. La marca habla por sí misma.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         CAPÍTULO 2 · COLORES
+    ═══════════════════════════════════════════════ -->
+    <section id="colores" class="chapter">
+      <div class="chapter-number">02 ·</div>
+      <h2 class="chapter-title">Paleta de Color</h2>
+      <p class="chapter-sub">Cinco fondos estructurales que crean profundidad. Un ámbar que actúa como elemento de precisión técnica. Dos tonos de texto.</p>
+      <div class="chapter-rule"></div>
+
+      <div class="color-palette">
+        <div class="color-swatch">
+          <div class="color-chip" style="background:#0E1117;"></div>
+          <div class="color-info">
+            <div class="color-name">Background</div>
+            <div class="color-hex">#0E1117</div>
+            <div class="color-use">Fondo principal del sitio</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-chip" style="background:#1A1F2E;"></div>
+          <div class="color-info">
+            <div class="color-name">Surface</div>
+            <div class="color-hex">#1A1F2E</div>
+            <div class="color-use">Tarjetas, nav, secciones alt</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-chip" style="background:#222838;"></div>
+          <div class="color-info">
+            <div class="color-name">Surface 2</div>
+            <div class="color-hex">#222838</div>
+            <div class="color-use">Hover de tarjetas, campos</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-chip" style="background:#2A3040;"></div>
+          <div class="color-info">
+            <div class="color-name">Surface 3</div>
+            <div class="color-hex">#2A3040</div>
+            <div class="color-use">Bordes activos, separadores</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-chip" style="background:#C8922A;"></div>
+          <div class="color-info">
+            <div class="color-name">Amber — Acento</div>
+            <div class="color-hex">#C8922A</div>
+            <div class="color-use">Único color de acento. CTAs, highlights, datum line logo.</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-chip" style="background:#E0A030;"></div>
+          <div class="color-info">
+            <div class="color-name">Amber Hover</div>
+            <div class="color-hex">#E0A030</div>
+            <div class="color-use">Estado hover del ámbar</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-chip" style="background:#E8E6E1;"></div>
+          <div class="color-info">
+            <div class="color-name">Texto principal</div>
+            <div class="color-hex">#E8E6E1</div>
+            <div class="color-use">Cuerpo, títulos, anchors</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-chip" style="background:#8A8F9E;border:1px solid rgba(255,255,255,.08);"></div>
+          <div class="color-info">
+            <div class="color-name">Texto muted</div>
+            <div class="color-hex">#8A8F9E</div>
+            <div class="color-use">Párrafos secundarios, labels</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contrast pairs -->
+      <h3 style="font-family:var(--font-d);font-size:18px;font-weight:700;color:var(--white);margin-bottom:16px;letter-spacing:-.01em;">Pares aprobados de contraste</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;">
+        <div class="color-pair">
+          <div style="font-size:20px;font-weight:800;font-family:var(--font-d);color:#E8E6E1;">Texto claro</div>
+          <div style="font-size:10px;color:#555;background:#1A1F2E;padding:4px 8px;border-radius:3px;display:inline-block;margin-top:8px;font-family:monospace;">#E8E6E1 sobre #0E1117</div>
+          <p style="color:#4CAF80;font-size:11px;margin-top:6px;">✓ 14.5:1 — AAA</p>
+        </div>
+        <div class="color-pair">
+          <div style="font-size:20px;font-weight:800;font-family:var(--font-d);color:#C8922A;">Ámbar texto</div>
+          <div style="font-size:10px;color:#555;background:#1A1F2E;padding:4px 8px;border-radius:3px;display:inline-block;margin-top:8px;font-family:monospace;">#C8922A sobre #0E1117</div>
+          <p style="color:#4CAF80;font-size:11px;margin-top:6px;">✓ 6.9:1 — AA</p>
+        </div>
+        <div class="color-pair" style="background:#C8922A;">
+          <div style="font-size:20px;font-weight:800;font-family:var(--font-d);color:#1A1F2E;">Navy sobre ámbar</div>
+          <div style="font-size:10px;background:rgba(0,0,0,.2);color:rgba(255,255,255,.5);padding:4px 8px;border-radius:3px;display:inline-block;margin-top:8px;font-family:monospace;">#1A1F2E sobre #C8922A</div>
+          <p style="color:#1A1F2E;font-size:11px;margin-top:6px;font-weight:700;">✓ 6.9:1 — AA</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         CAPÍTULO 3 · TIPOGRAFÍA
+    ═══════════════════════════════════════════════ -->
+    <section id="tipografia" class="chapter">
+      <div class="chapter-number">03 ·</div>
+      <h2 class="chapter-title">Sistema Tipográfico</h2>
+      <p class="chapter-sub">Dos familias complementarias. Cabinet Grotesk para lo que manda; Satoshi para lo que informa. Nunca intercambiar sus roles.</p>
+      <div class="chapter-rule"></div>
+
+      <!-- Cabinet Grotesk -->
+      <div class="type-specimen">
+        <div class="type-meta">
+          <div class="type-name">Cabinet Grotesk</div>
+          <div class="type-source">Fontshare · Display / Headlines</div>
+        </div>
+        <div class="type-rule"></div>
+        <div class="type-scale">
+          <div class="type-row">
+            <span class="type-size-label">Hero</span>
+            <span style="font-family:var(--font-d);font-size:52px;font-weight:800;letter-spacing:-.03em;color:var(--white);line-height:1;">Ingeniería</span>
+          </div>
+          <div class="type-row">
+            <span class="type-size-label">H1 · 36px</span>
+            <span style="font-family:var(--font-d);font-size:36px;font-weight:800;letter-spacing:-.02em;color:var(--white);">Taller Mayor Consultoría</span>
+          </div>
+          <div class="type-row">
+            <span class="type-size-label">H2 · 28px</span>
+            <span style="font-family:var(--font-d);font-size:28px;font-weight:700;letter-spacing:-.01em;color:var(--white);">Maestranzas industriales</span>
+          </div>
+          <div class="type-row">
+            <span class="type-size-label">H3 · 20px</span>
+            <span style="font-family:var(--font-d);font-size:20px;font-weight:700;color:var(--white);">Ingeniería de Procesos</span>
+          </div>
+          <div class="type-row">
+            <span class="type-size-label">Card · 16px</span>
+            <span style="font-family:var(--font-d);font-size:16px;font-weight:700;color:var(--white);">Diagnóstico 48 horas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Satoshi -->
+      <div class="type-specimen">
+        <div class="type-meta">
+          <div class="type-name">Satoshi</div>
+          <div class="type-source">Fontshare · Body / UI</div>
+        </div>
+        <div class="type-rule"></div>
+        <div class="type-scale">
+          <div class="type-row">
+            <span class="type-size-label">Lead · 18px</span>
+            <span style="font-family:var(--font-b);font-size:18px;font-weight:500;color:var(--white);">Para talleres que crecieron más rápido que su estructura.</span>
+          </div>
+          <div class="type-row">
+            <span class="type-size-label">Body · 15px</span>
+            <span style="font-family:var(--font-b);font-size:15px;color:var(--muted);">El diagnóstico identifica qué procesos inhiben el crecimiento y cuáles already funcionan bien pero no están documentados.</span>
+          </div>
+          <div class="type-row">
+            <span class="type-size-label">Small · 12px</span>
+            <span style="font-family:var(--font-b);font-size:12px;color:var(--muted);">Entregable incluido · Duración estimada: 48 horas</span>
+          </div>
+          <div class="type-row">
+            <span class="type-size-label">LABEL · 10px</span>
+            <span style="font-family:var(--font-b);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);">INGENIERÍA DE PROCESOS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usage table -->
+      <h3 style="font-family:var(--font-d);font-size:18px;font-weight:700;color:var(--white);margin-bottom:20px;letter-spacing:-.01em;">Tabla de uso tipográfico</h3>
+      <table class="font-table">
+        <thead>
+          <tr>
+            <th>Elemento</th>
+            <th>Familia</th>
+            <th>Peso</th>
+            <th>Tracking</th>
+            <th>Uso en</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Hero Title</td><td style="color:var(--amber);font-family:var(--font-d);font-weight:700;">Cabinet Grotesk</td><td>800</td><td>-0.03em</td><td>Sección hero, portadas</td></tr>
+          <tr><td>H1–H2</td><td style="color:var(--amber);font-family:var(--font-d);font-weight:700;">Cabinet Grotesk</td><td>800</td><td>-0.02em</td><td>Títulos de sección</td></tr>
+          <tr><td>H3–H4</td><td style="color:var(--amber);font-family:var(--font-d);font-weight:700;">Cabinet Grotesk</td><td>700</td><td>-0.01em</td><td>Subtítulos, nombres de servicio</td></tr>
+          <tr><td>Wordmark</td><td style="color:var(--amber);font-family:var(--font-d);font-weight:700;">Cabinet Grotesk</td><td>800</td><td>+2.2px</td><td>Solo en el logo oficial</td></tr>
+          <tr><td>Body texto</td><td style="color:var(--white);font-family:var(--font-b);">Satoshi</td><td>400</td><td>+0.01em</td><td>Párrafos, descripciones</td></tr>
+          <tr><td>UI Labels</td><td style="color:var(--white);font-family:var(--font-b);">Satoshi</td><td>700</td><td>+0.14em</td><td>Tags uppercase, categorías</td></tr>
+          <tr><td>Formularios</td><td style="color:var(--white);font-family:var(--font-b);">Satoshi</td><td>500</td><td>0</td><td>Inputs, placeholders</td></tr>
+          <tr><td>Código / Ref</td><td>Monospace (system)</td><td>400</td><td>+0.08em</td><td>Números de propuesta, fechas</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Fallbacks -->
+      <div style="background:var(--surf);border-radius:6px;padding:20px 24px;border:1px solid rgba(255,255,255,.05);">
+        <div style="font-size:11px;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;font-weight:700;">Stack de fallback</div>
+        <div style="font-family:monospace;font-size:12px;color:var(--muted);line-height:2;">
+          Display: 'Cabinet Grotesk', 'Helvetica Neue', Arial, sans-serif;<br>
+          Body:    'Satoshi', 'Inter', system-ui, sans-serif;
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         CAPÍTULO 4 · TONO DE VOZ
+    ═══════════════════════════════════════════════ -->
+    <section id="tono" class="chapter">
+      <div class="chapter-number">04 ·</div>
+      <h2 class="chapter-title">Tono de Voz</h2>
+      <p class="chapter-sub">TMC habla como un ingeniero experto que ya conoce el rubro del cliente. No como una agencia que vino a vender.</p>
+      <div class="chapter-rule"></div>
+
+      <!-- Values -->
+      <h3 style="font-family:var(--font-d);font-size:18px;font-weight:700;color:var(--white);margin-bottom:20px;letter-spacing:-.01em;">Valores de marca</h3>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-num">01</div>
+          <div class="value-title">Precisión técnica</div>
+          <div class="value-desc">Hablamos con datos, plazos y entregables concretos. Nunca con promesas abstractas.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-num">02</div>
+          <div class="value-title">Honestidad directa</div>
+          <div class="value-desc">Si el problema del cliente no encaja con lo que hacemos, lo decimos. Eso genera más confianza que aceptar todo.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-num">03</div>
+          <div class="value-title">Conocimiento del rubro</div>
+          <div class="value-desc">Hablamos de salas de proceso, IQF, maestranzas, turno de mantenimiento. No somos externos; somos parte del ecosistema.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-num">04</div>
+          <div class="value-title">Escala gestionada</div>
+          <div class="value-desc">No queremos crecer infinito. Queremos ser los mejores para los talleres adecuados. Selectivos por diseño.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-num">05</div>
+          <div class="value-title">Ingeniería visible</div>
+          <div class="value-desc">El trabajo debe verse. Diagramas, reportes, planos, flujos. Los entregables son evidencia del valor entregado.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-num">06</div>
+          <div class="value-title">Respeto al cliente</div>
+          <div class="value-desc">El cliente conoce su operación. Nuestra tarea es ordenar eso que ya existe, no reemplazarlo con teoría importada.</div>
+        </div>
+      </div>
+
+      <!-- Do's & Don'ts -->
+      <h3 style="font-family:var(--font-d);font-size:18px;font-weight:700;color:var(--white);margin:40px 0 20px;letter-spacing:-.01em;">Do's &amp; Don'ts</h3>
+      <div class="tone-grid">
+        <div class="tone-col">
+          <div class="tone-col-head do">Sí hacemos</div>
+          <ul class="tone-list">
+            <li data-icon="✓">Usar terminología industrial específica del rubro salmonero (maestranza, sala de proceso, IQF, PMP, PTM).</li>
+            <li data-icon="✓">Citar números concretos: tiempo de entrega, número de entregables, precio en UF.</li>
+            <li data-icon="✓">Reconocer los problemas del cliente antes de hablar de soluciones.</li>
+            <li data-icon="✓">Escribir como hablamos en terreno: frases cortas, activas, sin rodeos.</li>
+            <li data-icon="✓">Usar el nombre del cliente o su industria para personalizar la comunicación.</li>
+          </ul>
+        </div>
+        <div class="tone-col">
+          <div class="tone-col-head dont">No hacemos</div>
+          <ul class="tone-list">
+            <li data-icon="✗">Usar frases MBA como "solución integral", "enfoque holístico" o "ecosistema sinérgico".</li>
+            <li data-icon="✗">Hablar de precio por hora. TMC cobra por proyecto o por retainer mensual.</li>
+            <li data-icon="✗">Nombrar a la competencia ni hacer benchmarking público de otros talleres.</li>
+            <li data-icon="✗">Prometer resultados sin haber visto la operación. El diagnóstico va primero.</li>
+            <li data-icon="✗">Publicitar que AquAp está listo. El producto está en desarrollo activo.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Copy examples -->
+      <h3 style="font-family:var(--font-d);font-size:18px;font-weight:700;color:var(--white);margin:40px 0 20px;letter-spacing:-.01em;">Ejemplos de copy</h3>
+      <div class="tone-examples">
+        <div class="tone-example good">
+          <div class="tone-tag">✓ Copy correcto</div>
+          <blockquote>En 48 horas identificamos los 3 cuellos de botella que más afectan tu capacidad de cotizar proyectos grandes. Entregamos un informe, no una presentación.</blockquote>
+        </div>
+        <div class="tone-example bad">
+          <div class="tone-tag">✗ Copy incorrecto</div>
+          <blockquote>Ofrecemos soluciones integrales de consultoría y gestión de proyectos con un enfoque innovador orientado a resultados transformacionales para su empresa.</blockquote>
+        </div>
+        <div class="tone-example good">
+          <div class="tone-tag">✓ Copy correcto</div>
+          <blockquote>Tu taller factura bien pero no puede demostrar por qué debería ganar una licitación grande. Eso se arregla con estructura, no con RR.HH.</blockquote>
+        </div>
+        <div class="tone-example bad">
+          <div class="tone-tag">✗ Copy incorrecto</div>
+          <blockquote>Somos apasionados por ayudar a los negocios a alcanzar su máximo potencial y crear una cultura de mejora continua y excelencia operacional.</blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         CAPÍTULO 5 · USO INCORRECTO
+    ═══════════════════════════════════════════════ -->
+    <section id="uso-incorrecto" class="chapter">
+      <div class="chapter-number">05 ·</div>
+      <h2 class="chapter-title">Uso Incorrecto de Marca</h2>
+      <p class="chapter-sub">Lo que nunca debe aparecer asociado a Taller Mayor Consultoría.</p>
+      <div class="chapter-rule"></div>
+
+      <div class="misuse-grid">
+        <div class="misuse-card">
+          <div class="misuse-title">Tipografía no aprobada</div>
+          <div class="misuse-example" style="font-family:Georgia,serif;font-size:20px;color:#E8E6E1;">TALLER<br>mayor</div>
+          <div class="misuse-reason">Solo Cabinet Grotesk para el wordmark. No se admiten fuentes serif, display decorativas ni manuscritas.</div>
+        </div>
+        <div class="misuse-card">
+          <div class="misuse-title">Color ámbar fuera de rangos</div>
+          <div class="misuse-example">
+            <span style="color:#FF6600;font-size:20px;font-weight:800;font-family:var(--font-d);">TALLER MAYOR</span><br>
+            <span style="font-size:11px;font-family:monospace;">#FF6600 o #FFB000 — No aprobados</span>
+          </div>
+          <div class="misuse-reason">El único ámbar aprobado es #C8922A. El hover es #E0A030. Ningún otro tono naranja es parte de la marca.</div>
+        </div>
+        <div class="misuse-card">
+          <div class="misuse-title">Tagline modificado o mal citado</div>
+          <div class="misuse-example">"Ingeniería que automatiza. Consultoría que crece."</div>
+          <div class="misuse-reason">La tagline oficial es: "Ingeniería que ordena. Consultoría que escala." No debe parafrasearse ni adaptarse sin aprobación.</div>
+        </div>
+        <div class="misuse-card">
+          <div class="misuse-title">Promesas no autorizadas</div>
+          <div class="misuse-example">"Con TMC y nuestra IA, tu empresa crecerá un 40% en 6 meses."</div>
+          <div class="misuse-reason">TMC no garantiza porcentajes de crecimiento. La comunicación siempre describe el proceso, no promesas de resultado.</div>
+        </div>
+        <div class="misuse-card">
+          <div class="misuse-title">Posicionamiento incorrecto</div>
+          <div class="misuse-example">"TMC es una agencia de marketing industrial."</div>
+          <div class="misuse-reason">TMC es una consultora de ingeniería de procesos, automatización y gestión de proyectos. No es agencia, ni de marketing.</div>
+        </div>
+        <div class="misuse-card">
+          <div class="misuse-title">AquAp como producto disponible</div>
+          <div class="misuse-example">"Descarga ya AquAp — el software de gestión para maestranzas."</div>
+          <div class="misuse-reason">AquAp está en desarrollo. No anunciar como disponible ni ofrecer acceso hasta lanzamiento oficial aprobado por Oswaldo Sosa.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Footer ──────────────────────────────────── -->
+    <footer class="guide-footer">
+      <div>
+        <svg viewBox="0 0 100 100" width="24" height="24" style="display:inline;vertical-align:middle;margin-right:8px;" aria-hidden="true">
+          <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+          <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+          <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+        </svg>
+        Taller Mayor Consultoría · Guía de Marca v1.0 · 2026
+      </div>
+      <div>Uso estrictamente interno · No distribuir públicamente</div>
+    </footer>
+
+  </div><!-- /.guide-container -->
+
+  <script>
+    function downloadBlob(blob, filename) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+
+    function exportSVG(svgElement, filename) {
+      const serializer = new XMLSerializer();
+      let svgStr = serializer.serializeToString(svgElement);
+      if (!svgStr.includes('xmlns=')) {
+        svgStr = svgStr.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+      }
+      const blob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+      downloadBlob(blob, filename);
+    }
+
+    async function svgToPNG(svgEl, width, height, filename) {
+      const svgStr = new XMLSerializer().serializeToString(svgEl);
+      const blob = new Blob([svgStr], {type: 'image/svg+xml'});
+      const url = URL.createObjectURL(blob);
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(b => downloadBlob(b, filename), 'image/png');
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    }
+
+    function getLogoSVG(type) {
+      const swatches = document.querySelectorAll('.logo-swatch');
+      if (type === 'dark') return swatches[0].querySelector('svg');
+      if (type === 'light') return swatches[1].querySelector('svg');
+      if (type === 'monogram') return swatches[2].querySelector('svg');
+      if (type === 'amber') return swatches[3].querySelector('svg');
+    }
+
+    function exportLogoSVG(type) {
+      const names = { dark: 'tmc-logo-dark.svg', light: 'tmc-logo-light.svg', monogram: 'tmc-monogram.svg', amber: 'tmc-logo-amber.svg' };
+      exportSVG(getLogoSVG(type), names[type]);
+    }
+  </script>
+
+</body>
+</html>

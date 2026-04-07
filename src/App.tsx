@@ -139,8 +139,14 @@ function App() {
         navScrolled ? 'bg-navy/90 backdrop-blur-md py-3' : 'bg-transparent py-5'
       }`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <div className="font-display font-bold text-lg tracking-tight">
-            Taller Mayor
+          <div className="flex items-center gap-3">
+            <svg viewBox="0 0 100 100" className="w-9 h-9" role="img" aria-label="Taller Mayor">
+              <rect width="100" height="100" rx="12" fill="#1A1F2E"/>
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+              <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" strokeWidth="0.75"/>
+            </svg>
+            <span className="font-display font-bold text-lg tracking-tight">Taller Mayor</span>
           </div>
           
           {/* Desktop nav */}

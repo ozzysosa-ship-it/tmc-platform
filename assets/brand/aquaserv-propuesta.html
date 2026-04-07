@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMC — Propuesta AquaServ SpA</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    /* ── Design Tokens — Dark (default) ────────────── */
+    :root, [data-theme="dark"] {
+      --bg:       #0E1117;
+      --surf:     #1A1F2E;
+      --surf2:    #222838;
+      --surf3:    #2A3040;
+      --amber:    #C8922A;
+      --amber-h:  #E0A030;
+      --white:    #E8E6E1;
+      --muted:    #8A8F9E;
+      --faint:    #4A4F5E;
+      --border:   rgba(255,255,255,.05);
+      --border-amber: rgba(200,146,42,.12);
+      --nav-bg:   rgba(14,17,23,.94);
+      --card-border: rgba(255,255,255,.05);
+      --hover-bg: rgba(255,255,255,.02);
+      --table-header-bg: rgba(200,146,42,.04);
+      --table-row-alt: rgba(255,255,255,.015);
+      --table-border: rgba(255,255,255,.04);
+      --amber-glow: rgba(200,146,42,.08);
+      --price-main: #C8922A;
+      --price-sub:  #E8E6E1;
+      --price-net:  #8A8F9E;
+      --price-iva:  #4A4F5E;
+      --font-d: 'Cabinet Grotesk','Helvetica Neue',sans-serif;
+      --font-b: 'Satoshi','Inter',sans-serif;
+    }
+
+    /* ── Design Tokens — Light ─────────────────────── */
+    [data-theme="light"] {
+      --bg:       #F5F3EE;
+      --surf:     #FFFFFF;
+      --surf2:    #F0EDE6;
+      --surf3:    #E8E4DC;
+      --amber:    #C8922A;
+      --amber-h:  #B07A20;
+      --white:    #1A1F2E;
+      --muted:    #5A5F70;
+      --faint:    #9A9FAE;
+      --border:   rgba(0,0,0,.08);
+      --border-amber: rgba(200,146,42,.15);
+      --nav-bg:   rgba(245,243,238,.94);
+      --card-border: rgba(0,0,0,.08);
+      --hover-bg: rgba(0,0,0,.02);
+      --table-header-bg: rgba(200,146,42,.06);
+      --table-row-alt: rgba(0,0,0,.02);
+      --table-border: rgba(0,0,0,.06);
+      --amber-glow: rgba(200,146,42,.12);
+      --price-main: #C8922A;
+      --price-sub:  #1A1F2E;
+      --price-net:  #5A5F70;
+      --price-iva:  #9A9FAE;
+    }
+
+    /* ── Reset ─────────────────────────────────────── */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+      background:var(--bg);
+      color:var(--white);
+      font-family:var(--font-b);
+      font-size:15px;
+      line-height:1.65;
+      -webkit-font-smoothing:antialiased;
+      min-width:320px;
+      transition:background .3s,color .3s;
+    }
+
+    /* ── Nav ───────────────────────────────────────── */
+    .top-nav{
+      position:fixed;top:0;left:0;right:0;
+      height:52px;
+      background:var(--nav-bg);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border-amber);
+      z-index:200;
+      display:flex;align-items:center;
+      padding:0 24px;
+      gap:16px;
+    }
+    .top-nav .nav-logo{margin-right:auto;}
+    .top-nav a{
+      font-size:11px;color:var(--muted);text-decoration:none;
+      letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;
+      transition:color 180ms;
+    }
+    .top-nav a:hover{color:var(--amber);}
+
+    /* Theme toggle */
+    .theme-toggle{
+      font-family:var(--font-b);font-size:11px;font-weight:500;
+      color:var(--muted);background:transparent;
+      border:1px solid var(--border);border-radius:4px;
+      padding:4px 10px;cursor:pointer;transition:all 180ms;
+      white-space:nowrap;
+    }
+    .theme-toggle:hover{
+      color:var(--amber);border-color:var(--amber);
+    }
+
+    /* ── Sidebar ───────────────────────────────────── */
+    .sidebar{
+      position:fixed;top:52px;right:0;bottom:0;
+      width:200px;
+      background:var(--surf);
+      border-left:1px solid var(--border-amber);
+      padding:24px 16px;
+      display:flex;flex-direction:column;gap:10px;
+      z-index:150;
+    }
+    .sidebar-label{
+      font-size:10px;font-weight:700;letter-spacing:.14em;
+      text-transform:uppercase;color:var(--amber);margin-bottom:4px;
+    }
+    .sidebar-btn{
+      font-family:var(--font-b);font-size:12px;font-weight:500;
+      color:var(--white);background:var(--hover-bg);
+      border:1px solid var(--border);border-radius:4px;
+      padding:8px 12px;cursor:pointer;transition:all 180ms;
+      text-align:left;
+    }
+    .sidebar-btn:hover{
+      background:rgba(200,146,42,.12);border-color:rgba(200,146,42,.4);
+      color:var(--amber);
+    }
+    .sidebar-btn.primary{
+      background:rgba(200,146,42,.15);border-color:rgba(200,146,42,.3);
+      color:var(--amber);
+    }
+    .sidebar-btn.client{
+      background:var(--surf2);border:1px solid var(--amber);
+      color:var(--amber);font-weight:600;
+    }
+    .sidebar-divider{
+      height:1px;background:var(--border);margin:8px 0;
+    }
+    .sidebar-nav{display:flex;flex-direction:column;gap:4px;margin-top:8px;}
+    .sidebar-nav a{
+      font-size:11px;color:var(--muted);text-decoration:none;
+      padding:4px 0;transition:color 180ms;
+    }
+    .sidebar-nav a:hover{color:var(--amber);}
+
+    /* ── Main Content ──────────────────────────────── */
+    .main{
+      margin-top:52px;
+      margin-right:200px;
+      padding:32px 40px 80px;
+    }
+
+    /* ── Proposal Section (centered cards) ─────────── */
+    .proposal-section{
+      max-width:900px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    /* ── Section Card ──────────────────────────────── */
+    .section-card{
+      background:var(--surf);
+      border:1px solid var(--card-border);
+      border-radius:6px;
+      padding:40px;
+      margin-bottom:32px;
+      transition:background .3s,border-color .3s;
+    }
+    .section-label{
+      font-size:10px;font-weight:700;letter-spacing:.14em;
+      text-transform:uppercase;color:var(--amber);margin-bottom:8px;
+    }
+    .section-title{
+      font-family:var(--font-d);font-size:28px;font-weight:800;
+      letter-spacing:-.01em;margin-bottom:24px;color:var(--white);
+    }
+    .section-lead{
+      font-size:17px;font-weight:500;color:var(--muted);
+      line-height:1.6;margin-bottom:24px;max-width:680px;
+    }
+
+    /* ── Cover Section ─────────────────────────────── */
+    .cover-card{
+      background:var(--surf);
+      border:1px solid var(--card-border);
+      border-radius:6px;
+      padding:64px;
+      margin-bottom:32px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      transition:background .3s,border-color .3s;
+    }
+    .cover-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;
+      height:3px;background:var(--amber);
+    }
+    .cover-logo{margin:0 auto 32px;}
+    .cover-amber-line{
+      width:80px;height:2px;background:var(--amber);
+      margin:0 auto 32px;
+    }
+    .cover-doctype{
+      font-family:var(--font-d);font-size:10px;font-weight:700;
+      letter-spacing:.18em;text-transform:uppercase;
+      color:var(--amber);margin-bottom:24px;
+    }
+    .cover-client{
+      font-family:var(--font-d);font-size:36px;font-weight:800;
+      color:var(--white);letter-spacing:-.02em;margin-bottom:12px;
+    }
+    .cover-attention{
+      font-size:14px;color:var(--muted);margin-bottom:32px;line-height:1.6;
+    }
+    .cover-meta{
+      display:flex;justify-content:center;gap:32px;
+      margin-bottom:32px;flex-wrap:wrap;
+    }
+    .cover-meta-item{text-align:center;}
+    .cover-meta-label{
+      font-size:9px;color:var(--faint);letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:4px;
+    }
+    .cover-meta-value{
+      font-family:var(--font-d);font-size:14px;font-weight:700;
+      color:var(--white);
+    }
+    .cover-tagline{
+      font-family:var(--font-d);font-size:14px;font-weight:500;
+      color:var(--faint);letter-spacing:.04em;
+      border-top:1px solid var(--border-amber);
+      padding-top:24px;margin-top:16px;
+    }
+    .cover-tagline span{color:var(--amber);}
+
+    /* ── Tables ────────────────────────────────────── */
+    .tmc-table{
+      width:100%;border-collapse:collapse;font-size:13px;
+    }
+    .tmc-table th{
+      text-align:left;font-size:10px;font-weight:700;
+      letter-spacing:.1em;text-transform:uppercase;
+      color:var(--amber);padding:12px 12px;
+      border-bottom:1px solid rgba(200,146,42,.2);
+      background:var(--table-header-bg);
+    }
+    .tmc-table td{
+      padding:10px 12px;color:var(--muted);
+      border-bottom:1px solid var(--table-border);
+      vertical-align:top;
+    }
+    .tmc-table td:first-child{color:var(--white);font-weight:500;}
+    .tmc-table tr:hover td{background:var(--hover-bg);}
+
+    /* ── Plans Table ───────────────────────────────── */
+    .plans-table{
+      width:100%;border-collapse:collapse;font-size:12px;
+      margin-top:24px;
+    }
+    .plans-table th{
+      text-align:center;font-size:10px;font-weight:700;
+      letter-spacing:.1em;text-transform:uppercase;
+      padding:14px 10px;
+      border-bottom:1px solid rgba(200,146,42,.2);
+      color:var(--muted);
+    }
+    .plans-table th:first-child{text-align:left;width:280px;}
+    .plans-table th.recommended{
+      color:var(--amber);
+      background:rgba(200,146,42,.06);
+      border-top:2px solid var(--amber);
+      border-left:1px solid rgba(200,146,42,.15);
+      border-right:1px solid rgba(200,146,42,.15);
+    }
+    .plans-table td{
+      text-align:center;padding:8px 10px;
+      border-bottom:1px solid var(--table-border);
+      color:var(--muted);vertical-align:middle;
+    }
+    .plans-table td:first-child{
+      text-align:left;color:var(--white);font-weight:400;
+    }
+    .plans-table td.recommended{
+      background:rgba(200,146,42,.03);
+      border-left:1px solid rgba(200,146,42,.1);
+      border-right:1px solid rgba(200,146,42,.1);
+    }
+    .plans-table .check{color:var(--amber);font-weight:700;font-size:14px;}
+    .plans-table .dash{color:var(--faint);}
+
+    /* ── Feature Row (clickable) ───────────────────── */
+    .plans-table tr.feature-row td:first-child{
+      cursor:pointer;transition:color 150ms ease;
+    }
+    .plans-table tr.feature-row:hover td:first-child{
+      color:var(--amber) !important;
+    }
+    .feature-hint{
+      font-size:9px;color:var(--muted);margin-left:4px;
+      vertical-align:middle;opacity:.7;transition:opacity 180ms;
+    }
+    .plans-table tr.feature-row:hover .feature-hint{opacity:1;color:var(--amber);}
+
+    /* ── Plan Price Header ─────────────────────────── */
+    .plan-price-header{text-align:center;padding:16px 10px !important;}
+    .plan-uf{
+      font-family:var(--font-d);font-size:22px;font-weight:800;
+      color:var(--price-main);margin-bottom:2px;
+    }
+    .plan-clp{font-size:11px;color:var(--price-sub);margin-bottom:1px;}
+    .plan-iva{font-size:10px;color:var(--price-net);}
+    .plan-total{font-size:11px;font-weight:700;color:var(--price-sub);margin-top:2px;}
+    .plan-usd{font-size:10px;color:var(--price-iva);margin-top:1px;}
+    .rec-badge{
+      display:inline-block;font-size:8px;font-weight:700;
+      letter-spacing:.14em;text-transform:uppercase;
+      color:var(--amber);background:rgba(200,146,42,.12);
+      border:1px solid rgba(200,146,42,.3);border-radius:3px;
+      padding:2px 8px;margin-bottom:6px;
+    }
+
+    /* ── Gantt ─────────────────────────────────────── */
+    #gantt-container{
+      width:100%;overflow-x:auto;overflow-y:visible;
+      margin:24px 0;
+    }
+    #gantt-container svg{
+      display:block;
+      font-family:'Satoshi','Inter',sans-serif;
+    }
+
+    /* Gantt edit panel */
+    .gantt-edit-panel{
+      background:rgba(200,146,42,.04);
+      border:1px solid rgba(200,146,42,.15);
+      border-radius:6px;padding:20px;margin-bottom:16px;
+      display:none;
+    }
+    .gantt-edit-panel.active{display:block;}
+    .gantt-edit-row{
+      display:grid;grid-template-columns:1fr 70px 16px 70px;
+      align-items:center;gap:8px;margin-bottom:6px;
+    }
+    .gantt-edit-row label{
+      font-size:11px;color:var(--muted);
+    }
+    .gantt-edit-row .arrow{
+      font-size:11px;color:var(--faint);text-align:center;
+    }
+
+    /* ── Investment Cards ──────────────────────────── */
+    .invest-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+      margin-bottom:32px;
+    }
+    .invest-card{
+      background:var(--bg);border:1px solid var(--card-border);
+      border-radius:6px;padding:20px;text-align:center;
+      transition:background .3s,border-color .3s;
+    }
+    .invest-card.recommended{
+      border-color:rgba(200,146,42,.4);
+      box-shadow:0 0 24px var(--amber-glow);
+    }
+    .invest-card-name{
+      font-family:var(--font-d);font-size:14px;font-weight:700;
+      color:var(--white);margin-bottom:12px;
+    }
+    .invest-uf{
+      font-family:var(--font-d);font-size:28px;font-weight:800;
+      color:var(--price-main);line-height:1;
+    }
+    .invest-uf-label{font-size:11px;color:var(--muted);margin-bottom:8px;}
+    .invest-detail{font-size:11px;color:var(--price-net);line-height:1.5;}
+    .invest-total{
+      font-size:13px;font-weight:700;color:var(--price-sub);
+      margin-top:8px;padding-top:8px;
+      border-top:1px solid var(--card-border);
+    }
+
+    /* ── Guarantee Box ─────────────────────────────── */
+    .guarantee-box{
+      background:rgba(200,146,42,.05);
+      border:1px solid rgba(200,146,42,.25);
+      border-radius:6px;padding:20px 24px;
+      margin:24px 0;
+    }
+    .guarantee-box .g-label{
+      font-size:10px;font-weight:700;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--amber);margin-bottom:8px;
+    }
+    .guarantee-box p{font-size:14px;color:var(--white);line-height:1.6;}
+
+    /* ── Conditions List ───────────────────────────── */
+    .conditions-list{
+      list-style:none;display:flex;flex-direction:column;gap:8px;
+    }
+    .conditions-list li{
+      font-size:13px;color:var(--muted);line-height:1.55;
+      display:flex;gap:10px;
+    }
+    .conditions-list li::before{
+      content:'\2022';color:var(--amber);font-weight:700;flex-shrink:0;
+    }
+
+    /* ── Steps ─────────────────────────────────────── */
+    .steps-list{
+      list-style:none;counter-reset:steps;
+      display:flex;flex-direction:column;gap:16px;
+    }
+    .steps-list li{
+      counter-increment:steps;display:flex;gap:16px;
+      align-items:flex-start;
+    }
+    .steps-list li::before{
+      content:counter(steps);
+      font-family:var(--font-d);font-size:20px;font-weight:800;
+      color:var(--amber);flex-shrink:0;width:28px;text-align:center;
+    }
+    .step-text{font-size:15px;color:var(--white);line-height:1.55;}
+
+    /* ── Contact Card ──────────────────────────────── */
+    .contact-card{
+      background:rgba(200,146,42,.05);
+      border:1px solid rgba(200,146,42,.15);
+      border-radius:6px;padding:24px;margin-top:32px;
+      display:flex;align-items:center;gap:24px;
+    }
+    .contact-monogram{width:48px;height:48px;flex-shrink:0;}
+    .contact-info{display:flex;flex-direction:column;gap:2px;}
+    .contact-name{
+      font-family:var(--font-d);font-size:16px;font-weight:700;
+      color:var(--white);
+    }
+    .contact-role{font-size:11px;color:var(--amber);letter-spacing:.06em;}
+    .contact-detail{font-size:12px;color:var(--muted);}
+
+    .cta-final{
+      font-family:var(--font-d);font-size:16px;font-weight:700;
+      color:var(--amber);margin-top:32px;
+      border-top:1px solid var(--border-amber);
+      padding-top:24px;
+    }
+
+    /* ── Note ───────────────────────────────────────── */
+    .table-note{
+      font-size:12px;color:var(--faint);margin-top:16px;line-height:1.55;
+    }
+
+    /* ── Edit Mode ─────────────────────────────────── */
+    .edit-input{
+      font-family:var(--font-b);font-size:inherit;
+      color:var(--amber);background:rgba(200,146,42,.08);
+      border:1px solid rgba(200,146,42,.3);border-radius:3px;
+      padding:2px 6px;width:80px;text-align:right;
+      outline:none;
+    }
+    .edit-input:focus{border-color:var(--amber);}
+    .edit-row{
+      display:flex;align-items:center;gap:12px;margin-bottom:8px;
+    }
+    .edit-row label{
+      font-size:12px;color:var(--muted);min-width:140px;
+    }
+    .edit-panel{
+      background:rgba(200,146,42,.04);
+      border:1px solid rgba(200,146,42,.15);
+      border-radius:6px;padding:20px;margin-bottom:24px;
+      display:none;
+    }
+    .edit-panel.active{display:block;}
+    .edit-panel-title{
+      font-size:10px;font-weight:700;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--amber);margin-bottom:12px;
+    }
+
+    /* ── Algorithm Section ─────────────────────────── */
+    .algo-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+      margin:24px 0;
+    }
+    .algo-card{
+      background:var(--bg);border:1px solid var(--card-border);
+      border-radius:6px;padding:24px;text-align:center;
+      transition:background .3s,border-color .3s;
+    }
+    .algo-stat{
+      font-family:var(--font-d);font-size:32px;font-weight:800;
+      color:var(--amber);line-height:1;margin-bottom:8px;
+    }
+    .algo-stat-label{
+      font-size:11px;font-weight:700;color:var(--white);
+      text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;
+    }
+    .algo-stat-desc{
+      font-size:13px;color:var(--muted);line-height:1.5;
+    }
+
+    /* ── Potencial Web Section ─────────────────────── */
+    .potencial-table{
+      width:100%;border-collapse:collapse;font-size:13px;
+      margin-top:24px;
+    }
+    .potencial-table th{
+      text-align:left;font-size:10px;font-weight:700;
+      letter-spacing:.1em;text-transform:uppercase;
+      padding:12px;
+      border-bottom:1px solid rgba(200,146,42,.2);
+    }
+    .potencial-table th:first-child{color:var(--muted);width:220px;}
+    .potencial-table th:nth-child(2){color:var(--faint);}
+    .potencial-table th:nth-child(3){color:var(--amber);background:var(--table-header-bg);}
+    .potencial-table td{
+      padding:10px 12px;
+      border-bottom:1px solid var(--table-border);
+      vertical-align:top;
+    }
+    .potencial-table td:first-child{color:var(--white);font-weight:500;}
+    .potencial-table td:nth-child(2){color:var(--faint);}
+    .potencial-table td:nth-child(3){
+      color:var(--white);font-weight:500;
+      background:rgba(200,146,42,.03);
+    }
+
+    /* ── SVG Theme Overrides (light mode) ─────────── */
+    [data-theme="light"] .nav-logo svg g path,
+    [data-theme="light"] .cover-logo svg g path,
+    [data-theme="light"] .contact-monogram path {
+      fill: #1A1F2E;
+    }
+
+    /* ── Print Preview ─────────────────────────────── */
+    body.print-preview .top-nav{display:none;}
+    body.print-preview .sidebar{display:none;}
+    body.print-preview .main{
+      margin:0 auto;padding:0;max-width:none;
+    }
+    body.print-preview .section-card,
+    body.print-preview .cover-card{
+      border-radius:0;margin-bottom:0;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+    }
+    body.print-preview .section-card + .section-card{
+      border-top:none;
+    }
+    body.print-preview .edit-panel{display:none !important;}
+    body.print-preview .gantt-edit-panel{display:none !important;}
+    body.print-preview .print-header-block{display:flex !important;}
+    body.print-preview .print-footer-block{display:flex !important;}
+    body.print-preview .page-break{
+      page-break-before:always;height:0;border:none;margin:0;
+    }
+    .preview-close-bar{
+      display:none;position:fixed;top:0;left:0;right:0;
+      height:48px;background:var(--surf);z-index:999;
+      align-items:center;justify-content:center;gap:16px;
+    }
+    .preview-close-bar span{font-size:12px;color:var(--muted);}
+    body.print-preview .preview-close-bar{display:flex;}
+    body.print-preview .main{padding-top:56px;}
+
+    /* ── PDF generation mode ───────────────────────── */
+    body.pdf-generating .top-nav,
+    body.pdf-generating .sidebar,
+    body.pdf-generating .mobile-actions,
+    body.pdf-generating .preview-close-bar,
+    body.pdf-generating .edit-panel,
+    body.pdf-generating .gantt-edit-panel{
+      display:none !important;
+    }
+    body.pdf-generating .main{
+      margin:0 !important;padding:0 !important;max-width:none !important;
+    }
+
+    /* ── Print header/footer blocks (hidden on screen) */
+    .print-header-block,.print-footer-block{display:none;}
+    .print-header-block{
+      align-items:center;justify-content:space-between;
+      padding:12px 32px 8px;border-bottom:0.5pt solid #C8922A;
+      margin-bottom:24px;
+    }
+    .print-footer-block{
+      align-items:center;justify-content:space-between;
+      padding:12px 32px 0;margin-top:24px;
+      font-size:9px;color:var(--muted);
+    }
+    .print-header-block .ph-label{
+      font-size:9px;color:var(--muted);letter-spacing:.1em;
+      text-transform:uppercase;font-family:var(--font-b);
+    }
+
+    /* ── @media print ──────────────────────────────── */
+    @media print{
+      body{background:#fff!important;color:#1A1F2E!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+      .top-nav,.sidebar,.preview-close-bar,.edit-panel,.gantt-edit-panel,.mobile-actions{display:none!important;}
+      .main{margin:0!important;padding:0!important;max-width:100%!important;}
+
+      .section-card{
+        background:#fff!important;color:#1A1F2E!important;
+        border:none!important;border-radius:0!important;
+        box-shadow:none!important;padding:24px 12mm!important;
+      }
+      .section-title{color:#1A1F2E!important;}
+      .section-lead{color:#555!important;}
+      .section-label{color:#C8922A!important;}
+
+      .cover-card{
+        background:#fff!important;border:none!important;
+        border-radius:0!important;box-shadow:none!important;
+        padding:48px 12mm!important;
+      }
+      .cover-client{color:#1A1F2E!important;}
+      .cover-attention{color:#555!important;}
+      .cover-meta-value{color:#1A1F2E!important;}
+      .cover-tagline{color:#8A8F9E!important;border-color:#e0e0e0!important;}
+
+      .tmc-table th{background:#f5f5f5!important;color:#1A1F2E!important;border-bottom:1pt solid #C8922A!important;}
+      .tmc-table td{color:#333!important;border-bottom:0.5pt solid #e0e0e0!important;}
+      .tmc-table td:first-child{color:#1A1F2E!important;}
+
+      .plans-table th{color:#555!important;}
+      .plans-table th.recommended{color:#C8922A!important;background:rgba(200,146,42,.04)!important;}
+      .plans-table td{color:#555!important;}
+      .plans-table td:first-child{color:#1A1F2E!important;}
+
+      .invest-card{background:#fff!important;border:0.5pt solid #e0e0e0!important;box-shadow:none!important;}
+      .invest-card.recommended{border-color:#C8922A!important;}
+      .invest-card-name{color:#1A1F2E!important;}
+      .invest-detail{color:#555!important;}
+      .invest-total{color:#1A1F2E!important;}
+
+      .guarantee-box{background:#fff!important;border:0.5pt solid #C8922A!important;}
+      .guarantee-box p{color:#1A1F2E!important;}
+
+      .conditions-list li{color:#333!important;}
+      .step-text{color:#1A1F2E!important;}
+      .contact-card{background:#fff!important;border:0.5pt solid rgba(200,146,42,.3)!important;}
+      .contact-name{color:#1A1F2E!important;}
+      .contact-detail{color:#555!important;}
+      .cta-final{color:#C8922A!important;border-color:#e0e0e0!important;}
+      .table-note{color:#888!important;}
+
+      .print-header-block{display:flex!important;}
+      .print-footer-block{display:flex!important;}
+
+      .page-break{page-break-before:always;}
+
+      .algo-card{background:#fff!important;border:0.5pt solid #e0e0e0!important;}
+      .algo-stat{color:#C8922A!important;}
+      .algo-stat-label{color:#1A1F2E!important;}
+      .algo-stat-desc{color:#555!important;}
+
+      .potencial-table th:nth-child(3){background:rgba(200,146,42,.04)!important;}
+      .potencial-table td:nth-child(3){background:rgba(200,146,42,.02)!important;color:#1A1F2E!important;}
+    }
+
+    /* ── Responsive ────────────────────────────────── */
+    @media(max-width:960px){
+      .sidebar{display:none;}
+      .main{margin-right:0;}
+      .invest-grid{grid-template-columns:repeat(2,1fr);}
+      .algo-grid{grid-template-columns:1fr;}
+    }
+    @media(max-width:560px){
+      .main{padding:24px 16px 60px;}
+      .section-card{padding:24px 20px;}
+      .cover-card{padding:32px 20px;}
+      .invest-grid{grid-template-columns:1fr;}
+      .cover-meta{flex-direction:column;gap:16px;}
+      .algo-grid{grid-template-columns:1fr;}
+      .gantt-edit-row{grid-template-columns:1fr 60px 16px 60px;}
+    }
+
+    /* ── Mobile action bar ─────────────────────────── */
+    .mobile-actions{
+      display:none;position:fixed;bottom:0;left:0;right:0;
+      background:var(--surf);border-top:1px solid var(--border-amber);
+      padding:8px 16px;gap:8px;z-index:200;
+      justify-content:center;
+    }
+    @media(max-width:960px){.mobile-actions{display:flex;}}
+  </style>
+</head>
+<body>
+
+  <!-- ── Preview Close Bar (hidden by default) ────── -->
+  <div class="preview-close-bar">
+    <span>Vista previa de impresión</span>
+    <button class="sidebar-btn" onclick="togglePreview()">Cerrar vista previa</button>
+  </div>
+
+  <!-- ── Nav ───────────────────────────────────────── -->
+  <nav class="top-nav screen-only">
+    <div class="nav-logo">
+      <svg width="140" height="28" viewBox="0 0 300 60" aria-label="Taller Mayor Consultoría">
+        <g transform="translate(8,4) scale(0.52)">
+          <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+          <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+          <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+        </g>
+        <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+        <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+        <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+      </svg>
+    </div>
+    <a href="#portada">Portada</a>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#algoritmo">Algoritmo</a>
+    <a href="#planes">Planes</a>
+    <a href="#cronograma">Gantt</a>
+    <a href="#inversion">Inversión</a>
+    <a href="#potencial">Potencial</a>
+    <a href="#pasos">Pasos</a>
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">Light</button>
+  </nav>
+
+  <!-- ── Sidebar ───────────────────────────────────── -->
+  <aside class="sidebar screen-only">
+    <div class="sidebar-label">Acciones</div>
+    <button class="sidebar-btn" onclick="toggleEditMode();" id="btn-edit">Editar precios</button>
+    <button class="sidebar-btn" onclick="toggleGanttEdit();" id="btn-gantt-edit">Editar Gantt</button>
+    <button class="sidebar-btn" onclick="togglePreview();">Vista previa PDF</button>
+    <button class="sidebar-btn primary" onclick="downloadPDF();">Descargar PDF</button>
+    <button class="sidebar-btn client" onclick="generateClientHTML();" id="btn-client">&#x2B21; Versión Cliente HTML</button>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Secciones</div>
+    <div class="sidebar-nav">
+      <a href="#portada">1 · Portada</a>
+      <a href="#diagnostico">2 · Diagnóstico</a>
+      <a href="#algoritmo">3 · Algoritmo</a>
+      <a href="#planes">4 · Planes</a>
+      <a href="#cronograma">5 · Cronograma</a>
+      <a href="#inversion">6 · Inversión</a>
+      <a href="#potencial">7 · Potencial</a>
+      <a href="#pasos">8 · Próximos pasos</a>
+    </div>
+  </aside>
+
+  <!-- ── Mobile Actions ────────────────────────────── -->
+  <div class="mobile-actions screen-only">
+    <button class="sidebar-btn" onclick="toggleEditMode();" id="btn-edit-m">Editar</button>
+    <button class="sidebar-btn" onclick="togglePreview();">Preview</button>
+    <button class="sidebar-btn primary" onclick="downloadPDF();">PDF</button>
+    <button class="sidebar-btn client" onclick="generateClientHTML();">HTML</button>
+  </div>
+
+  <!-- ── Feature Modal (outside proposal-content) ──── -->
+  <div id="feature-modal" role="dialog" aria-modal="true"
+       style="display:none; position:fixed; inset:0; z-index:9999;
+              background:oklch(0 0 0 / 0.75);
+              backdrop-filter:blur(4px);
+              align-items:center; justify-content:center;">
+    <div class="modal-inner"
+         style="background:var(--surf);
+                border:1px solid var(--border);
+                border-top:3px solid var(--amber);
+                border-radius:12px; padding:32px;
+                max-width:520px; width:90%;
+                position:relative; max-height:85vh;
+                overflow-y:auto;">
+      <button id="modal-close-btn"
+              onclick="closeFeatureModal()"
+              aria-label="Cerrar"
+              style="position:absolute; top:12px; right:16px;
+                     background:none; border:none;
+                     color:var(--muted); font-size:22px;
+                     cursor:pointer; line-height:1;
+                     padding:4px 8px;">×</button>
+      <p id="modal-eyebrow"
+         style="font-size:10px; font-weight:700;
+                letter-spacing:0.12em; text-transform:uppercase;
+                color:var(--amber); margin-bottom:6px;">
+        CARACTERÍSTICA
+      </p>
+      <h3 id="modal-title"
+          style="font-family:var(--font-d); font-size:20px;
+                 font-weight:800; color:var(--white);
+                 margin-bottom:20px; line-height:1.2;
+                 padding-right:32px;"></h3>
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <div>
+          <p style="font-size:10px; font-weight:700;
+                    text-transform:uppercase; letter-spacing:0.1em;
+                    color:var(--amber); margin-bottom:4px;">¿QUÉ es?</p>
+          <p id="modal-que"
+             style="font-size:14px; color:var(--white);
+                    line-height:1.65; margin:0;"></p>
+        </div>
+        <div>
+          <p style="font-size:10px; font-weight:700;
+                    text-transform:uppercase; letter-spacing:0.1em;
+                    color:var(--amber); margin-bottom:4px;">¿CÓMO lo hacemos?</p>
+          <p id="modal-como"
+             style="font-size:14px; color:var(--white);
+                    line-height:1.65; margin:0;"></p>
+        </div>
+        <div>
+          <p style="font-size:10px; font-weight:700;
+                    text-transform:uppercase; letter-spacing:0.1em;
+                    color:var(--amber); margin-bottom:4px;">¿PARA QUÉ sirve a AquaServ?</p>
+          <p id="modal-paraque"
+             style="font-size:14px; color:var(--white);
+                    line-height:1.65; margin:0;"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Main Content ──────────────────────────────── -->
+  <div class="main" id="proposal-content">
+
+    <!-- ══ PORTADA ═══════════════════════════════════ -->
+    <div id="portada" class="cover-card proposal-section">
+      <div class="print-header-block">
+        <svg width="100" height="20" viewBox="0 0 300 60" aria-hidden="true">
+          <g transform="translate(8,4) scale(0.52)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+          </g>
+          <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+          <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+          <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#5A5F70">CONSULTORÍA</text>
+        </svg>
+        <span class="ph-label">Propuesta Confidencial</span>
+      </div>
+
+      <div class="cover-logo">
+        <svg width="200" height="40" viewBox="0 0 300 60" aria-label="Taller Mayor Consultoría">
+          <g transform="translate(8,4) scale(0.52)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+          </g>
+          <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+          <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+          <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+        </svg>
+      </div>
+      <div class="cover-amber-line"></div>
+      <div class="cover-doctype">Propuesta de Posicionamiento Industrial</div>
+      <div class="cover-client">AQUASERV SpA</div>
+      <div class="cover-attention">
+        Atención: Alejandro Vidal Ojeda, Gerente General<br>
+        Gonzalo Gallardo, Gerente Comercial
+      </div>
+      <div class="cover-meta">
+        <div class="cover-meta-item">
+          <div class="cover-meta-label">Fecha</div>
+          <div class="cover-meta-value" id="cover-date"></div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="cover-meta-label">Propuesta Nº</div>
+          <div class="cover-meta-value">TMC-2026-001</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="cover-meta-label">Versión</div>
+          <div class="cover-meta-value" style="color:var(--amber);">v1.0</div>
+        </div>
+      </div>
+      <div class="cover-tagline">Ingeniería que ordena. <span>Consultoría que escala.</span></div>
+
+      <div class="print-footer-block">
+        <span>tallermayor.cl</span>
+        <span>contacto@tallermayor.cl</span>
+        <span>Folio: 1/8</span>
+      </div>
+    </div>
+
+    <!-- ══ DIAGNÓSTICO ═══════════════════════════════ -->
+    <hr class="page-break" style="border:none;margin:0;">
+    <div id="diagnostico" class="section-card proposal-section">
+      <div class="print-header-block">
+        <svg width="100" height="20" viewBox="0 0 300 60" aria-hidden="true">
+          <g transform="translate(8,4) scale(0.52)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+          </g>
+          <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+          <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+          <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#5A5F70">CONSULTORÍA</text>
+        </svg>
+        <span class="ph-label">Propuesta Confidencial</span>
+      </div>
+
+      <div class="section-label">Diagnóstico Situacional</div>
+      <h2 class="section-title">Lo que identificamos en AquaServ</h2>
+
+      <table class="tmc-table">
+        <thead>
+          <tr>
+            <th>Activo digital</th>
+            <th>Estado actual</th>
+            <th>Impacto en negocios</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Sitio web</td><td>Título "mi sitio" — sin configurar</td><td>Primera impresión informal para clientes</td></tr>
+          <tr><td>LinkedIn Alejandro Vidal</td><td>116 seguidores, cargo: "Gerente general"</td><td>Invisible ante tomadores de decisión</td></tr>
+          <tr><td>LinkedIn página empresa</td><td>No existe activamente</td><td>Cero presencia institucional de AquaServ</td></tr>
+          <tr><td>Portafolio técnico</td><td>No documentado públicamente</td><td>Incapacidad de responder licitaciones que pidan referencias</td></tr>
+          <tr><td>Diferenciador Matterport 3D</td><td>Existe pero mal comunicado</td><td>Activo más poderoso sin visibilidad</td></tr>
+          <tr><td>Alianza SmartProcess</td><td>Sin expresión pública</td><td>Red nórdica de Hornstrup sin activar</td></tr>
+        </tbody>
+      </table>
+
+      <p class="section-lead" style="margin-top:32px;">
+        AquaServ tiene capacidad técnica real, un diferenciador único con Matterport 3D y una alianza con tecnología europea. Ninguno de esos tres activos está generando oportunidades comerciales porque el mercado no sabe que existen.
+      </p>
+
+      <div class="print-footer-block">
+        <span>tallermayor.cl</span>
+        <span>contacto@tallermayor.cl</span>
+        <span>Folio: 2/8</span>
+      </div>
+    </div>
+
+    <!-- ══ ALGORITMO LINKEDIN ════════════════════════ -->
+    <hr class="page-break" style="border:none;margin:0;">
+    <div id="algoritmo" class="section-card proposal-section">
+      <div class="print-header-block">
+        <svg width="100" height="20" viewBox="0 0 300 60" aria-hidden="true">
+          <g transform="translate(8,4) scale(0.52)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+          </g>
+          <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+          <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+          <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#5A5F70">CONSULTORÍA</text>
+        </svg>
+        <span class="ph-label">Propuesta Confidencial</span>
+      </div>
+
+      <div class="section-label">Algoritmo LinkedIn</div>
+      <h2 class="section-title">LinkedIn no es una red social. Es un motor de decisiones B2B.</h2>
+
+      <div class="algo-grid">
+        <div class="algo-card">
+          <div class="algo-stat">3s</div>
+          <div class="algo-stat-label">Dwell Time</div>
+          <div class="algo-stat-desc">El algoritmo mide el tiempo de lectura. Si un tomador de decisión se detiene +3 segundos en tu post, LinkedIn lo muestra a más personas del mismo perfil.</div>
+        </div>
+        <div class="algo-card">
+          <div class="algo-stat">3-5×</div>
+          <div class="algo-stat-label">Alcance Técnico</div>
+          <div class="algo-stat-desc">Posts con contenido técnico-industrial superan 3 a 5 veces el engagement de contenido genérico corporativo en LinkedIn.</div>
+        </div>
+        <div class="algo-card">
+          <div class="algo-stat">10×</div>
+          <div class="algo-stat-label">Impresiones 90d</div>
+          <div class="algo-stat-desc">Un perfil optimizado con SSI (Social Selling Index) alto multiplica por 10 su visibilidad orgánica en los primeros 90 días.</div>
+        </div>
+      </div>
+
+      <p class="section-lead">
+        Para AquaServ, esto significa que cada post sobre una instalación Matterport 3D, cada caso técnico documentado, y cada mención de la alianza SmartProcess / Hornstrup es una señal que LinkedIn amplifica hacia exactamente el tipo de gerentes de operaciones y directores de planta que contratan servicios de tratamiento de agua.
+      </p>
+
+      <div class="print-footer-block">
+        <span>tallermayor.cl</span>
+        <span>contacto@tallermayor.cl</span>
+        <span>Folio: 3/8</span>
+      </div>
+    </div>
+
+    <!-- ══ PLANES ════════════════════════════════════ -->
+    <hr class="page-break" style="border:none;margin:0;">
+    <div id="planes" class="section-card proposal-section">
+      <div class="print-header-block">
+        <svg width="100" height="20" viewBox="0 0 300 60" aria-hidden="true">
+          <g transform="translate(8,4) scale(0.52)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+          </g>
+          <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+          <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+          <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#5A5F70">CONSULTORÍA</text>
+        </svg>
+        <span class="ph-label">Propuesta Confidencial</span>
+      </div>
+
+      <div class="section-label">Opciones de Servicio</div>
+      <h2 class="section-title">Tres planes. Un objetivo: que el mercado vea lo que AquaServ puede hacer.</h2>
+
+      <!-- Edit Panel -->
+      <div class="edit-panel" id="edit-panel">
+        <div class="edit-panel-title">Editar Variables de Precio</div>
+        <div class="edit-row">
+          <label>Valor UF (CLP):</label>
+          <input class="edit-input" type="number" id="e-uf" value="38000" oninput="recalcAll()">
+        </div>
+        <div class="edit-row">
+          <label>Tipo cambio USD:</label>
+          <input class="edit-input" type="number" id="e-usd" value="1050" oninput="recalcAll()">
+        </div>
+        <div class="edit-row">
+          <label>Plan 1 (UF/mes):</label>
+          <input class="edit-input" type="number" id="e-p1" value="12" oninput="recalcAll()">
+        </div>
+        <div class="edit-row">
+          <label>Plan 2 (UF/mes):</label>
+          <input class="edit-input" type="number" id="e-p2" value="22" oninput="recalcAll()">
+        </div>
+        <div class="edit-row">
+          <label>Plan 2 + Gonzalo (UF/mes):</label>
+          <input class="edit-input" type="number" id="e-p2plus" value="30" oninput="recalcAll()">
+        </div>
+        <div class="edit-row">
+          <label>Plan 3 (UF/mes):</label>
+          <input class="edit-input" type="number" id="e-p3" value="32" oninput="recalcAll()">
+        </div>
+        <div style="margin-top:12px;">
+          <button class="sidebar-btn primary" onclick="toggleEditMode()">Guardar cambios</button>
+        </div>
+      </div>
+
+      <!-- Plans comparison table -->
+      <div style="overflow-x:auto;">
+        <table class="plans-table" id="plans-table">
+          <thead>
+            <tr>
+              <th>Característica</th>
+              <th>Plan 1</th>
+              <th class="recommended">Plan 2 ★</th>
+              <th>Plan 2 + Gonzalo</th>
+              <th>Plan 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:700;">Precio mensual</td>
+              <td class="plan-price-header" id="price-p1"></td>
+              <td class="plan-price-header recommended" id="price-p2"></td>
+              <td class="plan-price-header" id="price-p2plus"></td>
+              <td class="plan-price-header" id="price-p3"></td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Perfil LinkedIn Alejandro')">
+              <td>Perfil LinkedIn Alejandro (reescritura completa) <span class="feature-hint">ⓘ</span></td>
+              <td><span class="check">✓</span></td>
+              <td class="recommended"><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Página empresa AquaServ')">
+              <td>Página empresa AquaServ (creación + configuración) <span class="feature-hint">ⓘ</span></td>
+              <td><span class="check">✓</span></td>
+              <td class="recommended"><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Corrección sitio web')">
+              <td>Corrección sitio web (título, meta, SEO básico) <span class="feature-hint">ⓘ</span></td>
+              <td><span class="check">✓</span></td>
+              <td class="recommended"><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Posts perfil Alejandro')">
+              <td>Posts perfil Alejandro <span class="feature-hint">ⓘ</span></td>
+              <td>4/mes</td>
+              <td class="recommended">8/mes</td>
+              <td>8/mes</td>
+              <td>8/mes</td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Posts empresa AquaServ')">
+              <td>Posts empresa AquaServ <span class="feature-hint">ⓘ</span></td>
+              <td><span class="dash">—</span></td>
+              <td class="recommended">4/mes</td>
+              <td>4/mes</td>
+              <td>4/mes</td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Posts Gonzalo Gallardo')">
+              <td>Posts Gonzalo Gallardo <span class="feature-hint">ⓘ</span></td>
+              <td><span class="dash">—</span></td>
+              <td class="recommended"><span class="dash">—</span></td>
+              <td>2/mes</td>
+              <td>2/mes</td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Gestión de comentarios')">
+              <td>Gestión de comentarios (≤4 hrs hábiles) <span class="feature-hint">ⓘ</span></td>
+              <td><span class="dash">—</span></td>
+              <td class="recommended"><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Activación red TMC')">
+              <td>Activación red TMC (menciones + introducciones) <span class="feature-hint">ⓘ</span></td>
+              <td><span class="dash">—</span></td>
+              <td class="recommended"><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Coordinación SmartProcess / Hornstrup')">
+              <td>Coordinación SmartProcess / Hornstrup <span class="feature-hint">ⓘ</span></td>
+              <td><span class="dash">—</span></td>
+              <td class="recommended"><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Banco fotográfico')">
+              <td>Banco fotográfico (brief mensual 10 fotos) <span class="feature-hint">ⓘ</span></td>
+              <td><span class="dash">—</span></td>
+              <td class="recommended"><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Portafolio técnico PDF')">
+              <td>Portafolio técnico PDF (3 casos documentados) <span class="feature-hint">ⓘ</span></td>
+              <td><span class="dash">—</span></td>
+              <td class="recommended"><span class="dash">—</span></td>
+              <td><span class="dash">—</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Plantilla propuesta comercial')">
+              <td>Plantilla propuesta comercial AquaServ <span class="feature-hint">ⓘ</span></td>
+              <td><span class="dash">—</span></td>
+              <td class="recommended"><span class="dash">—</span></td>
+              <td><span class="dash">—</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr class="feature-row" onclick="openFeatureModal('Reporte mensual')">
+              <td>Reporte mensual <span class="feature-hint">ⓘ</span></td>
+              <td>Básico</td>
+              <td class="recommended">Completo</td>
+              <td>Completo</td>
+              <td>Completo + Estratégico</td>
+            </tr>
+            <tr>
+              <td>Meses mínimos</td>
+              <td>3</td>
+              <td class="recommended">3</td>
+              <td>3</td>
+              <td>6</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="table-note">* Inicio del servicio de contenido condicionado a entrega de banco fotográfico mínimo de 20 imágenes de obras (equipos fabricados, instalaciones, taller). TMC entrega brief fotográfico en semana 1.</p>
+
+      <div class="print-footer-block">
+        <span>tallermayor.cl</span>
+        <span>contacto@tallermayor.cl</span>
+        <span>Folio: 4/8</span>
+      </div>
+    </div>
+
+    <!-- ══ GANTT ═════════════════════════════════════ -->
+    <hr class="page-break" style="border:none;margin:0;">
+    <div id="cronograma" class="section-card proposal-section">
+      <div class="print-header-block">
+        <svg width="100" height="20" viewBox="0 0 300 60" aria-hidden="true">
+          <g transform="translate(8,4) scale(0.52)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+          </g>
+          <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+          <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+          <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#5A5F70">CONSULTORÍA</text>
+        </svg>
+        <span class="ph-label">Propuesta Confidencial</span>
+      </div>
+
+      <div class="section-label">Cronograma</div>
+      <h2 class="section-title">De invisible a referente en 90 días</h2>
+
+      <!-- Gantt Edit Panel (inline inputs) -->
+      <div class="gantt-edit-panel" id="gantt-edit-panel"></div>
+
+      <div id="gantt-container" style="width:100%; overflow-x:auto; overflow-y:visible; margin:24px 0;"></div>
+
+      <div class="print-footer-block">
+        <span>tallermayor.cl</span>
+        <span>contacto@tallermayor.cl</span>
+        <span>Folio: 5/8</span>
+      </div>
+    </div>
+
+    <!-- ══ INVERSIÓN ═════════════════════════════════ -->
+    <hr class="page-break" style="border:none;margin:0;">
+    <div id="inversion" class="section-card proposal-section">
+      <div class="print-header-block">
+        <svg width="100" height="20" viewBox="0 0 300 60" aria-hidden="true">
+          <g transform="translate(8,4) scale(0.52)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+          </g>
+          <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+          <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+          <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#5A5F70">CONSULTORÍA</text>
+        </svg>
+        <span class="ph-label">Propuesta Confidencial</span>
+      </div>
+
+      <div class="section-label">Inversión</div>
+      <h2 class="section-title">Qué incluye cada plan y cuánto cuesta</h2>
+
+      <div class="invest-grid" id="invest-grid"></div>
+
+      <div class="guarantee-box">
+        <div class="g-label">Garantía 90 días — Plan 2 y Plan 3</div>
+        <p>Si a los 90 días AquaServ no ha iniciado al menos 3 conversaciones comerciales originadas desde LinkedIn, revisamos la estrategia completa sin costo adicional.</p>
+      </div>
+
+      <div class="section-label" style="margin-top:32px;">Condiciones Comerciales</div>
+      <ul class="conditions-list">
+        <li>Pago: adelantado el día 1 de cada mes — transferencia bancaria</li>
+        <li>Onboarding: primera semana sin costo adicional</li>
+        <li>Inicio de contenido: condicionado a entrega del banco fotográfico</li>
+        <li>Propiedad: todo el contenido producido por TMC es propiedad de AquaServ</li>
+        <li>Exclusividad: TMC no trabaja con competidores directos de AquaServ</li>
+        <li>Salida: aviso de 30 días. Plan 3: penalidad de 1 mes si termina antes de 6 meses</li>
+        <li>Consultoría técnica / PM (separada): UF 6/hora, mínimo 8 horas por proyecto</li>
+      </ul>
+
+      <div class="print-footer-block">
+        <span>tallermayor.cl</span>
+        <span>contacto@tallermayor.cl</span>
+        <span>Folio: 6/8</span>
+      </div>
+    </div>
+
+    <!-- ══ POTENCIAL WEB ═════════════════════════════ -->
+    <hr class="page-break" style="border:none;margin:0;">
+    <div id="potencial" class="section-card proposal-section">
+      <div class="print-header-block">
+        <svg width="100" height="20" viewBox="0 0 300 60" aria-hidden="true">
+          <g transform="translate(8,4) scale(0.52)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+          </g>
+          <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+          <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+          <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#5A5F70">CONSULTORÍA</text>
+        </svg>
+        <span class="ph-label">Propuesta Confidencial</span>
+      </div>
+
+      <div class="section-label">Potencial Web</div>
+      <h2 class="section-title">Lo que cambia con presencia digital activa</h2>
+
+      <table class="potencial-table">
+        <thead>
+          <tr>
+            <th>Dimensión</th>
+            <th>Hoy (sin TMC)</th>
+            <th>Con TMC — 90 días</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Impresiones LinkedIn / mes</td><td>~200 (estimado)</td><td>5,000 – 15,000</td></tr>
+          <tr><td>Perfil SSI Alejandro</td><td>~20 / 100</td><td>65+ / 100</td></tr>
+          <tr><td>Conversaciones comerciales desde LinkedIn</td><td>0</td><td>3+ por mes</td></tr>
+          <tr><td>Página empresa AquaServ</td><td>No existe</td><td>Activa + 4 posts/mes</td></tr>
+          <tr><td>Portafolio técnico</td><td>No documentado</td><td>3+ casos publicados</td></tr>
+          <tr><td>Percepción de marca</td><td>Informal ("mi sitio")</td><td>Profesional, con credenciales</td></tr>
+          <tr><td>Diferenciador Matterport 3D</td><td>Invisible</td><td>Publicado, demostrado, viralizable</td></tr>
+        </tbody>
+      </table>
+
+      <p class="section-lead" style="margin-top:24px;">
+        Estos números son conservadores y se basan en resultados típicos de posicionamiento industrial B2B en LinkedIn Chile. La garantía del Plan 2 y Plan 3 respalda este compromiso.
+      </p>
+
+      <div class="print-footer-block">
+        <span>tallermayor.cl</span>
+        <span>contacto@tallermayor.cl</span>
+        <span>Folio: 7/8</span>
+      </div>
+    </div>
+
+    <!-- ══ PRÓXIMOS PASOS ════════════════════════════ -->
+    <hr class="page-break" style="border:none;margin:0;">
+    <div id="pasos" class="section-card proposal-section">
+      <div class="print-header-block">
+        <svg width="100" height="20" viewBox="0 0 300 60" aria-hidden="true">
+          <g transform="translate(8,4) scale(0.52)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+            <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+          </g>
+          <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+          <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+          <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#5A5F70">CONSULTORÍA</text>
+        </svg>
+        <span class="ph-label">Propuesta Confidencial</span>
+      </div>
+
+      <div class="section-label">Próximos Pasos</div>
+      <h2 class="section-title">Cómo avanzamos desde aquí</h2>
+
+      <ol class="steps-list">
+        <li><div class="step-text">Confirmación del plan elegido (esta semana)</div></li>
+        <li><div class="step-text">Reunión de kick-off — 60 minutos para definir tono de marca y brief fotográfico</div></li>
+        <li><div class="step-text">Entrega del banco fotográfico por parte de AquaServ (condición de inicio)</div></li>
+      </ol>
+
+      <div class="contact-card">
+        <svg class="contact-monogram" viewBox="0 0 100 100" width="48" height="48" aria-hidden="true">
+          <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+          <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+          <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+        </svg>
+        <div class="contact-info">
+          <div class="contact-name">Oswaldo Sosa</div>
+          <div class="contact-role">Fundador · Taller Mayor Consultoría</div>
+          <div class="contact-detail">contacto@tallermayor.cl · tallermayor.cl</div>
+          <div class="contact-detail">linkedin.com/company/taller-mayor</div>
+        </div>
+      </div>
+
+      <div class="cta-final">Respondeme confirmando el plan elegido y agendamos el kick-off.</div>
+
+      <div class="print-footer-block">
+        <span>tallermayor.cl</span>
+        <span>contacto@tallermayor.cl</span>
+        <span>Folio: 8/8</span>
+      </div>
+    </div>
+
+  </div><!-- /.main #proposal-content -->
+
+  <script>
+    /* ── Theme Toggle ──────────────────────────────── */
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme') || 'dark';
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      var btn = document.getElementById('theme-toggle');
+      if (btn) btn.textContent = next === 'dark' ? 'Light' : 'Dark';
+      renderGantt();
+    }
+
+    /* ── Pricing Engine ──────────────────────────── */
+    var PLANS = [
+      {id: 'p1',  name: 'Plan 1',            inputId: 'e-p1',     defaultUF: 12},
+      {id: 'p2',  name: 'Plan 2',            inputId: 'e-p2',     defaultUF: 22, recommended: true},
+      {id: 'p2plus', name: 'Plan 2 + Gonzalo', inputId: 'e-p2plus', defaultUF: 30},
+      {id: 'p3',  name: 'Plan 3',            inputId: 'e-p3',     defaultUF: 32}
+    ];
+    var IVA_RATE = 0.19;
+
+    function getVal(id) {
+      var el = document.getElementById(id);
+      return el ? parseFloat(el.value) || 0 : 0;
+    }
+
+    function fmtCLP(n) {
+      return '$' + Math.round(n).toLocaleString('es-CL');
+    }
+
+    function fmtUSD(n) {
+      return 'USD ' + Math.round(n).toLocaleString('en-US');
+    }
+
+    function recalcAll() {
+      var ufVal = getVal('e-uf');
+      var usdRate = getVal('e-usd');
+
+      PLANS.forEach(function(p) {
+        var uf = getVal(p.inputId);
+        var clp = uf * ufVal;
+        var iva = clp * IVA_RATE;
+        var total = clp + iva;
+        var usd = usdRate > 0 ? clp / usdRate : 0;
+
+        var cell = document.getElementById('price-' + p.id);
+        if (cell) {
+          var rec = p.recommended ? '<div class="rec-badge">Recomendado</div>' : '';
+          cell.innerHTML =
+            rec +
+            '<div class="plan-uf">UF ' + uf + '/mes</div>' +
+            '<div class="plan-clp">= ' + fmtCLP(clp) + ' CLP/mes</div>' +
+            '<div class="plan-iva">+ IVA 19%: ' + fmtCLP(iva) + '</div>' +
+            '<div class="plan-total">Total: ' + fmtCLP(total) + '/mes</div>' +
+            '<div class="plan-usd">\u2248 ' + fmtUSD(usd) + '/mes</div>';
+        }
+      });
+
+      renderInvestCards(ufVal, usdRate);
+    }
+
+    function renderInvestCards(ufVal, usdRate) {
+      var grid = document.getElementById('invest-grid');
+      if (!grid) return;
+      var html = '';
+      PLANS.forEach(function(p) {
+        var uf = getVal(p.inputId);
+        var clp = uf * ufVal;
+        var iva = clp * IVA_RATE;
+        var total = clp + iva;
+        var usd = usdRate > 0 ? clp / usdRate : 0;
+        var rec = p.recommended ? ' recommended' : '';
+
+        html +=
+          '<div class="invest-card' + rec + '">' +
+            (p.recommended ? '<div class="rec-badge" style="margin-bottom:8px;">Recomendado</div>' : '') +
+            '<div class="invest-card-name">' + p.name + '</div>' +
+            '<div class="invest-uf">UF ' + uf + '</div>' +
+            '<div class="invest-uf-label">por mes</div>' +
+            '<div class="invest-detail">' + fmtCLP(clp) + ' CLP neto</div>' +
+            '<div class="invest-detail">IVA: ' + fmtCLP(iva) + '</div>' +
+            '<div class="invest-total">' + fmtCLP(total) + '/mes</div>' +
+            '<div class="invest-detail" style="margin-top:4px;">\u2248 ' + fmtUSD(usd) + '/mes</div>' +
+          '</div>';
+      });
+      grid.innerHTML = html;
+    }
+
+    /* ── Edit Mode ───────────────────────────────── */
+    var editMode = false;
+    function toggleEditMode() {
+      editMode = !editMode;
+      var panel = document.getElementById('edit-panel');
+      var btn = document.getElementById('btn-edit');
+      var btnM = document.getElementById('btn-edit-m');
+      if (editMode) {
+        panel.classList.add('active');
+        if (btn) btn.textContent = 'Guardar cambios';
+        if (btnM) btnM.textContent = 'Guardar';
+      } else {
+        panel.classList.remove('active');
+        if (btn) btn.textContent = 'Editar precios';
+        if (btnM) btnM.textContent = 'Editar';
+      }
+    }
+
+    /* ── Gantt Edit Mode ─────────────────────────── */
+    var ganttEditMode = false;
+    function toggleGanttEdit() {
+      ganttEditMode = !ganttEditMode;
+      var panel = document.getElementById('gantt-edit-panel');
+      var btn = document.getElementById('btn-gantt-edit');
+      if (ganttEditMode) {
+        panel.classList.add('active');
+        renderGanttInputs();
+        if (btn) btn.textContent = 'Cerrar editor Gantt';
+      } else {
+        panel.classList.remove('active');
+        if (btn) btn.textContent = 'Editar Gantt';
+      }
+    }
+
+    function renderGanttInputs() {
+      var panel = document.getElementById('gantt-edit-panel');
+      if (!panel) return;
+      var html = '<div class="edit-panel-title">Editar Cronograma (semana inicio + duración)</div>';
+      ganttData.forEach(function(t, i) {
+        html += '<div class="gantt-edit-row">' +
+          '<label>' + t.task + '</label>' +
+          '<input class="edit-input" type="number" min="1" max="12" value="' + t.start + '" onchange="updateGanttTask(' + i + ',\'start\',this.value)" oninput="updateGanttTask(' + i + ',\'start\',this.value)">' +
+          '<span class="arrow">+</span>' +
+          '<input class="edit-input" type="number" min="1" max="12" value="' + t.duration + '" onchange="updateGanttTask(' + i + ',\'duration\',this.value)" oninput="updateGanttTask(' + i + ',\'duration\',this.value)">' +
+        '</div>';
+      });
+      panel.innerHTML = html;
+    }
+
+    function updateGanttTask(index, field, value) {
+      var v = parseInt(value) || 1;
+      if (v < 1) v = 1;
+      if (v > 12) v = 12;
+      ganttData[index][field] = v;
+      renderGantt();
+    }
+
+    /* ── Print Preview ───────────────────────────── */
+    function togglePreview() {
+      document.body.classList.toggle('print-preview');
+    }
+
+    /* ── PDF Download (dual dark + light) ────────── */
+    async function downloadPDF() {
+      var el = document.getElementById('proposal-content');
+      var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+
+      document.body.classList.add('pdf-generating');
+
+      /* Re-render Gantt with absolute dimensions */
+      renderGantt();
+      await new Promise(function(r) { setTimeout(r, 500); });
+
+      function freezeGanttSvg() {
+        var ganttSvg = document.querySelector('#gantt-container svg');
+        if (ganttSvg) {
+          var w = ganttSvg.getAttribute('width');
+          var h = ganttSvg.getAttribute('height');
+          ganttSvg.style.width = w + 'px';
+          ganttSvg.style.height = h + 'px';
+          ganttSvg.style.minWidth = w + 'px';
+        }
+      }
+
+      var opt = {
+        margin: [12, 10, 12, 10],
+        image: {type: 'jpeg', quality: 0.96},
+        html2pdf: {useCORS: true},
+        jsPDF: {unit: 'mm', format: 'letter', orientation: 'portrait'},
+        pagebreak: {mode: 'css', before: '.page-break'}
+      };
+
+      /* Dark PDF */
+      document.documentElement.setAttribute('data-theme', 'dark');
+      renderGantt();
+      await new Promise(function(r) { setTimeout(r, 500); });
+      freezeGanttSvg();
+
+      opt.filename = 'TMC-AquaServ-Propuesta-2026-dark.pdf';
+      await html2pdf().set(opt).from(el).save();
+
+      /* Light PDF */
+      document.documentElement.setAttribute('data-theme', 'light');
+      renderGantt();
+      await new Promise(function(r) { setTimeout(r, 500); });
+      freezeGanttSvg();
+
+      opt.filename = 'TMC-AquaServ-Propuesta-2026-light.pdf';
+      await html2pdf().set(opt).from(el).save();
+
+      /* Restore */
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      document.body.classList.remove('pdf-generating');
+      renderGantt();
+      var btn = document.getElementById('theme-toggle');
+      if (btn) btn.textContent = currentTheme === 'dark' ? 'Light' : 'Dark';
+    }
+
+    /* ── Generate Client HTML ────────────────────── */
+    function generateClientHTML() {
+
+      // 1. Clonar solo el contenido de la propuesta
+      var clone = document.getElementById('proposal-content').cloneNode(true);
+
+      // 2. Eliminar SOLO los elementos de EDICIÓN
+      var editOnlySelectors = [
+        'input', 'select', 'textarea',
+        '.controls-bar', '.edit-controls', '.edit-mode',
+        '.btn-group-top', '[data-screen-only]', '.no-print',
+        '.gantt-edit-btn', '.price-editor', '.sidebar'
+      ];
+      editOnlySelectors.forEach(function(sel) {
+        clone.querySelectorAll(sel).forEach(function(el) { el.remove(); });
+      });
+
+      // 3. Eliminar atributos de edición pero PRESERVAR openFeatureModal
+      clone.querySelectorAll('[contenteditable]').forEach(function(el) {
+        el.removeAttribute('contenteditable');
+      });
+
+      // SOLO eliminar onclicks que NO sean openFeatureModal
+      clone.querySelectorAll('[onclick]').forEach(function(el) {
+        var handler = el.getAttribute('onclick') || '';
+        if (!handler.includes('openFeatureModal')) {
+          el.removeAttribute('onclick');
+        }
+      });
+
+      // 4. Eliminar botones que NO sean parte del contenido informativo
+      clone.querySelectorAll('button').forEach(function(btn) {
+        btn.remove();
+      });
+
+      // 5. Obtener todos los estilos del documento
+      var styles = Array.from(document.styleSheets).map(function(sheet) {
+        try {
+          return Array.from(sheet.cssRules).map(function(rule) {
+            return rule.cssText;
+          }).join('\n');
+        } catch(e) { return ''; }
+      }).join('\n');
+
+      // 6. Serializar FEATURE_INFO y funciones de modal como string
+      var modalScript = '\n' +
+        'var FEATURE_INFO = ' + JSON.stringify(FEATURE_INFO, null, 2) + ';\n\n' +
+        'function openFeatureModal(featureName) {\n' +
+        '  var info = FEATURE_INFO[featureName];\n' +
+        '  if (!info) { console.warn("FEATURE_INFO: clave no encontrada →", featureName); return; }\n' +
+        '  document.getElementById("modal-title").textContent = featureName;\n' +
+        '  document.getElementById("modal-que").textContent = info.que;\n' +
+        '  document.getElementById("modal-como").textContent = info.como;\n' +
+        '  document.getElementById("modal-paraque").textContent = info.paraque;\n' +
+        '  var modal = document.getElementById("feature-modal");\n' +
+        '  modal.style.display = "flex";\n' +
+        '  document.body.style.overflow = "hidden";\n' +
+        '  document.addEventListener("keydown", function esc(e) {\n' +
+        '    if (e.key === "Escape") { closeFeatureModal(); document.removeEventListener("keydown", esc); }\n' +
+        '  });\n' +
+        '  modal.addEventListener("click", function bg(e) {\n' +
+        '    if (e.target === modal) { closeFeatureModal(); modal.removeEventListener("click", bg); }\n' +
+        '  });\n' +
+        '}\n\n' +
+        'function closeFeatureModal() {\n' +
+        '  var modal = document.getElementById("feature-modal");\n' +
+        '  if (modal) { modal.style.display = "none"; document.body.style.overflow = ""; }\n' +
+        '}\n';
+
+      // 7. HTML del modal (idéntico al del archivo fuente)
+      var modalHTML =
+        '<div id="feature-modal" role="dialog" aria-modal="true"' +
+        ' style="display:none; position:fixed; inset:0; z-index:9999;' +
+        ' background:oklch(0 0 0 / 0.75); backdrop-filter:blur(4px);' +
+        ' align-items:center; justify-content:center;">' +
+        '<div style="background:var(--surf); border:1px solid var(--border);' +
+        ' border-top:3px solid var(--amber); border-radius:12px; padding:32px;' +
+        ' max-width:520px; width:90%; position:relative; max-height:85vh; overflow-y:auto;">' +
+        '<button onclick="closeFeatureModal()" style="position:absolute; top:12px; right:16px;' +
+        ' background:none; border:none; color:var(--muted); font-size:22px;' +
+        ' cursor:pointer; line-height:1; padding:4px 8px;">×</button>' +
+        '<p id="modal-eyebrow" style="font-size:10px; font-weight:700;' +
+        ' letter-spacing:0.12em; text-transform:uppercase; color:var(--amber); margin-bottom:6px;">CARACTERÍSTICA</p>' +
+        '<h3 id="modal-title" style="font-family:var(--font-d); font-size:20px;' +
+        ' font-weight:800; color:var(--white); margin-bottom:20px; line-height:1.2; padding-right:32px;"></h3>' +
+        '<div style="display:flex; flex-direction:column; gap:18px;">' +
+        '<div><p style="font-size:10px; font-weight:700; text-transform:uppercase;' +
+        ' letter-spacing:0.1em; color:var(--amber); margin-bottom:4px;">¿QUÉ es?</p>' +
+        '<p id="modal-que" style="font-size:14px; color:var(--white); line-height:1.65; margin:0;"></p></div>' +
+        '<div><p style="font-size:10px; font-weight:700; text-transform:uppercase;' +
+        ' letter-spacing:0.1em; color:var(--amber); margin-bottom:4px;">¿CÓMO lo hacemos?</p>' +
+        '<p id="modal-como" style="font-size:14px; color:var(--white); line-height:1.65; margin:0;"></p></div>' +
+        '<div><p style="font-size:10px; font-weight:700; text-transform:uppercase;' +
+        ' letter-spacing:0.1em; color:var(--amber); margin-bottom:4px;">¿PARA QUÉ sirve a AquaServ?</p>' +
+        '<p id="modal-paraque" style="font-size:14px; color:var(--white); line-height:1.65; margin:0;"></p></div>' +
+        '</div></div></div>';
+
+      // 8. Ensamblar HTML final
+      var html = '<!DOCTYPE html>\n' +
+        '<html lang="es" data-theme="dark">\n' +
+        '<head>\n' +
+        '  <meta charset="UTF-8">\n' +
+        '  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+        '  <meta name="robots" content="noindex, nofollow">\n' +
+        '  <title>Propuesta TMC × AquaServ — TMC-2026-001</title>\n' +
+        '  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">\n' +
+        '  <style>\n' + styles + '\n' +
+        '    tr.feature-row td:first-child { cursor:pointer; transition:color 150ms ease; }\n' +
+        '    tr.feature-row:hover td:first-child { color:var(--amber) !important; }\n' +
+        '    .feature-hint { font-size:9px; color:var(--muted); margin-left:4px; vertical-align:middle; opacity:0.7; }\n' +
+        '    tr.feature-row:hover .feature-hint { opacity:1; color:var(--amber); }\n' +
+        '  </style>\n' +
+        '</head>\n' +
+        '<body>\n' +
+        '  <div style="background:#C8922A; color:#0E1117; padding:12px 24px;' +
+        ' text-align:center; font-size:13px; font-weight:700;' +
+        ' letter-spacing:0.05em; font-family:sans-serif;">\n' +
+        '    PROPUESTA CONFIDENCIAL — AQUASERV SpA · TMC-2026-001' +
+        ' · Solo para uso de Alejandro Vidal Ojeda\n' +
+        '  </div>\n' +
+        '  ' + modalHTML + '\n' +
+        '  ' + clone.outerHTML + '\n' +
+        '  <script>' + modalScript + '<\/script>\n' +
+        '</body>\n</html>';
+
+      // 9. Descargar
+      var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+      var url  = URL.createObjectURL(blob);
+      var a    = document.createElement('a');
+      a.href     = url;
+      a.download = 'TMC-AquaServ-Propuesta-2026-CLIENTE.html';
+      a.click();
+      setTimeout(function() { URL.revokeObjectURL(url); }, 3000);
+    }
+
+    /* ── Cover Date ──────────────────────────────── */
+    function setCoverDate() {
+      var d = new Date();
+      var months = ['enero','febrero','marzo','abril','mayo','junio',
+                    'julio','agosto','septiembre','octubre','noviembre','diciembre'];
+      document.getElementById('cover-date').textContent =
+        d.getDate() + ' de ' + months[d.getMonth()] + ' de ' + d.getFullYear();
+    }
+
+    /* ── Gantt Data (editable) ───────────────────── */
+    var ganttData = [
+      {task: 'Onboarding',                   start: 1,  duration: 1,  type: 'milestone'},
+      {task: 'Fundación digital',             start: 1,  duration: 2,  type: 'bar'},
+      {task: 'Banco fotográfico',             start: 2,  duration: 1,  type: 'bar', note: 'Entrega cliente', optional: true, color: 'secondary'},
+      {task: 'Primer contenido Alejandro',    start: 2,  duration: 3,  type: 'bar'},
+      {task: 'Página empresa AquaServ',       start: 3,  duration: 1,  type: 'bar'},
+      {task: 'Activación red TMC',            start: 4,  duration: 9,  type: 'bar'},
+      {task: 'Contenido Gonzalo',             start: 3,  duration: 10, type: 'bar', note: 'Solo Plan 2+ / Plan 3', optional: true, color: 'secondary'},
+      {task: 'Coordinación SmartProcess',     start: 4,  duration: 5,  type: 'bar'},
+      {task: 'Revisión estratégica 90 días',  start: 8,  duration: 1,  type: 'milestone'}
+    ];
+
+    /* ── Render Gantt (fixed dimensions for PDF) ── */
+    function renderGantt() {
+      var TOTAL_WEEKS = 12;
+      var LABEL_COL   = 180;
+      var WEEK_W      = 44;
+      var ROW_H       = 36;
+      var HEADER_H    = 52;
+      var PADDING     = 16;
+
+      var svgW = LABEL_COL + (TOTAL_WEEKS * WEEK_W) + PADDING * 2;
+      var svgH = HEADER_H + (ganttData.length * ROW_H) + PADDING * 2;
+
+      /* Read computed colors for theme-awareness */
+      var cs = getComputedStyle(document.documentElement);
+      var textColor  = cs.getPropertyValue('--white').trim()  || '#E8E6E1';
+      var mutedColor = cs.getPropertyValue('--muted').trim()  || '#8A8F9E';
+      var faintColor = cs.getPropertyValue('--faint').trim()  || '#4A4F5E';
+      var surfColor  = cs.getPropertyValue('--surf').trim()   || '#1A1F2E';
+      var surf2Color = cs.getPropertyValue('--surf2').trim()  || '#222838';
+      var surf3Color = cs.getPropertyValue('--surf3').trim()  || '#2A3040';
+      var amberColor = cs.getPropertyValue('--amber').trim()  || '#C8922A';
+      var borderColor = faintColor;
+
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" ' +
+        'width="' + svgW + '" height="' + svgH + '" ' +
+        'viewBox="0 0 ' + svgW + ' ' + svgH + '" ' +
+        'style="font-family:Satoshi,Inter,sans-serif;display:block;max-width:100%;overflow:visible;">';
+
+      /* ── Alternating row backgrounds ── */
+      ganttData.forEach(function(row, i) {
+        var y = HEADER_H + PADDING + i * ROW_H;
+        if (i % 2 === 0) {
+          svg += '<rect x="0" y="' + y + '" width="' + svgW + '" height="' + ROW_H + '" fill="' + surf2Color + '" opacity="0.3"/>';
+        }
+      });
+
+      /* ── Month headers (Mes 1, Mes 2, Mes 3) ── */
+      var monthLabels = ['MES 1', 'MES 2', 'MES 3'];
+      for (var m = 0; m < 3; m++) {
+        var mx = LABEL_COL + PADDING + m * 4 * WEEK_W;
+        var mw = 4 * WEEK_W;
+        svg += '<rect x="' + mx + '" y="' + PADDING + '" width="' + mw + '" height="22" rx="3" fill="' + amberColor + '" fill-opacity="0.15"/>';
+        svg += '<text x="' + (mx + mw / 2) + '" y="' + (PADDING + 14) + '" text-anchor="middle" font-size="11" font-weight="700" fill="' + amberColor + '" letter-spacing="0.08em">' + monthLabels[m] + '</text>';
+      }
+
+      /* ── Week headers (S1–S12) + vertical lines ── */
+      for (var w = 0; w < TOTAL_WEEKS; w++) {
+        var wx = LABEL_COL + PADDING + w * WEEK_W + WEEK_W / 2;
+        svg += '<text x="' + wx + '" y="' + (PADDING + 38) + '" text-anchor="middle" font-size="9" font-weight="500" fill="' + mutedColor + '">S' + (w + 1) + '</text>';
+        var lx = LABEL_COL + PADDING + w * WEEK_W;
+        svg += '<line x1="' + lx + '" y1="' + (PADDING + 24) + '" x2="' + lx + '" y2="' + svgH + '" stroke="' + borderColor + '" stroke-width="0.5" opacity="0.3"/>';
+      }
+
+      /* ── Header/content divider ── */
+      svg += '<line x1="0" y1="' + HEADER_H + '" x2="' + svgW + '" y2="' + HEADER_H + '" stroke="' + amberColor + '" stroke-width="1.5" stroke-opacity="0.4"/>';
+
+      /* ── Task rows ── */
+      ganttData.forEach(function(row, i) {
+        var y = HEADER_H + PADDING + i * ROW_H;
+        var centerY = y + ROW_H / 2;
+
+        /* Task label (truncate if >24 chars) */
+        var label = row.task.length > 24 ? row.task.substring(0, 23) + '\u2026' : row.task;
+        var labelWeight = row.type === 'milestone' ? '600' : '400';
+        svg += '<text x="' + (LABEL_COL - 8) + '" y="' + (centerY + 4) + '" text-anchor="end" font-size="11" font-weight="' + labelWeight + '" fill="' + textColor + '">' + label + '</text>';
+
+        /* Optional note */
+        if (row.note) {
+          svg += '<text x="' + (LABEL_COL - 8) + '" y="' + (centerY + 15) + '" text-anchor="end" font-size="8" fill="' + mutedColor + '">' + row.note + '</text>';
+        }
+
+        if (row.type === 'milestone') {
+          /* Diamond */
+          var dmx = LABEL_COL + PADDING + (row.start - 1) * WEEK_W + WEEK_W / 2;
+          svg += '<polygon points="' + dmx + ',' + (centerY - 8) + ' ' + (dmx + 8) + ',' + centerY + ' ' + dmx + ',' + (centerY + 8) + ' ' + (dmx - 8) + ',' + centerY + '" fill="' + amberColor + '"/>';
+        } else {
+          /* Bar */
+          var bx = LABEL_COL + PADDING + (row.start - 1) * WEEK_W + 2;
+          var bw = row.duration * WEEK_W - 4;
+          var bh = 18;
+          var by = centerY - bh / 2;
+          if (bw <= 0) return;
+
+          var opacity = row.optional ? '0.5' : '1';
+          var dash = row.optional ? ' stroke-dasharray="4 2"' : '';
+          var fillC = row.color === 'secondary' ? surf3Color : surf2Color;
+
+          svg += '<rect x="' + bx + '" y="' + by + '" width="' + bw + '" height="' + bh + '" rx="3" fill="' + fillC + '" fill-opacity="' + opacity + '" stroke="' + amberColor + '" stroke-width="1.5"' + dash + '/>';
+        }
+      });
+
+      /* ── "Inicio" line (week 1) ── */
+      var todayX = LABEL_COL + PADDING + 0.5 * WEEK_W;
+      svg += '<line x1="' + todayX + '" y1="' + HEADER_H + '" x2="' + todayX + '" y2="' + svgH + '" stroke="' + amberColor + '" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="3 3"/>';
+      svg += '<text x="' + (todayX + 4) + '" y="' + (HEADER_H + 12) + '" font-size="8" fill="' + amberColor + '" fill-opacity="0.8">Inicio</text>';
+
+      svg += '</svg>';
+
+      var container = document.getElementById('gantt-container');
+      if (container) {
+        container.innerHTML = svg;
+        container.style.overflowX = 'auto';
+        container.style.overflowY = 'visible';
+      }
+    }
+
+    /* ── Feature Modal ───────────────────────────── */
+    var FEATURE_INFO = {
+      "Perfil LinkedIn Alejandro": {
+        que:     "Reescritura completa del perfil de LinkedIn de Alejandro Vidal: titular, extracto, experiencia y sección destacados. No es edición cosmética \u2014 es reposicionamiento estratégico de su identidad profesional.",
+        como:    "TMC analiza el perfil actual, define las palabras clave del sector (salmonicultura, agua de mar, acero inoxidable, tratamiento de efluentes) y redacta cada sección para atraer a tomadores de decisión de la industria. El perfil se entrega en documento para aprobación antes de publicar.",
+        paraque: "El 72% de los compradores B2B revisan el LinkedIn del proveedor antes de agendar una reunión. Un perfil que describe capacidades técnicas reales con lenguaje del sector convierte visitas en conversaciones comerciales."
+      },
+      "Página empresa AquaServ": {
+        que:     "Creación y configuración completa de la página de empresa de AquaServ en LinkedIn, incluyendo descripción, especialidades, banner y primeras publicaciones de lanzamiento.",
+        como:    "TMC crea la página desde cero, optimiza cada campo para búsquedas internas de LinkedIn, diseña el banner con el branding de AquaServ y publica las primeras 3 piezas de contenido para iniciar la presencia institucional.",
+        paraque: "AquaServ necesita una identidad corporativa separada del perfil personal de Alejandro. Cuando un ingeniero de Ventisqueros o Cermaq busca un proveedor de estanques, la página empresa aparece en los resultados \u2014 el perfil personal no."
+      },
+      "Corrección sitio web": {
+        que:     "Corrección del título de la página web (actualmente dice \u0027mi sitio\u0027), configuración de meta descripción y optimización SEO básica de la página de inicio.",
+        como:    "Acceso al backend WordPress/CMS de AquaServ, cambio de título a \u0027AquaServ SpA | Maestranza especializada en acero inoxidable \u2014 Puerto Montt\u0027, configuración de meta tags y verificación de Google Search Console.",
+        paraque: "El título \u0027mi sitio\u0027 es la primera impresión al buscar AquaServ en Google. Una búsqueda desde Cermaq o Mowi devolverá ese título. Corregirlo toma 10 minutos pero cambia la percepción de profesionalismo en el mercado."
+      },
+      "Posts perfil Alejandro": {
+        que:     "Producción mensual de publicaciones para el perfil personal de LinkedIn de Alejandro Vidal: redacción, diseño de imagen de apoyo y calendario de publicación.",
+        como:    "TMC desarrolla un calendario mensual de contenido técnico-comercial calibrado para el algoritmo de LinkedIn (máximo 2 posts/semana). Cada post tiene objetivo específico: credibilidad técnica, diferenciación Matterport o activación de red. Alejandro aprueba antes de publicar.",
+        paraque: "Los tomadores de decisión del rubro siguen a personas, no a empresas. El LinkedIn de Alejandro es el canal más efectivo para que jefes de planta, gerentes de operaciones y directores de ingeniería de las salmoneras conozcan las capacidades de AquaServ."
+      },
+      "Posts empresa AquaServ": {
+        que:     "Producción mensual de publicaciones para la página de empresa de AquaServ en LinkedIn: contenido institucional, casos de obra y noticias del sector.",
+        como:    "4 posts mensuales de contenido corporativo: portafolio de proyectos terminados, capacidades de fabricación, certificaciones y alianzas. Se coordina con el calendario del perfil personal para no competir en alcance.",
+        paraque: "La página empresa respalda institucionalmente lo que Alejandro comunica en su perfil personal. Cuando un cliente investiga AquaServ después de ver un post de Alejandro, la página empresa es la validación corporativa."
+      },
+      "Posts Gonzalo Gallardo": {
+        que:     "Producción mensual de publicaciones para el perfil LinkedIn de Gonzalo Gallardo, Gerente Comercial, enfocadas en desarrollo de negocio y relaciones comerciales.",
+        como:    "2 posts mensuales de contenido comercial: testimonios de clientes, novedades de productos/servicios, y contenido de relacionamiento con el ecosistema del sector. Gonzalo aprueba antes de publicar.",
+        paraque: "Un gerente comercial activo en LinkedIn multiplica los puntos de contacto de AquaServ con el mercado. Mientras Alejandro construye credibilidad técnica, Gonzalo construye relaciones comerciales \u2014 dos frentes simultáneos de visibilidad."
+      },
+      "Gestión de comentarios": {
+        que:     "Monitoreo y respuesta a comentarios en todos los perfiles y páginas de AquaServ en LinkedIn, con tiempo de respuesta máximo de 4 horas hábiles.",
+        como:    "TMC revisa la actividad de los perfiles cada 2 horas durante horario hábil (9:00\u201318:00). Los comentarios informativos son respondidos directamente. Los comerciales o sensibles se escalan a Alejandro con borrador de respuesta propuesto.",
+        paraque: "El algoritmo de LinkedIn amplifica contenido con engagement. Un comentario sin respuesta en las primeras 2 horas frena la distribución del post. La gestión activa multiplica el alcance orgánico y demuestra al mercado que AquaServ está presente."
+      },
+      "Activación red TMC": {
+        que:     "Menciones estratégicas de AquaServ en la red de contactos de TMC e introducciones directas con perfiles relevantes del sector salmonero y de ingeniería industrial.",
+        como:    "TMC identifica en su red los perfiles de mayor valor para AquaServ (compradores, licitadores, aliados potenciales) y genera puntos de contacto naturales: comentarios de soporte, artículos con mención, introducciones directas via mensaje.",
+        paraque: "Una red construida desde cero tarda 6\u201312 meses en generar oportunidades. La red TMC ya existe. Activarla en favor de AquaServ acelera el acceso a tomadores de decisión que de otra forma tardarían meses en conocer a Alejandro."
+      },
+      "Coordinación SmartProcess / Hornstrup": {
+        que:     "Comunicación activa de la alianza tecnológica entre AquaServ y SmartProcess/Hornstrup (Dinamarca) a través del contenido de LinkedIn y gestión de la relación digital.",
+        como:    "TMC redacta contenido específico sobre la alianza, coordina con el equipo de SmartProcess para co-publicaciones o menciones cruzadas, y documenta los casos de aplicación de tecnología nórdica en proyectos de AquaServ.",
+        paraque: "La alianza con una empresa de tecnología danesa es el mayor diferenciador de AquaServ en el mercado chileno. Hoy nadie lo sabe porque no está comunicado. Activar esa credencial nórdica posiciona a AquaServ como proveedor de tecnología, no solo de fabricación."
+      },
+      "Banco fotográfico": {
+        que:     "Brief mensual detallado que indica exactamente qué fotografiar: ángulos, iluminación, tipo de obra, detalles técnicos y formato requerido. TMC no toma las fotos \u2014 AquaServ las toma con el brief de guía.",
+        como:    "Cada mes TMC entrega un documento de 1 página con 10 tomas específicas solicitadas según el calendario de contenido: estanque terminado desde esquina superior izquierda, detalle de soldadura TIG, equipo en instalación con operarios. AquaServ fotografía con celular o cámara.",
+        paraque: "El contenido sin imágenes propias tiene un tercio del alcance del contenido con fotos reales de obra. Las imágenes de fabricación son el activo más valioso de AquaServ para el contenido \u2014 demuestran capacidad técnica que ningún texto puede reemplazar."
+      },
+      "Portafolio técnico PDF": {
+        que:     "Documentación de 3 casos de obra de AquaServ en formato PDF de portafolio técnico: ficha de proyecto con especificaciones, fotografías y resultado.",
+        como:    "TMC entrevista a Alejandro o al equipo técnico sobre los 3 proyectos seleccionados, redacta las fichas con lenguaje técnico-comercial, diseña el PDF con el branding de AquaServ y entrega archivo editable para uso futuro.",
+        paraque: "Las licitaciones del sector salmonero exigen presentar referencias técnicas documentadas. Sin portafolio formalizado, AquaServ queda fuera de procesos que técnicamente podría ganar. 3 fichas bien hechas abren la puerta a licitaciones de mayor escala."
+      },
+      "Plantilla propuesta comercial": {
+        que:     "Plantilla de propuesta comercial de AquaServ en HTML interactivo (como esta misma que estás leyendo) para que el equipo genere propuestas profesionales de forma autónoma.",
+        como:    "TMC diseña y desarrolla una plantilla editable con el branding de AquaServ, campos variables (cliente, proyecto, precio, plazo), tabla de ítems con cálculo automático y botón de exportación a PDF. Se entrega con instrucciones de uso.",
+        paraque: "Una propuesta comercial con diseño profesional aumenta la tasa de cierre. AquaServ compite con empresas más grandes \u2014 una propuesta de nivel corporativo iguala la percepción de tamaño y profesionalismo."
+      },
+      "Reporte mensual": {
+        que:     "Documento mensual de métricas y análisis del desempeño de la presencia digital de AquaServ: alcance, engagement, nuevas conexiones y oportunidades identificadas.",
+        como:    "TMC consolida los datos de LinkedIn Analytics, seguidores nuevos, posts con mayor rendimiento y conversaciones iniciadas. El reporte incluye recomendaciones para el mes siguiente y evaluación de avance hacia los objetivos del trimestre.",
+        paraque: "Sin métricas no hay gestión. El reporte mensual permite a Alejandro y Gonzalo tomar decisiones sobre qué tipos de contenido generan más conversaciones comerciales y ajustar el foco de inversión."
+      }
+    };
+
+    function openFeatureModal(featureName) {
+      var info = FEATURE_INFO[featureName];
+      if (!info) return;
+
+      document.getElementById('modal-eyebrow').textContent = 'CARACTERÍSTICA';
+      document.getElementById('modal-title').textContent = featureName;
+      document.getElementById('modal-que').textContent = info.que;
+      document.getElementById('modal-como').textContent = info.como;
+      document.getElementById('modal-paraque').textContent = info.paraque;
+
+      var modal = document.getElementById('feature-modal');
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+
+      /* Close on Escape */
+      function escHandler(e) {
+        if (e.key === 'Escape') {
+          closeFeatureModal();
+          document.removeEventListener('keydown', escHandler);
+        }
+      }
+      document.addEventListener('keydown', escHandler);
+
+      /* Close on backdrop click */
+      function bgHandler(e) {
+        if (e.target === modal) {
+          closeFeatureModal();
+          modal.removeEventListener('click', bgHandler);
+        }
+      }
+      modal.addEventListener('click', bgHandler);
+    }
+
+    function closeFeatureModal() {
+      document.getElementById('feature-modal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    /* ── Init ────────────────────────────────────── */
+    setCoverDate();
+    recalcAll();
+    renderGantt();
+  </script>
+
+</body>
+</html>

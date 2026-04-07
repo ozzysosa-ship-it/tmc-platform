@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TMC — Portada de Propuesta</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    #download-panel {
+      background: #1A1F2E;
+      border-bottom: 1px solid rgba(200,146,42,.15);
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    #download-panel .dp-label {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #C8922A;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    #download-panel button {
+      font-family: 'Satoshi', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #E8E6E1;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 180ms ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    #download-panel button:hover {
+      background: rgba(200,146,42,.12);
+      border-color: rgba(200,146,42,.4);
+      color: #C8922A;
+    }
+    #download-panel button.primary {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: #C8922A;
+    }
+    @media print { #download-panel { display: none; } }
+
+    :root {
+      --navy:    #1A1F2E;
+      --bg:      #0E1117;
+      --surf2:   #222838;
+      --amber:   #C8922A;
+      --white:   #E8E6E1;
+      --muted:   #8A8F9E;
+      --faint:   #4A4F5E;
+      --font-d:  'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+      --font-b:  'Satoshi', 'Inter', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #2A2A2A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 40px 20px;
+      font-family: var(--font-b);
+      -webkit-font-smoothing: antialiased;
+    }
+    h2 {
+      color: #555;
+      font-family: var(--font-b);
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    /* A4: 210mm × 297mm at 96dpi = 793.7 × 1122.5 px */
+    /* We render at 1:1.33 scale for screen preview: 595 × 842 px */
+    .page {
+      width: 595px;
+      height: 842px;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 48px rgba(0,0,0,.7);
+    }
+
+    /* Very subtle diagonal texture */
+    .page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          -45deg,
+          transparent 0, transparent 28px,
+          rgba(200,146,42,.025) 28px, rgba(200,146,42,.025) 29px
+        );
+      pointer-events: none;
+    }
+
+    /* Amber left accent strip */
+    .amber-strip {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--amber);
+    }
+
+    /* Top section: logo + classification */
+    .top-area {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 48px 64px 0 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .top-ref {
+      font-size: 9px;
+      color: var(--faint);
+      letter-spacing: .1em;
+      font-family: monospace;
+    }
+
+    /* Center content */
+    .center-area {
+      position: absolute;
+      top: 50%;
+      left: 64px;
+      right: 64px;
+      transform: translateY(-52%);
+    }
+    .doc-type {
+      font-family: var(--font-d);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .doc-type::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--amber);
+      flex-shrink: 0;
+    }
+    .client-label {
+      font-size: 10px;
+      color: var(--faint);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-family: var(--font-b);
+      margin-bottom: 8px;
+    }
+    .client-name {
+      font-family: var(--font-d);
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -.02em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .client-name .placeholder {
+      color: var(--muted);
+      border-bottom: 1px solid var(--faint);
+      padding-bottom: 2px;
+    }
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(200,146,42,.2);
+      margin: 28px 0;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+    .meta-item {}
+    .meta-label {
+      font-size: 9px;
+      color: var(--faint);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-family: var(--font-b);
+      margin-bottom: 5px;
+    }
+    .meta-value {
+      font-family: var(--font-d);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -.01em;
+    }
+    .meta-value.placeholder {
+      color: var(--muted);
+      border-bottom: 1px solid var(--faint);
+      padding-bottom: 2px;
+    }
+    .meta-value.amber { color: var(--amber); }
+
+    /* Bottom section */
+    .bottom-area {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 32px 64px;
+      border-top: 1px solid rgba(200,146,42,.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .bottom-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .bottom-name {
+      font-family: var(--font-d);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .bottom-title {
+      font-size: 9px;
+      color: var(--amber);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .bottom-detail {
+      font-size: 9px;
+      color: var(--faint);
+      letter-spacing: .04em;
+    }
+    .confidential {
+      font-size: 8px;
+      color: var(--faint);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-family: monospace;
+    }
+
+    /* Technical corner marks */
+    .corner-mark {
+      position: absolute;
+      width: 16px; height: 16px;
+    }
+    .corner-mark.tl { top: 16px; left: 16px; border-top: 1px solid rgba(200,146,42,.3); border-left: 1px solid rgba(200,146,42,.3); }
+    .corner-mark.tr { top: 16px; right: 16px; border-top: 1px solid rgba(200,146,42,.3); border-right: 1px solid rgba(200,146,42,.3); }
+    .corner-mark.bl { bottom: 16px; left: 16px; border-bottom: 1px solid rgba(200,146,42,.3); border-left: 1px solid rgba(200,146,42,.3); }
+    .corner-mark.br { bottom: 16px; right: 16px; border-bottom: 1px solid rgba(200,146,42,.3); border-right: 1px solid rgba(200,146,42,.3); }
+
+    .print-note {
+      font-size: 10px;
+      color: #555;
+      font-family: monospace;
+      margin-top: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="download-panel">
+    <span class="dp-label">Descargar Portada</span>
+    <button class="primary" onclick="exportPNG('cover-preview', 'tmc-portada-propuesta-300dpi.png', 2480, 3508)">PNG A4 @300dpi</button>
+    <button onclick="exportPNG('cover-preview', 'tmc-portada-propuesta-web.png', 1240, 1754)">PNG Web</button>
+  </div>
+
+  <h2>Portada de Propuesta — A4 (595 × 842 px)</h2>
+
+  <div id="cover-preview" class="page">
+    <!-- Amber left strip -->
+    <div class="amber-strip"></div>
+
+    <!-- Corner marks -->
+    <div class="corner-mark tl"></div>
+    <div class="corner-mark tr"></div>
+    <div class="corner-mark bl"></div>
+    <div class="corner-mark br"></div>
+
+    <!-- Top: Logo + Ref -->
+    <div class="top-area">
+      <svg height="32" viewBox="0 0 220 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g transform="translate(2,2) scale(0.4)">
+          <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+          <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+          <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2"/>
+        </g>
+        <line x1="46" y1="7" x2="46" y2="37" stroke="#C8922A" stroke-width="0.75" opacity="0.35"/>
+        <text x="54" y="20" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="13" font-weight="800" letter-spacing="1.8" fill="#E8E6E1">TALLER MAYOR</text>
+        <text x="54" y="33" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="7" font-weight="500" letter-spacing="3.5" fill="#8A8F9E">CONSULTORÍA</text>
+      </svg>
+      <span class="top-ref">TMC-PROP-001 · CONFIDENCIAL</span>
+    </div>
+
+    <!-- Center content -->
+    <div class="center-area">
+      <div class="doc-type">Propuesta de Consultoría</div>
+
+      <div class="client-label">Preparada para</div>
+      <div class="client-name">
+        <span class="placeholder">[NOMBRE DEL CLIENTE]</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="meta-label">Fecha</div>
+          <div class="meta-value placeholder">[FECHA]</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Válida hasta</div>
+          <div class="meta-value placeholder">[+30 días]</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Versión</div>
+          <div class="meta-value amber">v1.0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: Contact -->
+    <div class="bottom-area">
+      <div class="bottom-contact">
+        <div class="bottom-name">Oswaldo Sosa</div>
+        <div class="bottom-title">Fundador · Taller Mayor Consultoría</div>
+        <div class="bottom-detail">contacto@tallermayor.cl · tallermayor.cl</div>
+      </div>
+      <div class="confidential">Documento confidencial<br>No distribuir sin autorización</div>
+    </div>
+  </div>
+
+  <p class="print-note">Imprimir en A4 · Orientación retrato · Márgenes 0 · PDF/A para archivo</p>
+
+  <script>
+    function downloadBlob(blob, filename) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+
+    async function exportPNG(elementId, filename, targetWidth, targetHeight) {
+      const el = document.getElementById(elementId);
+      const scale = targetWidth / el.offsetWidth;
+      const canvas = await html2canvas(el, {
+        scale,
+        useCORS: true,
+        backgroundColor: null,
+        width: el.offsetWidth,
+        height: el.offsetHeight
+      });
+      canvas.toBlob(blob => downloadBlob(blob, filename), 'image/png');
+    }
+  </script>
+
+</body>
+</html>

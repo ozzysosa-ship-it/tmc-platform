@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMC — Taza Corporativa</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --bg:      #0E1117;
+      --surf:    #1A1F2E;
+      --surf2:   #222838;
+      --surf3:   #2A3040;
+      --amber:   #C8922A;
+      --amber-h: #E0A030;
+      --white:   #E8E6E1;
+      --muted:   #8A8F9E;
+      --faint:   #4A4F5E;
+      --red:     #C04040;
+      --font-d:  'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+      --font-b:  'Satoshi', 'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-b);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      min-width: 320px;
+    }
+
+    /* Download Panel */
+    #download-panel {
+      background: #1A1F2E;
+      border-bottom: 1px solid rgba(200,146,42,.15);
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    #download-panel .dp-label {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #C8922A;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    #download-panel button {
+      font-family: 'Satoshi', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #E8E6E1;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 180ms ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    #download-panel button:hover {
+      background: rgba(200,146,42,.12);
+      border-color: rgba(200,146,42,.4);
+      color: #C8922A;
+    }
+    #download-panel button.primary {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: #C8922A;
+    }
+    @media print { #download-panel { display: none; } }
+
+    /* Header */
+    .page-header {
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(200,146,42,.12);
+    }
+    .page-header a {
+      font-family: var(--font-b);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .04em;
+      transition: color 180ms ease;
+    }
+    .page-header a:hover { color: var(--amber); }
+
+    /* Content */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 40px 80px;
+    }
+    .page-title {
+      font-family: var(--font-d);
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 8px;
+    }
+    .page-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 48px;
+    }
+
+    /* Mug grid */
+    .mug-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+    @media (max-width: 768px) { .mug-grid { grid-template-columns: 1fr; } }
+    .mug-card {
+      background: var(--surf);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 6px;
+      padding: 40px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .mug-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 24px;
+    }
+
+    /* CSS Mug */
+    .mug-wrap {
+      position: relative;
+      width: 180px;
+      height: 220px;
+      margin-bottom: 16px;
+    }
+    .mug-body {
+      position: absolute;
+      bottom: 0;
+      left: 20px;
+      width: 140px;
+      height: 160px;
+      border-radius: 0 0 12px 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mug-body .mug-text {
+      font-family: var(--font-d);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .mug-top {
+      position: absolute;
+      top: 40px;
+      left: 10px;
+      width: 160px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid;
+    }
+    .mug-top-inner {
+      position: absolute;
+      top: 44px;
+      left: 30px;
+      width: 120px;
+      height: 16px;
+      border-radius: 50%;
+    }
+    .mug-bottom {
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 160px;
+      height: 20px;
+      border-radius: 50%;
+    }
+    .mug-band {
+      position: absolute;
+      bottom: 0;
+      left: 20px;
+      width: 140px;
+      height: 8px;
+      background: var(--amber);
+      border-radius: 0 0 12px 12px;
+      z-index: 3;
+    }
+    /* Handle SVG */
+    .mug-handle {
+      position: absolute;
+      right: -8px;
+      top: 80px;
+    }
+
+    /* Specs */
+    .specs {
+      margin-top: 48px;
+    }
+    .specs-title {
+      font-family: var(--font-d);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .specs-table th {
+      text-align: left;
+      font-size: 10px;
+      color: var(--faint);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 10px 0;
+    }
+    .specs-table td {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .specs-table td:first-child {
+      font-weight: 700;
+      color: var(--white);
+      width: 200px;
+    }
+
+    /* Footer */
+    .page-footer {
+      padding: 24px 40px;
+      border-top: 1px solid rgba(200,146,42,.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--faint);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="download-panel">
+    <span class="dp-label">Descargar</span>
+    <button class="primary" onclick="exportPNG('merch-preview', 'tmc-taza-2400x1600.png', 2400, 1600)">PNG 2400×1600</button>
+  </div>
+
+  <header class="page-header">
+    <svg width="120" height="24" viewBox="0 0 300 60" aria-label="Taller Mayor Consultoría">
+      <g transform="translate(8,4) scale(0.52)">
+        <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+        <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+        <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+      </g>
+      <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+      <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+      <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+    </svg>
+    <a href="../index_brand.html">← Brand Assets</a>
+  </header>
+
+  <div class="container">
+    <h1 class="page-title">Taza Corporativa</h1>
+    <p class="page-sub">Merchandising oficial — 3 colorways aprobados</p>
+
+    <div id="merch-preview" class="mug-grid">
+
+      <!-- Navy colorway -->
+      <div class="mug-card">
+        <div class="mug-label">Navy — Primario</div>
+        <div class="mug-wrap">
+          <div class="mug-top" style="border-color: #2A3040; background: #1A1F2E;"></div>
+          <div class="mug-top-inner" style="background: #0E1117;"></div>
+          <div class="mug-body" style="background: #1A1F2E;">
+            <svg width="80" height="40" viewBox="0 0 300 60" aria-hidden="true" style="position:relative;z-index:2;">
+              <g transform="translate(8,4) scale(0.52)">
+                <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+                <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+                <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+              </g>
+              <text x="72" y="30" font-family="'Cabinet Grotesk',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+              <text x="72" y="43" font-family="'Cabinet Grotesk',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+            </svg>
+          </div>
+          <div class="mug-band"></div>
+          <div class="mug-bottom" style="background: #141826;"></div>
+          <svg class="mug-handle" width="28" height="48" viewBox="0 0 28 48" fill="none">
+            <path d="M2,4 C18,4 24,12 24,24 C24,36 18,44 2,44" stroke="#C8922A" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- White colorway -->
+      <div class="mug-card">
+        <div class="mug-label">Blanco</div>
+        <div class="mug-wrap">
+          <div class="mug-top" style="border-color: #D8D4CC; background: #F0EDE6;"></div>
+          <div class="mug-top-inner" style="background: #E0DCD4;"></div>
+          <div class="mug-body" style="background: #F0EDE6;">
+            <svg width="80" height="40" viewBox="0 0 300 60" aria-hidden="true" style="position:relative;z-index:2;">
+              <g transform="translate(8,4) scale(0.52)">
+                <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+                <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+                <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+              </g>
+              <text x="72" y="30" font-family="'Cabinet Grotesk',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+              <text x="72" y="43" font-family="'Cabinet Grotesk',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#5A5F70">CONSULTORÍA</text>
+            </svg>
+          </div>
+          <div class="mug-band"></div>
+          <div class="mug-bottom" style="background: #E0DCD4;"></div>
+          <svg class="mug-handle" width="28" height="48" viewBox="0 0 28 48" fill="none">
+            <path d="M2,4 C18,4 24,12 24,24 C24,36 18,44 2,44" stroke="#C8922A" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Amber colorway -->
+      <div class="mug-card">
+        <div class="mug-label">Amber</div>
+        <div class="mug-wrap">
+          <div class="mug-top" style="border-color: #B08024; background: #C8922A;"></div>
+          <div class="mug-top-inner" style="background: #A87820;"></div>
+          <div class="mug-body" style="background: #C8922A;">
+            <svg width="80" height="40" viewBox="0 0 300 60" aria-hidden="true" style="position:relative;z-index:2;">
+              <g transform="translate(8,4) scale(0.52)">
+                <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+                <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+                <line x1="4" y1="44" x2="96" y2="44" stroke="rgba(26,31,46,.4)" stroke-width="2.5"/>
+              </g>
+              <text x="72" y="30" font-family="'Cabinet Grotesk',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+              <text x="72" y="43" font-family="'Cabinet Grotesk',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="rgba(26,31,46,.6)">CONSULTORÍA</text>
+            </svg>
+          </div>
+          <div class="mug-band" style="background: #1A1F2E;"></div>
+          <div class="mug-bottom" style="background: #A87820;"></div>
+          <svg class="mug-handle" width="28" height="48" viewBox="0 0 28 48" fill="none">
+            <path d="M2,4 C18,4 24,12 24,24 C24,36 18,44 2,44" stroke="#1A1F2E" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Specifications -->
+    <div class="specs">
+      <h2 class="specs-title">Especificaciones Técnicas</h2>
+      <table class="specs-table">
+        <thead>
+          <tr><th>Propiedad</th><th>Valor</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Capacidad</td><td>350 ml</td></tr>
+          <tr><td>Alto</td><td>95 mm</td></tr>
+          <tr><td>Diámetro</td><td>85 mm</td></tr>
+          <tr><td>Material</td><td>Cerámica blanca o Acero inoxidable doble pared</td></tr>
+          <tr><td>Técnica de impresión</td><td>Sublimación / Serigrafía</td></tr>
+          <tr><td>Pantone Amber</td><td>138 C</td></tr>
+          <tr><td>Pantone Navy</td><td>289 C</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div>
+      <svg viewBox="0 0 100 100" width="24" height="24" style="display:inline;vertical-align:middle;margin-right:8px;" aria-hidden="true">
+        <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+        <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+        <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+      </svg>
+      Taller Mayor Consultoría — Uso interno · v1.0 · 2026
+    </div>
+    <div>Ingeniería que ordena. Consultoría que escala.</div>
+  </footer>
+
+  <script>
+    function downloadBlob(blob, filename) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+
+    async function exportPNG(elementId, filename, targetWidth, targetHeight) {
+      const el = document.getElementById(elementId);
+      const scale = targetWidth / el.offsetWidth;
+      const canvas = await html2canvas(el, {
+        scale,
+        useCORS: true,
+        backgroundColor: null,
+        width: el.offsetWidth,
+        height: el.offsetHeight
+      });
+      canvas.toBlob(blob => downloadBlob(blob, filename), 'image/png');
+    }
+  </script>
+
+</body>
+</html>

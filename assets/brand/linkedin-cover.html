@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TMC — LinkedIn Cover 1584×396</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    #download-panel {
+      background: #1A1F2E;
+      border-bottom: 1px solid rgba(200,146,42,.15);
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    #download-panel .dp-label {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #C8922A;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    #download-panel button {
+      font-family: 'Satoshi', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #E8E6E1;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 180ms ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    #download-panel button:hover {
+      background: rgba(200,146,42,.12);
+      border-color: rgba(200,146,42,.4);
+      color: #C8922A;
+    }
+    #download-panel button.primary {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: #C8922A;
+    }
+    @media print { #download-panel { display: none; } }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px;
+      -webkit-font-smoothing: antialiased;
+    }
+    h2 {
+      color: #555;
+      font-family: 'Satoshi', sans-serif;
+      font-size: 11px;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      margin-bottom:16px;
+    }
+    .cover {
+      width: 1584px;
+      height: 396px;
+      background: #1A1F2E;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 0 72px;
+      justify-content: space-between;
+    }
+
+    /* Technical grid pattern */
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,146,42,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,146,42,.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* Amber bottom rule */
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: #C8922A;
+    }
+
+    /* Left: logo block */
+    .left {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .mark {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .mark-divider {
+      width: 1px;
+      height: 44px;
+      background: rgba(200,146,42,.35);
+    }
+    .mark-text {}
+    .mark-text .name {
+      font-family: 'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #E8E6E1;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+    .mark-text .sub {
+      font-family: 'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #8A8F9E;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .eyebrow {
+      font-family: 'Satoshi', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: #C8922A;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    /* Right: tagline block */
+    .right {
+      text-align: right;
+      position: relative;
+      z-index: 1;
+    }
+    .tagline-line {
+      font-family: 'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #E8E6E1;
+      letter-spacing: -.01em;
+      line-height: 1.2;
+      display: block;
+    }
+    .tagline-line.amber { color: #C8922A; }
+    .tagline-sub {
+      display: block;
+      font-family: 'Satoshi', sans-serif;
+      font-size: 13px;
+      color: #8A8F9E;
+      margin-top: 12px;
+      letter-spacing: .04em;
+    }
+
+    /* Decorative dimension line across center */
+    .dim-line {
+      position: absolute;
+      left: 0; right: 0;
+      top: 50%;
+      height: 1px;
+      background: rgba(200,146,42,.06);
+      pointer-events: none;
+    }
+    .dim-mark {
+      position: absolute;
+      top: 50%;
+      width: 1px;
+      height: 16px;
+      background: rgba(200,146,42,.15);
+      transform: translateY(-50%);
+    }
+
+    /* Note */
+    .note {
+      font-size: 10px;
+      color: #444;
+      font-family: monospace;
+      margin-top: 16px;
+    }
+    .scale-hint {
+      color: #555;
+      font-size:11px;font-family:monospace;margin-bottom:12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="download-panel">
+    <span class="dp-label">Descargar LinkedIn Cover</span>
+    <button class="primary" onclick="exportPNG('linkedin-cover', 'tmc-linkedin-cover-2x.png', 3168, 792)">PNG 2x (3168×792)</button>
+    <button onclick="exportPNG('linkedin-cover', 'tmc-linkedin-cover-1x.png', 1584, 396)">PNG 1x (1584×396)</button>
+  </div>
+
+  <h2>LinkedIn Cover Photo — 1584 × 396 px</h2>
+  <p class="scale-hint">Renderizada al 100% · Escalar al 50% para previsualización</p>
+
+  <div id="linkedin-cover" class="cover">
+
+    <!-- Grid dimension markers -->
+    <div class="dim-line"></div>
+    <div class="dim-mark" style="left:198px"></div>
+    <div class="dim-mark" style="left:396px"></div>
+    <div class="dim-mark" style="left:594px"></div>
+    <div class="dim-mark" style="left:792px"></div>
+    <div class="dim-mark" style="left:990px"></div>
+    <div class="dim-mark" style="left:1188px"></div>
+    <div class="dim-mark" style="left:1386px"></div>
+
+    <!-- Left: Brand -->
+    <div class="left">
+      <div class="eyebrow">Ingeniería · Procesos · Automatización</div>
+      <div class="mark">
+        <svg width="52" height="52" viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+          <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+          <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+        </svg>
+        <div class="mark-divider"></div>
+        <div class="mark-text">
+          <div class="name">TALLER MAYOR</div>
+          <div class="sub">Consultoría</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Tagline -->
+    <div class="right">
+      <span class="tagline-line">Ingeniería que ordena.</span>
+      <span class="tagline-line amber">Consultoría que escala.</span>
+      <span class="tagline-sub">Para maestranzas y fábricas de equipos de la industria salmonera chilena.</span>
+    </div>
+
+  </div>
+
+  <p class="note">Exportar como PNG 1584×396 px · LinkedIn recomienda mínimo 1128×191 px</p>
+
+  <script>
+    function downloadBlob(blob, filename) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+
+    async function exportPNG(elementId, filename, targetWidth, targetHeight) {
+      const el = document.getElementById(elementId);
+      const scale = targetWidth / el.offsetWidth;
+      const canvas = await html2canvas(el, {
+        scale,
+        useCORS: true,
+        backgroundColor: null,
+        width: el.offsetWidth,
+        height: el.offsetHeight
+      });
+      canvas.toBlob(blob => downloadBlob(blob, filename), 'image/png');
+    }
+  </script>
+
+</body>
+</html>

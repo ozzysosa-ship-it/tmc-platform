@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMC — Carpeta Corporativa</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --bg:      #0E1117;
+      --surf:    #1A1F2E;
+      --surf2:   #222838;
+      --surf3:   #2A3040;
+      --amber:   #C8922A;
+      --amber-h: #E0A030;
+      --white:   #E8E6E1;
+      --muted:   #8A8F9E;
+      --faint:   #4A4F5E;
+      --red:     #C04040;
+      --font-d:  'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+      --font-b:  'Satoshi', 'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-b);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      min-width: 320px;
+    }
+
+    #download-panel {
+      background: #1A1F2E;
+      border-bottom: 1px solid rgba(200,146,42,.15);
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    #download-panel .dp-label {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #C8922A;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    #download-panel button {
+      font-family: 'Satoshi', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #E8E6E1;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 180ms ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    #download-panel button:hover {
+      background: rgba(200,146,42,.12);
+      border-color: rgba(200,146,42,.4);
+      color: #C8922A;
+    }
+    #download-panel button.primary {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: #C8922A;
+    }
+    @media print { #download-panel { display: none; } }
+
+    .page-header {
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(200,146,42,.12);
+    }
+    .page-header a {
+      font-family: var(--font-b);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .04em;
+      transition: color 180ms ease;
+    }
+    .page-header a:hover { color: var(--amber); }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 40px 80px;
+    }
+    .page-title {
+      font-family: var(--font-d);
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 8px;
+    }
+    .page-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .toggle-bar {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .toggle-btn {
+      font-family: var(--font-b);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      background: var(--surf);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 8px 20px;
+      cursor: pointer;
+      transition: all 180ms ease;
+    }
+    .toggle-btn:hover { border-color: rgba(200,146,42,.3); color: var(--amber); }
+    .toggle-btn.active {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: var(--amber);
+    }
+
+    .folder-view { display: none; justify-content: center; }
+    .folder-view.active { display: flex; }
+    .hidden { display: none !important; }
+
+    /* Closed folder – A4 vertical */
+    .folder-closed {
+      width: 320px;
+      height: 452px;
+      background: var(--surf);
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.5);
+      /* Leatherette noise texture */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%231A1F2E'/%3E%3Crect x='1' y='1' width='1' height='1' fill='%231C2130' opacity='.4'/%3E%3Crect x='3' y='0' width='1' height='1' fill='%23181D2C' opacity='.3'/%3E%3C/svg%3E");
+    }
+    /* Amber datum line */
+    .folder-closed .datum {
+      position: absolute;
+      left: 0; right: 0;
+      top: 55%;
+      height: 1.5px;
+      background: var(--amber);
+    }
+    /* TM monogram top-right */
+    .folder-closed .folder-mono {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+    }
+    /* Wordmark bottom-left */
+    .folder-closed .folder-wordmark {
+      position: absolute;
+      bottom: 32px;
+      left: 24px;
+    }
+    .folder-closed .folder-wordmark span {
+      font-family: var(--font-d);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: var(--white);
+    }
+    /* Spine */
+    .folder-closed .spine {
+      position: absolute;
+      left: -2px;
+      top: 0; bottom: 0;
+      width: 16px;
+      background: var(--surf3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .folder-closed .spine-text {
+      font-family: var(--font-b);
+      font-size: 7px;
+      letter-spacing: .12em;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      white-space: nowrap;
+    }
+    /* Elastic closure */
+    .folder-closed .elastic {
+      position: absolute;
+      right: 12px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: var(--amber);
+      opacity: .6;
+    }
+
+    /* Open folder – spread */
+    .folder-open {
+      width: 640px;
+      height: 452px;
+      display: flex;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,.5);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    @media (max-width: 700px) {
+      .folder-open { width: 100%; flex-direction: column; height: auto; }
+      .folder-half { width: 100% !important; height: 300px; }
+    }
+    .folder-half {
+      width: 50%;
+      background: var(--surf);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%231A1F2E'/%3E%3Crect x='1' y='1' width='1' height='1' fill='%231C2130' opacity='.4'/%3E%3C/svg%3E");
+      position: relative;
+      padding: 24px;
+    }
+    .folder-half .amber-header {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--amber);
+    }
+    /* Left panel: document pocket */
+    .pocket {
+      margin-top: 32px;
+      width: 100%;
+      height: 280px;
+      border: 1px dashed var(--faint);
+      border-left: 3px solid var(--amber);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--faint);
+      font-size: 11px;
+      letter-spacing: .06em;
+    }
+    /* Right panel: card slot + pen */
+    .card-slot {
+      margin-top: 32px;
+      width: 136px;
+      height: 76px;
+      border: 1px solid rgba(200,146,42,.3);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: var(--faint);
+      letter-spacing: .06em;
+    }
+    .pen-holder {
+      margin-top: 16px;
+      width: 8px;
+      height: 60px;
+      border: 1px solid rgba(200,146,42,.2);
+      border-radius: 4px;
+    }
+    .folder-spine {
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 4px;
+      background: var(--surf3);
+      transform: translateX(-50%);
+    }
+
+    .specs { margin-top: 48px; }
+    .specs-title {
+      font-family: var(--font-d);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 32px;
+    }
+    .specs-table th {
+      text-align: left;
+      font-size: 10px;
+      color: var(--faint);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 10px 0;
+    }
+    .specs-table td {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .specs-table td:first-child {
+      font-weight: 700;
+      color: var(--white);
+      width: 200px;
+    }
+
+    .page-footer {
+      padding: 24px 40px;
+      border-top: 1px solid rgba(200,146,42,.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--faint);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="download-panel">
+    <span class="dp-label">Descargar</span>
+    <button class="primary" onclick="exportPNG('merch-preview', 'tmc-carpeta-2400x1600.png', 2400, 1600)">PNG 2400×1600</button>
+  </div>
+
+  <header class="page-header">
+    <svg width="120" height="24" viewBox="0 0 300 60" aria-label="Taller Mayor Consultoría">
+      <g transform="translate(8,4) scale(0.52)">
+        <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+        <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+        <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+      </g>
+      <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+      <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+      <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+    </svg>
+    <a href="../index_brand.html">← Brand Assets</a>
+  </header>
+
+  <div class="container">
+    <h1 class="page-title">Carpeta Corporativa</h1>
+    <p class="page-sub">Carpeta A4 — Vista cerrada y abierta</p>
+
+    <div id="merch-preview">
+      <div class="toggle-bar">
+        <button id="toggle-btn" class="toggle-btn active" onclick="toggleView('closed', this)">Vista Cerrada</button>
+        <button class="toggle-btn" onclick="toggleView('open', this)">Vista Abierta</button>
+      </div>
+
+      <!-- Closed view -->
+      <div id="view-closed" class="folder-view active">
+        <div class="folder-closed">
+          <!-- Spine -->
+          <div class="spine">
+            <span class="spine-text">TALLER MAYOR CONSULTORÍA</span>
+          </div>
+          <!-- TM monogram top-right -->
+          <div class="folder-mono">
+            <svg width="40" height="40" viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+              <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <!-- Amber datum -->
+          <div class="datum"></div>
+          <!-- Wordmark bottom-left -->
+          <div class="folder-wordmark">
+            <span>TALLER MAYOR</span>
+          </div>
+          <!-- Elastic closure -->
+          <div class="elastic"></div>
+        </div>
+      </div>
+
+      <!-- Open view -->
+      <div id="view-open" class="folder-view">
+        <div class="folder-open">
+          <div class="folder-spine"></div>
+          <!-- Left half -->
+          <div class="folder-half">
+            <div class="amber-header"></div>
+            <div class="pocket">Bolsillo documentos A4</div>
+          </div>
+          <!-- Right half -->
+          <div class="folder-half">
+            <div class="amber-header"></div>
+            <div class="card-slot">Tarjeta 90×50mm</div>
+            <div class="pen-holder" title="Porta-lápiz"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="specs">
+      <h2 class="specs-title">Especificaciones Técnicas</h2>
+      <table class="specs-table">
+        <thead>
+          <tr><th>Propiedad</th><th>Valor</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Formato</td><td>A4 vertical — 210 × 297 mm</td></tr>
+          <tr><td>Material</td><td>Cuero sintético PU 0.8 mm</td></tr>
+          <tr><td>Cierre</td><td>Elástico amber</td></tr>
+          <tr><td>Técnica</td><td>Grabado láser / Serigrafía</td></tr>
+          <tr><td>Interior</td><td>Bolsillo elástico + slot tarjeta 90×50mm + argolla porta-lápiz</td></tr>
+          <tr><td>Pantone Navy</td><td>289 C</td></tr>
+          <tr><td>Pantone Amber</td><td>138 C</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div>
+      <svg viewBox="0 0 100 100" width="24" height="24" style="display:inline;vertical-align:middle;margin-right:8px;" aria-hidden="true">
+        <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+        <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+        <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+      </svg>
+      Taller Mayor Consultoría — Uso interno · v1.0 · 2026
+    </div>
+    <div>Ingeniería que ordena. Consultoría que escala.</div>
+  </footer>
+
+  <script>
+    function downloadBlob(blob, filename) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+
+    async function exportPNG(elementId, filename, targetWidth, targetHeight) {
+      const el = document.getElementById(elementId);
+      const scale = targetWidth / el.offsetWidth;
+      const canvas = await html2canvas(el, {
+        scale,
+        useCORS: true,
+        backgroundColor: null,
+        width: el.offsetWidth,
+        height: el.offsetHeight
+      });
+      canvas.toBlob(blob => downloadBlob(blob, filename), 'image/png');
+    }
+
+    function toggleView(view, btn) {
+      document.getElementById('view-closed').classList.remove('active');
+      document.getElementById('view-open').classList.remove('active');
+      document.getElementById('view-' + view).classList.add('active');
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>

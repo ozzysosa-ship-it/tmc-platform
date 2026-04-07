@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TMC — Firma de Email</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!--
+    Email-safe HTML signature.
+    Use ONLY table-based layout + inline styles.
+    No flexbox, no grid, no external CSS classes.
+    Copy from <table id="tmc-sig"> onwards into your email client.
+  -->
+  <style>
+    #download-panel {
+      background: #1A1F2E;
+      border-bottom: 1px solid rgba(200,146,42,.15);
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    #download-panel .dp-label {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #C8922A;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    #download-panel button {
+      font-family: 'Satoshi', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #E8E6E1;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 180ms ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    #download-panel button:hover {
+      background: rgba(200,146,42,.12);
+      border-color: rgba(200,146,42,.4);
+      color: #C8922A;
+    }
+    #download-panel button.primary {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: #C8922A;
+    }
+    @media print { #download-panel { display: none; } }
+
+    body { font-family: 'Satoshi', 'Inter', Arial, sans-serif; background: #f0f0f0; padding: 40px; margin: 0; }
+    .preview-label { font-family: Arial, sans-serif; font-size: 11px; color: #999; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; }
+    .preview-box { background: #fff; padding: 40px; max-width: 560px; border: 1px solid #ddd; border-radius: 4px; }
+    .dark-preview { background: #1A1F2E; padding: 40px; max-width: 560px; margin-top: 20px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <div id="download-panel">
+    <span class="dp-label">Descargar Firma</span>
+    <button class="primary" onclick="exportPNG('sig-preview', 'tmc-firma-email-2x.png', 1040, 208)">PNG 2x (1040×208)</button>
+    <button onclick="exportPNG('sig-preview', 'tmc-firma-email-1x.png', 520, 104)">PNG 1x (520×104)</button>
+  </div>
+
+  <p class="preview-label">Preview — Light background</p>
+  <div id="sig-preview" class="preview-box">
+
+    <!-- ═══════════════════════════════════════════
+         TMC EMAIL SIGNATURE — Copy from here ↓
+         ═══════════════════════════════════════════ -->
+    <table id="tmc-sig" cellpadding="0" cellspacing="0" border="0"
+           style="font-family: Arial, 'Helvetica Neue', sans-serif; font-size: 13px; line-height: 1.5; color: #1A1F2E; max-width: 520px;">
+      <tr>
+        <td style="padding-bottom: 16px;">
+          <!-- Top amber rule -->
+          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+              <td style="background-color: #C8922A; height: 2px; font-size: 1px; line-height: 1px;">&nbsp;</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <!-- TM Mark column -->
+        <td valign="top" style="padding-top: 4px; padding-right: 16px; width: 48px;">
+          <!-- SVG as inline (email clients that support it) -->
+          <!-- Fallback: text "TM" in amber if SVG not rendered -->
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="background-color: #1A1F2E; width: 44px; height: 44px; text-align: center; vertical-align: middle; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; color: #C8922A; letter-spacing: 1px;">
+                TM
+              </td>
+            </tr>
+          </table>
+        </td>
+
+        <!-- Amber vertical divider -->
+        <td valign="top" style="padding-right: 16px; width: 1px;">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="background-color: #C8922A; width: 1px; height: 52px; font-size: 1px; line-height: 1px;">&nbsp;</td>
+            </tr>
+          </table>
+        </td>
+
+        <!-- Identity column -->
+        <td valign="top" style="padding-right: 32px;">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="font-family: Arial, 'Helvetica Neue', sans-serif; font-size: 15px; font-weight: bold; color: #1A1F2E; letter-spacing: -0.2px; padding-bottom: 1px;">
+                Oswaldo Sosa
+              </td>
+            </tr>
+            <tr>
+              <td style="font-family: Arial, 'Helvetica Neue', sans-serif; font-size: 11px; color: #C8922A; letter-spacing: 0.1em; text-transform: uppercase; padding-bottom: 6px;">
+                Fundador · Taller Mayor Consultoría
+              </td>
+            </tr>
+          </table>
+        </td>
+
+        <!-- Details column -->
+        <td valign="top">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="font-family: Arial, 'Helvetica Neue', sans-serif; font-size: 11px; color: #5A5F70; padding-bottom: 3px;">
+                <a href="mailto:contacto@tallermayor.cl" style="color: #1A1F2E; text-decoration: none;">contacto@tallermayor.cl</a>
+              </td>
+            </tr>
+            <tr>
+              <td style="font-family: Arial, 'Helvetica Neue', sans-serif; font-size: 11px; color: #5A5F70; padding-bottom: 3px;">
+                <a href="https://tallermayor.cl" style="color: #5A5F70; text-decoration: none;">tallermayor.cl</a>
+              </td>
+            </tr>
+            <tr>
+              <td style="font-family: Arial, 'Helvetica Neue', sans-serif; font-size: 11px; color: #5A5F70;">
+                <a href="https://linkedin.com/in/oswaldososa" style="color: #5A5F70; text-decoration: none;">linkedin.com/in/oswaldososa</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="4" style="padding-top: 14px;">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+              <td style="background-color: rgba(200,146,42,.15); height: 1px; font-size: 1px; line-height: 1px;">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="font-family: Arial, 'Helvetica Neue', sans-serif; font-size: 9px; color: #9A9FA E; letter-spacing: 0.05em; padding-top: 6px; color: #8A8F9E;">
+                Ingeniería que ordena. Consultoría que escala. · Chile · Industria Salmonera
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!-- ═══════════════════════════════════════════
+         End of TMC signature
+         ═══════════════════════════════════════════ -->
+
+  </div>
+
+  <br>
+  <p class="preview-label">Preview — Dark background (Gmail dark mode)</p>
+  <div class="dark-preview">
+    <table id="tmc-sig-dark" cellpadding="0" cellspacing="0" border="0"
+           style="font-family: Arial, 'Helvetica Neue', sans-serif; font-size: 13px; line-height: 1.5; color: #E8E6E1; max-width: 520px;">
+      <tr>
+        <td style="padding-bottom: 16px;">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr><td style="background-color: #C8922A; height: 2px; font-size: 1px; line-height: 1px;">&nbsp;</td></tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" style="padding-top: 4px; padding-right: 16px; width: 48px;">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="border: 1px solid rgba(200,146,42,.3); width: 44px; height: 44px; text-align: center; vertical-align: middle; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; color: #C8922A; letter-spacing: 1px;">
+                TM
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td valign="top" style="padding-right: 16px; width: 1px;">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td style="background-color: #C8922A; width: 1px; height: 52px; font-size: 1px; line-height: 1px;">&nbsp;</td></tr>
+          </table>
+        </td>
+        <td valign="top" style="padding-right: 32px;">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td style="font-family: Arial, sans-serif; font-size: 15px; font-weight: bold; color: #E8E6E1; padding-bottom: 1px;">Oswaldo Sosa</td></tr>
+            <tr><td style="font-family: Arial, sans-serif; font-size: 11px; color: #C8922A; letter-spacing: 0.1em; text-transform: uppercase; padding-bottom: 6px;">Fundador · Taller Mayor Consultoría</td></tr>
+          </table>
+        </td>
+        <td valign="top">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr><td style="font-family: Arial, sans-serif; font-size: 11px; padding-bottom: 3px;"><a href="mailto:contacto@tallermayor.cl" style="color: #C8922A; text-decoration: none;">contacto@tallermayor.cl</a></td></tr>
+            <tr><td style="font-family: Arial, sans-serif; font-size: 11px; padding-bottom: 3px;"><a href="https://tallermayor.cl" style="color: #8A8F9E; text-decoration: none;">tallermayor.cl</a></td></tr>
+            <tr><td style="font-family: Arial, sans-serif; font-size: 11px;"><a href="https://linkedin.com/in/oswaldososa" style="color: #8A8F9E; text-decoration: none;">linkedin.com/in/oswaldososa</a></td></tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4" style="padding-top: 14px;">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr><td style="background-color:rgba(200,146,42,.15);height:1px;font-size:1px;line-height:1px;">&nbsp;</td></tr>
+            <tr><td style="font-family:Arial,sans-serif;font-size:9px;color:#4A4F5E;letter-spacing:.05em;padding-top:6px;">Ingeniería que ordena. Consultoría que escala. · Chile · Industria Salmonera</td></tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    function downloadBlob(blob, filename) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+
+    async function exportPNG(elementId, filename, targetWidth, targetHeight) {
+      const el = document.getElementById(elementId);
+      const scale = targetWidth / el.offsetWidth;
+      const canvas = await html2canvas(el, {
+        scale,
+        useCORS: true,
+        backgroundColor: null,
+        width: el.offsetWidth,
+        height: el.offsetHeight
+      });
+      canvas.toBlob(blob => downloadBlob(blob, filename), 'image/png');
+    }
+  </script>
+
+</body>
+</html>

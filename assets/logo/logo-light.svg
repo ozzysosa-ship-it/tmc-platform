@@ -1,0 +1,38 @@
+<svg viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Taller Mayor Consultoría — logotipo versión clara">
+  <title>Taller Mayor Consultoría — Logo light</title>
+  <style>
+    @import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800&amp;display=swap');
+    .wm { font-family: 'Cabinet Grotesk', 'Helvetica Neue', Arial, sans-serif; }
+  </style>
+
+  <!-- Transparent background (no fill) — for light surfaces -->
+
+  <!-- TM mark group (navy on light) -->
+  <g transform="translate(4, 4) scale(0.52)">
+    <!-- T -->
+    <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#1A1F2E"/>
+    <!-- M -->
+    <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#1A1F2E"/>
+    <!-- Amber datum -->
+    <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.4"/>
+    <!-- Ticks -->
+    <g stroke="#C8922A" stroke-width="1" opacity="0.5">
+      <line x1="30" y1="41" x2="30" y2="47"/>
+      <line x1="62" y1="41" x2="62" y2="47"/>
+    </g>
+    <!-- Corner marks -->
+    <g stroke="#C8922A" stroke-width="1.2" opacity="0.4">
+      <line x1="4" y1="6" x2="4" y2="14"/><line x1="0" y1="10" x2="8" y2="10"/>
+      <line x1="96" y1="6" x2="96" y2="14"/><line x1="92" y1="10" x2="100" y2="10"/>
+      <line x1="4" y1="86" x2="4" y2="94"/><line x1="0" y1="90" x2="8" y2="90"/>
+      <line x1="96" y1="86" x2="96" y2="94"/><line x1="92" y1="90" x2="100" y2="90"/>
+    </g>
+  </g>
+
+  <!-- Separator -->
+  <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity="0.4"/>
+
+  <!-- Wordmark — navy text on light bg -->
+  <text x="74" y="29" class="wm" font-size="17" font-weight="800" letter-spacing="2.2" fill="#1A1F2E">TALLER MAYOR</text>
+  <text x="74" y="45" class="wm" font-size="9.5" font-weight="500" letter-spacing="4.5" fill="#4A4F5E">CONSULTORÍA</text>
+</svg>

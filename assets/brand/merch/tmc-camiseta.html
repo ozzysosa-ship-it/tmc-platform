@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMC — Camiseta Corporativa</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --bg:      #0E1117;
+      --surf:    #1A1F2E;
+      --surf2:   #222838;
+      --surf3:   #2A3040;
+      --amber:   #C8922A;
+      --amber-h: #E0A030;
+      --white:   #E8E6E1;
+      --muted:   #8A8F9E;
+      --faint:   #4A4F5E;
+      --red:     #C04040;
+      --font-d:  'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+      --font-b:  'Satoshi', 'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-b);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      min-width: 320px;
+    }
+
+    /* Download Panel */
+    #download-panel {
+      background: #1A1F2E;
+      border-bottom: 1px solid rgba(200,146,42,.15);
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    #download-panel .dp-label {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #C8922A;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    #download-panel button {
+      font-family: 'Satoshi', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #E8E6E1;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 180ms ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    #download-panel button:hover {
+      background: rgba(200,146,42,.12);
+      border-color: rgba(200,146,42,.4);
+      color: #C8922A;
+    }
+    #download-panel button.primary {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: #C8922A;
+    }
+    @media print { #download-panel { display: none; } }
+
+    .page-header {
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(200,146,42,.12);
+    }
+    .page-header a {
+      font-family: var(--font-b);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .04em;
+      transition: color 180ms ease;
+    }
+    .page-header a:hover { color: var(--amber); }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 40px 80px;
+    }
+    .page-title {
+      font-family: var(--font-d);
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 8px;
+    }
+    .page-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    /* Color selector */
+    .color-selector {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .color-selector label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .color-selector input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.1);
+      cursor: pointer;
+      transition: border-color 180ms ease;
+    }
+    .color-selector input[type="radio"]:checked { border-color: var(--amber); border-width: 3px; }
+    .color-selector input[data-color="navy"] { background: #1A1F2E; }
+    .color-selector input[data-color="charcoal"] { background: #2A3040; }
+    .color-selector input[data-color="white"] { background: #F0EDE6; }
+
+    /* Toggle */
+    .toggle-bar {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    .toggle-btn {
+      font-family: var(--font-b);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      background: var(--surf);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 8px 20px;
+      cursor: pointer;
+      transition: all 180ms ease;
+    }
+    .toggle-btn:hover { border-color: rgba(200,146,42,.3); color: var(--amber); }
+    .toggle-btn.active {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: var(--amber);
+    }
+
+    .tshirt-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 48px;
+      transition: opacity 300ms ease;
+    }
+    .tshirt-view { display: none; justify-content: center; }
+    .tshirt-view.active { display: flex; }
+
+    .specs { margin-top: 48px; }
+    .specs-title {
+      font-family: var(--font-d);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 32px;
+    }
+    .specs-table th {
+      text-align: left;
+      font-size: 10px;
+      color: var(--faint);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 10px 0;
+    }
+    .specs-table td {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .specs-table td:first-child {
+      font-weight: 700;
+      color: var(--white);
+      width: 200px;
+    }
+
+    .page-footer {
+      padding: 24px 40px;
+      border-top: 1px solid rgba(200,146,42,.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--faint);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="download-panel">
+    <span class="dp-label">Descargar</span>
+    <button class="primary" onclick="exportPNG('merch-preview', 'tmc-camiseta-2400x1600.png', 2400, 1600)">PNG 2400×1600</button>
+  </div>
+
+  <header class="page-header">
+    <svg width="120" height="24" viewBox="0 0 300 60" aria-label="Taller Mayor Consultoría">
+      <g transform="translate(8,4) scale(0.52)">
+        <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+        <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+        <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+      </g>
+      <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+      <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+      <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+    </svg>
+    <a href="../index_brand.html">← Brand Assets</a>
+  </header>
+
+  <div class="container">
+    <h1 class="page-title">Camiseta Corporativa</h1>
+    <p class="page-sub">T-shirt — 3 colorways con toggle frente/dorso</p>
+
+    <div id="merch-preview">
+      <div class="color-selector">
+        <label><input type="radio" name="colorway" data-color="navy" value="navy" checked onchange="setColor('navy')">Navy</label>
+        <label><input type="radio" name="colorway" data-color="charcoal" value="charcoal" onchange="setColor('charcoal')">Charcoal</label>
+        <label><input type="radio" name="colorway" data-color="white" value="white" onchange="setColor('white')">Blanco</label>
+      </div>
+
+      <div class="toggle-bar">
+        <button class="toggle-btn active" onclick="showSide('front', this)">Frente</button>
+        <button class="toggle-btn" onclick="showSide('back', this)">Dorso</button>
+      </div>
+
+      <!-- Front -->
+      <div id="tshirt-front" class="tshirt-view active">
+        <svg id="svg-front" width="380" height="460" viewBox="0 0 380 460" fill="none">
+          <!-- T-shirt shape front -->
+          <path class="tshirt-body" d="M100,50 L60,65 L10,110 L30,160 L70,140 L70,430 L310,430 L310,140 L350,160 L370,110 L320,65 L280,50 L250,35 Q220,20 190,18 Q160,20 130,35 Z" fill="#1A1F2E" stroke="#2A3040" stroke-width="1"/>
+          <!-- Neckline -->
+          <path d="M130,35 Q160,55 190,58 Q220,55 250,35" fill="none" stroke="#2A3040" stroke-width="1.5"/>
+          <!-- TM monogram chest center 80×80mm -->
+          <g transform="translate(150,150) scale(0.8)">
+            <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" class="mono-fill" fill="#C8922A"/>
+            <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" class="mono-fill" fill="#C8922A"/>
+            <line x1="4" y1="44" x2="96" y2="44" class="mono-line" stroke="#E8E6E1" stroke-width="1.5" opacity=".5"/>
+          </g>
+          <!-- Size annotation -->
+          <text x="190" y="250" font-family="'Satoshi',sans-serif" font-size="8" fill="#4A4F5E" text-anchor="middle" letter-spacing=".08em">SERIGRAFÍA 80×80mm</text>
+        </svg>
+      </div>
+
+      <!-- Back -->
+      <div id="tshirt-back" class="tshirt-view">
+        <svg id="svg-back" width="380" height="460" viewBox="0 0 380 460" fill="none">
+          <!-- T-shirt shape back -->
+          <path class="tshirt-body" d="M100,50 L60,65 L10,110 L30,160 L70,140 L70,430 L310,430 L310,140 L350,160 L370,110 L320,65 L280,50 L250,35 Q220,25 190,23 Q160,25 130,35 Z" fill="#1A1F2E" stroke="#2A3040" stroke-width="1"/>
+          <!-- Back neckline -->
+          <path d="M130,35 Q160,45 190,47 Q220,45 250,35" fill="none" stroke="#2A3040" stroke-width="1.5"/>
+          <!-- Wordmark TALLER MAYOR CONSULTORÍA -->
+          <text x="190" y="200" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="18" font-weight="800" letter-spacing="2.5" class="text-fill" fill="#E8E6E1" text-anchor="middle">TALLER MAYOR</text>
+          <text x="190" y="218" font-family="'Satoshi','Inter',sans-serif" font-size="8" font-weight="500" letter-spacing="4" class="text-sub-fill" fill="#8A8F9E" text-anchor="middle">CONSULTORÍA</text>
+          <!-- Tagline -->
+          <text x="190" y="248" font-family="'Satoshi','Inter',sans-serif" font-size="9" class="text-sub-fill" fill="#8A8F9E" text-anchor="middle" letter-spacing=".04em">Ingeniería que ordena. Consultoría que escala.</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="specs">
+      <h2 class="specs-title">Especificaciones Técnicas</h2>
+      <table class="specs-table">
+        <thead>
+          <tr><th>Propiedad</th><th>Valor</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Material</td><td>100% algodón peinado 180 g/m²</td></tr>
+          <tr><td>Cuello</td><td>Redondo, mangas cortas</td></tr>
+          <tr><td>Técnica de impresión</td><td>Serigrafía plastisol</td></tr>
+          <tr><td>Colorways</td><td>Navy #1A1F2E · Charcoal #2A3040 · Blanco #F0EDE6</td></tr>
+          <tr><td>Pantone Navy</td><td>289 C</td></tr>
+          <tr><td>Tallas</td><td>S – XXL</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div>
+      <svg viewBox="0 0 100 100" width="24" height="24" style="display:inline;vertical-align:middle;margin-right:8px;" aria-hidden="true">
+        <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+        <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+        <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+      </svg>
+      Taller Mayor Consultoría — Uso interno · v1.0 · 2026
+    </div>
+    <div>Ingeniería que ordena. Consultoría que escala.</div>
+  </footer>
+
+  <script>
+    function downloadBlob(blob, filename) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+
+    async function exportPNG(elementId, filename, targetWidth, targetHeight) {
+      const el = document.getElementById(elementId);
+      const scale = targetWidth / el.offsetWidth;
+      const canvas = await html2canvas(el, {
+        scale,
+        useCORS: true,
+        backgroundColor: null,
+        width: el.offsetWidth,
+        height: el.offsetHeight
+      });
+      canvas.toBlob(blob => downloadBlob(blob, filename), 'image/png');
+    }
+
+    function showSide(side, btn) {
+      document.getElementById('tshirt-front').classList.remove('active');
+      document.getElementById('tshirt-back').classList.remove('active');
+      document.getElementById('tshirt-' + side).classList.add('active');
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    var colorSchemes = {
+      navy:     { body: '#1A1F2E', stroke: '#2A3040', mono: '#C8922A', monoLine: '#E8E6E1', text: '#E8E6E1', textSub: '#8A8F9E' },
+      charcoal: { body: '#2A3040', stroke: '#3A4050', mono: '#C8922A', monoLine: '#E8E6E1', text: '#E8E6E1', textSub: '#8A8F9E' },
+      white:    { body: '#F0EDE6', stroke: '#D8D4CC', mono: '#1A1F2E', monoLine: '#C8922A', text: '#1A1F2E', textSub: '#5A5F70' }
+    };
+
+    function setColor(c) {
+      var s = colorSchemes[c];
+      document.querySelectorAll('.tshirt-body').forEach(el => { el.setAttribute('fill', s.body); el.setAttribute('stroke', s.stroke); });
+      document.querySelectorAll('.mono-fill').forEach(el => el.setAttribute('fill', s.mono));
+      document.querySelectorAll('.mono-line').forEach(el => el.setAttribute('stroke', s.monoLine));
+      document.querySelectorAll('.text-fill').forEach(el => el.setAttribute('fill', s.text));
+      document.querySelectorAll('.text-sub-fill').forEach(el => el.setAttribute('fill', s.textSub));
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMC — Chaqueta Corporativa</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --bg:      #0E1117;
+      --surf:    #1A1F2E;
+      --surf2:   #222838;
+      --surf3:   #2A3040;
+      --amber:   #C8922A;
+      --amber-h: #E0A030;
+      --white:   #E8E6E1;
+      --muted:   #8A8F9E;
+      --faint:   #4A4F5E;
+      --red:     #C04040;
+      --font-d:  'Cabinet Grotesk', 'Helvetica Neue', sans-serif;
+      --font-b:  'Satoshi', 'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-b);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      min-width: 320px;
+    }
+
+    /* Download Panel */
+    #download-panel {
+      background: #1A1F2E;
+      border-bottom: 1px solid rgba(200,146,42,.15);
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    #download-panel .dp-label {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #C8922A;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    #download-panel button {
+      font-family: 'Satoshi', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #E8E6E1;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all 180ms ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    #download-panel button:hover {
+      background: rgba(200,146,42,.12);
+      border-color: rgba(200,146,42,.4);
+      color: #C8922A;
+    }
+    #download-panel button.primary {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: #C8922A;
+    }
+    @media print { #download-panel { display: none; } }
+
+    /* Header */
+    .page-header {
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(200,146,42,.12);
+    }
+    .page-header a {
+      font-family: var(--font-b);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .04em;
+      transition: color 180ms ease;
+    }
+    .page-header a:hover { color: var(--amber); }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 40px 80px;
+    }
+    .page-title {
+      font-family: var(--font-d);
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 8px;
+    }
+    .page-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 48px;
+    }
+
+    /* Jacket mockup */
+    .jacket-views {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .jacket-view {
+      display: none;
+      justify-content: center;
+    }
+    .jacket-view.active { display: flex; }
+    .jacket-svg-wrap {
+      position: relative;
+      width: 400px;
+      height: 480px;
+    }
+
+    /* Toggle */
+    .toggle-bar {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 48px;
+    }
+    .toggle-btn {
+      font-family: var(--font-b);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      background: var(--surf);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 8px 20px;
+      cursor: pointer;
+      transition: all 180ms ease;
+    }
+    .toggle-btn:hover { border-color: rgba(200,146,42,.3); color: var(--amber); }
+    .toggle-btn.active {
+      background: rgba(200,146,42,.15);
+      border-color: rgba(200,146,42,.3);
+      color: var(--amber);
+    }
+
+    /* Specs + sizes */
+    .specs { margin-top: 48px; }
+    .specs-title {
+      font-family: var(--font-d);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 32px;
+    }
+    .specs-table th {
+      text-align: left;
+      font-size: 10px;
+      color: var(--faint);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 10px 0;
+    }
+    .specs-table td {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .specs-table td:first-child {
+      font-weight: 700;
+      color: var(--white);
+      width: 200px;
+    }
+
+    .page-footer {
+      padding: 24px 40px;
+      border-top: 1px solid rgba(200,146,42,.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--faint);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="download-panel">
+    <span class="dp-label">Descargar</span>
+    <button class="primary" onclick="exportPNG('merch-preview', 'tmc-chaqueta-2400x1600.png', 2400, 1600)">PNG 2400×1600</button>
+  </div>
+
+  <header class="page-header">
+    <svg width="120" height="24" viewBox="0 0 300 60" aria-label="Taller Mayor Consultoría">
+      <g transform="translate(8,4) scale(0.52)">
+        <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+        <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+        <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="2.5"/>
+      </g>
+      <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity=".3"/>
+      <text x="72" y="30" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+      <text x="72" y="43" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="8" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+    </svg>
+    <a href="../index_brand.html">← Brand Assets</a>
+  </header>
+
+  <div class="container">
+    <h1 class="page-title">Chaqueta Corporativa</h1>
+    <p class="page-sub">Softshell corporativa — Vista frontal y posterior</p>
+
+    <div id="merch-preview">
+      <div class="toggle-bar">
+        <button class="toggle-btn active" onclick="showView('front')">Frente</button>
+        <button class="toggle-btn" onclick="showView('back')">Dorso</button>
+      </div>
+
+      <div class="jacket-views">
+        <!-- Front view -->
+        <div id="view-front" class="jacket-view active">
+          <svg width="400" height="480" viewBox="0 0 400 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Jacket body -->
+            <path d="M120,40 L80,60 L40,120 L20,240 L30,400 L60,440 L170,450 L200,455 L230,450 L340,440 L370,400 L380,240 L360,120 L320,60 L280,40 L240,30 L200,25 L160,30 Z" fill="#1A1F2E" stroke="#2A3040" stroke-width="1"/>
+            <!-- Collar -->
+            <path d="M140,35 L160,30 L200,25 L240,30 L260,35 L250,60 L220,55 L200,52 L180,55 L150,60 Z" fill="#222838" stroke="#2A3040" stroke-width="1"/>
+            <!-- Zipper -->
+            <line x1="200" y1="55" x2="200" y2="450" stroke="#C8922A" stroke-width="2"/>
+            <!-- Zipper pull -->
+            <rect x="196" y="80" width="8" height="14" rx="2" fill="#C8922A"/>
+            <!-- Left pocket -->
+            <path d="M80,220 L170,220 L170,280 L80,280 Z" fill="none" stroke="#2A3040" stroke-width="1"/>
+            <!-- Right pocket -->
+            <path d="M230,220 L320,220 L320,280 L230,280 Z" fill="none" stroke="#2A3040" stroke-width="1"/>
+            <!-- Left sleeve seam -->
+            <path d="M120,40 L80,60 L40,120 L30,200" fill="none" stroke="#2A3040" stroke-width="1"/>
+            <!-- Right sleeve seam -->
+            <path d="M280,40 L320,60 L360,120 L370,200" fill="none" stroke="#2A3040" stroke-width="1"/>
+            <!-- TM monogram chest left 30x30mm ref -->
+            <g transform="translate(95,130) scale(0.35)">
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#C8922A"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#C8922A"/>
+              <line x1="4" y1="44" x2="96" y2="44" stroke="#E8E6E1" stroke-width="2" opacity=".5"/>
+            </g>
+            <!-- Annotation: bordado -->
+            <text x="100" y="175" font-family="'Satoshi',sans-serif" font-size="8" fill="#4A4F5E" letter-spacing=".08em">BORDADO 30×30mm</text>
+            <!-- Internal label -->
+            <text x="184" y="72" font-family="'Satoshi',sans-serif" font-size="7" fill="#C8922A" letter-spacing=".1em">TMC</text>
+            <!-- Amber vivos on zipper edges -->
+            <line x1="198" y1="55" x2="198" y2="450" stroke="rgba(200,146,42,.2)" stroke-width="0.5"/>
+            <line x1="202" y1="55" x2="202" y2="450" stroke="rgba(200,146,42,.2)" stroke-width="0.5"/>
+          </svg>
+        </div>
+
+        <!-- Back view -->
+        <div id="view-back" class="jacket-view">
+          <svg width="400" height="480" viewBox="0 0 400 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Jacket body back -->
+            <path d="M120,40 L80,60 L40,120 L20,240 L30,400 L60,440 L170,450 L200,455 L230,450 L340,440 L370,400 L380,240 L360,120 L320,60 L280,40 L240,30 L200,25 L160,30 Z" fill="#1A1F2E" stroke="#2A3040" stroke-width="1"/>
+            <!-- Collar back -->
+            <path d="M140,35 L160,30 L200,25 L240,30 L260,35 L255,50 L200,42 L145,50 Z" fill="#222838" stroke="#2A3040" stroke-width="1"/>
+            <!-- Center back seam -->
+            <line x1="200" y1="42" x2="200" y2="450" stroke="#2A3040" stroke-width="0.5" stroke-dasharray="4,4"/>
+            <!-- Left sleeve seam -->
+            <path d="M120,40 L80,60 L40,120 L30,200" fill="none" stroke="#2A3040" stroke-width="1"/>
+            <!-- Right sleeve seam -->
+            <path d="M280,40 L320,60 L360,120 L370,200" fill="none" stroke="#2A3040" stroke-width="1"/>
+            <!-- Wordmark TALLER MAYOR centered on back -->
+            <text x="200" y="240" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="22" font-weight="800" letter-spacing="3" fill="#E8E6E1" text-anchor="middle">TALLER MAYOR</text>
+            <!-- Annotation -->
+            <text x="200" y="260" font-family="'Satoshi',sans-serif" font-size="8" fill="#4A4F5E" text-anchor="middle" letter-spacing=".08em">BORDADO 180mm · Cabinet Grotesk 800</text>
+            <!-- Left sleeve tagline (optional) -->
+            <g transform="translate(52,180) rotate(-90)">
+              <text font-family="'Satoshi',sans-serif" font-size="6" fill="#4A4F5E" letter-spacing=".06em">Ingeniería que ordena</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sizes -->
+    <div class="specs">
+      <h2 class="specs-title">Tabla de Tallas</h2>
+      <table class="specs-table">
+        <thead>
+          <tr><th>Talla</th><th>Pecho (cm)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>S</td><td>46 – 48</td></tr>
+          <tr><td>M</td><td>50 – 52</td></tr>
+          <tr><td>L</td><td>54 – 56</td></tr>
+          <tr><td>XL</td><td>58 – 60</td></tr>
+          <tr><td>XXL</td><td>62 – 64</td></tr>
+        </tbody>
+      </table>
+
+      <h2 class="specs-title">Especificaciones Técnicas</h2>
+      <table class="specs-table">
+        <thead>
+          <tr><th>Propiedad</th><th>Valor</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Material</td><td>Softshell 300 g/m²</td></tr>
+          <tr><td>Técnica</td><td>Bordado computarizado</td></tr>
+          <tr><td>Colores</td><td>Body Navy #1A1F2E · Cremallera/vivos Amber #C8922A · Forro #E8E6E1</td></tr>
+          <tr><td>Pantone Navy</td><td>289 C</td></tr>
+          <tr><td>Pantone Amber</td><td>138 C</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div>
+      <svg viewBox="0 0 100 100" width="24" height="24" style="display:inline;vertical-align:middle;margin-right:8px;" aria-hidden="true">
+        <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+        <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+        <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.5"/>
+      </svg>
+      Taller Mayor Consultoría — Uso interno · v1.0 · 2026
+    </div>
+    <div>Ingeniería que ordena. Consultoría que escala.</div>
+  </footer>
+
+  <script>
+    function downloadBlob(blob, filename) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }
+
+    async function exportPNG(elementId, filename, targetWidth, targetHeight) {
+      const el = document.getElementById(elementId);
+      const scale = targetWidth / el.offsetWidth;
+      const canvas = await html2canvas(el, {
+        scale,
+        useCORS: true,
+        backgroundColor: null,
+        width: el.offsetWidth,
+        height: el.offsetHeight
+      });
+      canvas.toBlob(blob => downloadBlob(blob, filename), 'image/png');
+    }
+
+    function showView(view) {
+      document.getElementById('view-front').classList.remove('active');
+      document.getElementById('view-back').classList.remove('active');
+      document.getElementById('view-' + view).classList.add('active');
+      document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
