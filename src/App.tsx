@@ -11,8 +11,7 @@ import {
   EyeOff, 
   TrendingDown,
   MapPin,
-  Clock,
-  MessageCircle
+  Clock
 } from 'lucide-react';
 import { useState } from 'react';
 import ServicesSection from './sections/services/ServicesSection';
@@ -461,15 +460,13 @@ function App() {
               </a>
             </div>
             
-            {/* Right - Placeholder for photo */}
-            <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-navy-light border border-white/10 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="w-24 h-24 bg-amber/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <MessageCircle className="text-amber" size={40} />
-                </div>
-                <p className="text-gray-cool text-sm">Foto del fundador</p>
-                <p className="text-gray-cool/60 text-xs mt-2">(Espacio reservado)</p>
-              </div>
+            {/* Right - Founder photo */}
+            <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-navy-light border border-white/10">
+              <img
+                src="/foto_creador.png"
+                alt="Fundador de Taller Mayor Consultoría"
+                className="absolute inset-0 w-full h-full object-cover object-top"
+              />
             </div>
           </div>
         </div>
