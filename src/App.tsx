@@ -450,7 +450,7 @@ function App() {
               </div>
               
               <a 
-                href="https://linkedin.com/in/oswaldososa" 
+                href="https://linkedin.com/in/tallermayor" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-amber hover:text-amber-light font-medium mt-8 group"
