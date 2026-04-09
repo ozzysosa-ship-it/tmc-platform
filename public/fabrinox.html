@@ -1453,6 +1453,20 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <script>
+    // TRACKING · Evento A: propuesta abierta
+    (function() {
+      fetch("/api/track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          evento: "propuesta_abierta",
+          propuesta: "fabrinox",
+          timestamp: new Date().toISOString(),
+          userAgent: navigator.userAgent
+        })
+      }).catch(() => {}); // silencioso — nunca interrumpe la propuesta
+    })();
+
     /* ── Service Modal Data ─────────────────────── */
     var SERVICES = {
       estrategia: {
@@ -1746,6 +1760,17 @@
         document.getElementById("pw-overlay").style.display = "none";
         document.getElementById("main-content").style.display = "block";
         document.body.style.overflow = "auto";
+        // TRACKING · Evento B: propuesta desbloqueada
+        fetch("/api/track", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            evento: "propuesta_desbloqueada",
+            propuesta: "fabrinox",
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent
+          })
+        }).catch(() => {});
       } else {
         document.getElementById("pw-error").style.display = "block";
         document.getElementById("pw-input").value = "";
