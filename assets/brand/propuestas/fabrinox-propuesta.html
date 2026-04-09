@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMC — Propuesta Fabrinox · Abril 2026</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <style>
+    /* ══ Design Tokens ══════════════════════════════ */
+    :root {
+      --navy:        #1A1F2E;
+      --amber:       #C8922A;
+      --bg:          #F7F6F2;
+      --surface:     #FFFFFF;
+      --text:        #1A1F2E;
+      --muted:       #6B7280;
+      --border:      #E5E2DC;
+      --font-display:'Cabinet Grotesk', 'Inter', sans-serif;
+      --font-body:   'Satoshi', 'Inter', sans-serif;
+      --pmblue:      #3D5A80;
+    }
+
+    /* ══ Reset ══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ══ Utility ════════════════════════════════════ */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ══ S1 · HERO ══════════════════════════════════ */
+    #hero {
+      background: var(--navy);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 80px 0;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 48px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .hero-pill {
+      display: inline-block;
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      letter-spacing: 0.02em;
+    }
+    #hero h1 {
+      font-family: var(--font-display);
+      font-size: 56px;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .hero-text {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.8);
+      max-width: 520px;
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 200ms ease;
+      min-height: 48px;
+      min-width: 44px;
+    }
+    .btn-primary {
+      background: var(--amber);
+      color: var(--navy);
+    }
+    .btn-primary:hover {
+      background: var(--navy);
+      color: var(--amber);
+      box-shadow: inset 0 0 0 2px var(--amber);
+    }
+    .btn-secondary-light {
+      background: transparent;
+      color: #FFFFFF;
+      box-shadow: inset 0 0 0 1px #FFFFFF;
+    }
+    .btn-secondary-light:hover {
+      background: #FFFFFF;
+      color: var(--navy);
+    }
+    .btn-navy {
+      background: var(--navy);
+      color: #FFFFFF;
+    }
+    .btn-navy:hover {
+      background: var(--amber);
+      color: var(--navy);
+    }
+
+    /* Hero card */
+    .hero-card {
+      background: #252B3B;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 32px;
+    }
+    .hero-card-label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 8px;
+    }
+    .hero-card-name {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .hero-card-role {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+    .hero-card-sep {
+      height: 1px;
+      background: var(--amber);
+      margin: 16px 0;
+    }
+    .hero-card-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #FFFFFF;
+    }
+    .hero-card-row i { color: var(--amber); width: 16px; height: 16px; flex-shrink: 0; }
+    .hero-card-conf {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* ══ S2 · DIAGNÓSTICO ═══════════════════════════ */
+    #diagnostico {
+      background: var(--bg);
+      padding: 96px 0;
+    }
+    .section-heading {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-heading h2 {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .section-heading p {
+      font-family: var(--font-body);
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+    .diag-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .diag-card {
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .diag-card i { color: var(--amber); width: 32px; height: 32px; margin-bottom: 16px; }
+    .diag-card h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .diag-card p {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ══ S3 · SERVICIOS ═════════════════════════════ */
+    #servicios {
+      background: var(--navy);
+      padding: 96px 0;
+    }
+    #servicios .section-heading h2 { color: #FFFFFF; }
+    #servicios .section-heading p { color: rgba(200,146,42,0.8); font-size: 17px; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .service-card {
+      background: #252B3B;
+      border: 1px solid rgba(200,146,42,0.25);
+      border-radius: 8px;
+      padding: 28px;
+      cursor: pointer;
+      transition: border-color 200ms ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .service-card:hover { border-color: var(--amber); }
+    .service-card i { color: var(--amber); width: 28px; height: 28px; margin-bottom: 14px; flex-shrink: 0; }
+    .service-card h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+    .service-card .service-bajada {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: rgba(200,146,42,0.7);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .service-card .service-link {
+      margin-top: auto;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ══ MODAL ══════════════════════════════════════ */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-container {
+      background: var(--surface);
+      border-radius: 12px;
+      max-width: 580px;
+      width: 92%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 40px;
+      position: relative;
+      animation: modalIn 250ms ease-out;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--navy);
+      cursor: pointer;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 200ms;
+    }
+    .modal-close:hover { color: var(--amber); }
+    .modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .modal-header i { color: var(--amber); width: 32px; height: 32px; flex-shrink: 0; }
+    .modal-header h3 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.2;
+      padding-right: 32px;
+    }
+    .modal-label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .modal-text {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--navy);
+      line-height: 1.6;
+    }
+    .modal-sep { height: 1px; background: var(--border); margin: 20px 0; }
+    .modal-list {
+      list-style: none;
+      padding: 0;
+    }
+    .modal-list li {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--navy);
+      line-height: 1.6;
+      padding-left: 20px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .modal-list li::before {
+      content: '\25A0';
+      color: var(--amber);
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+    .modal-highlight {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--navy);
+      background: var(--bg);
+      padding: 16px;
+      border-left: 3px solid var(--amber);
+      border-radius: 4px;
+      line-height: 1.6;
+    }
+    .modal-footer { margin-top: 24px; text-align: right; }
+
+    /* ══ S4 · PLANES ════════════════════════════════ */
+    #planes {
+      background: var(--bg);
+      padding: 96px 0;
+    }
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .plan-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .plan-card.recommended {
+      background: var(--navy);
+      border: 2px solid var(--amber);
+    }
+    .plan-badge {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(200,146,42,0.12);
+      padding: 3px 10px;
+      border-radius: 3px;
+      margin-bottom: 12px;
+      align-self: flex-start;
+    }
+    .plan-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .plan-card.recommended .plan-name { color: #FFFFFF; }
+    .plan-price {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+    .plan-card.recommended .plan-price { color: var(--amber); }
+    .plan-clp {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .plan-card.recommended .plan-clp { color: rgba(255,255,255,0.5); }
+    .plan-visits {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .plan-card.recommended .plan-visits {
+      color: #FFFFFF;
+      border-color: rgba(255,255,255,0.1);
+    }
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .plan-features li {
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.4;
+    }
+    .plan-card.recommended .plan-features li { color: rgba(255,255,255,0.7); }
+    .plan-features .feat-check { color: var(--amber); font-weight: 700; flex-shrink: 0; }
+    .plan-features .feat-dash { color: var(--muted); opacity: 0.4; flex-shrink: 0; }
+    .plan-features .feat-extra {
+      font-size: 12px;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .plan-card.recommended .plan-features .feat-extra { color: rgba(255,255,255,0.5); }
+    .plans-note {
+      font-size: 13px;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.65;
+      max-width: 700px;
+      margin: 0 auto 32px;
+      text-align: center;
+    }
+    .plans-cta { text-align: center; }
+
+    /* Pulse animation for T2 */
+    @keyframes pulse-amber {
+      0% { box-shadow: 0 0 0 0 rgba(200,146,42,0.5); }
+      50% { box-shadow: 0 0 0 12px rgba(200,146,42,0); }
+      100% { box-shadow: 0 0 0 0 rgba(200,146,42,0); }
+    }
+    .plan-card.pulse { animation: pulse-amber 600ms ease-in-out; }
+
+    /* ══ S5 · NÚMEROS ═══════════════════════════════ */
+    #numeros {
+      background: var(--navy);
+      padding: 96px 0;
+    }
+    #numeros .section-heading h2 { color: #FFFFFF; }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+    .metric-block { text-align: center; }
+    .metric-number {
+      font-family: var(--font-display);
+      font-size: 64px;
+      font-weight: 800;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .metric-label {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 500;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+    .metric-detail {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .metrics-context {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.8);
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 1.65;
+    }
+
+    /* ══ S6 · DIFERENCIADORES ═══════════════════════ */
+    #diferenciadores {
+      background: var(--bg);
+      padding: 96px 0;
+    }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    .diff-block {}
+    .diff-num {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .diff-block h3 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .diff-block p {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ══ S7 · PRÓXIMOS PASOS ═══════════════════════ */
+    #pasos {
+      background: var(--surface);
+      padding: 96px 0;
+    }
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+      margin-bottom: 48px;
+    }
+    .steps-row::before {
+      content: '';
+      position: absolute;
+      top: 22px;
+      left: 16.66%;
+      right: 16.66%;
+      height: 2px;
+      background: var(--border);
+    }
+    .step-item { text-align: center; position: relative; }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--amber);
+      background: var(--surface);
+      border: 2px solid var(--amber);
+      border-radius: 50%;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-item h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .step-item p {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 280px;
+      margin: 0 auto;
+    }
+    .steps-cta { text-align: center; }
+
+    /* ══ S8 · FOOTER ═══════════════════════════════ */
+    #footer-section {
+      background: var(--navy);
+      padding: 56px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 32px;
+    }
+    .footer-col {}
+    .footer-col .footer-tagline {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+    .footer-contact-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 10px;
+    }
+    .footer-contact-row i { color: var(--amber); width: 16px; height: 16px; flex-shrink: 0; }
+    .footer-contact-row a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: color 200ms;
+    }
+    .footer-contact-row a:hover { color: var(--amber); }
+    .footer-prop-info {
+      text-align: right;
+    }
+    .footer-prop-info p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .footer-bottom {
+      border-top: 1px solid #252B3B;
+      padding-top: 20px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ══ PASSWORD OVERLAY ═══════════════════════════ */
+    #pw-overlay {
+      position: fixed; inset: 0; z-index: 10000;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pw-box {
+      text-align: center;
+      max-width: 380px; width: 92%; padding: 0 16px;
+    }
+    .pw-logo { height: 52px; width: auto; margin-bottom: 12px; }
+    .pw-slogan {
+      font-family: var(--font-body); font-size: 13px; font-weight: 400;
+      color: rgba(200,146,42,0.6); margin-bottom: 20px;
+    }
+    .pw-sep {
+      width: 48px; height: 1px; background: var(--amber);
+      margin: 0 auto 20px;
+    }
+    .pw-title {
+      font-family: var(--font-display); font-size: 22px; font-weight: 800;
+      color: #FFFFFF; margin-bottom: 8px;
+    }
+    .pw-sub {
+      font-family: var(--font-body); font-size: 14px; font-weight: 400;
+      color: var(--muted); margin-bottom: 24px;
+    }
+    #pw-input {
+      display: block; width: 100%; max-width: 320px; margin: 0 auto 12px;
+      background: #252B3B; border: 1px solid rgba(200,146,42,0.3);
+      color: #FFFFFF; font-family: var(--font-body); font-size: 15px;
+      padding: 14px 18px; border-radius: 8px; outline: none;
+      transition: border-color 150ms;
+    }
+    #pw-input::placeholder { color: var(--muted); }
+    #pw-input:focus { border-color: var(--amber); }
+    #pw-btn {
+      display: block; width: 100%; max-width: 320px; margin: 0 auto 12px;
+      background: var(--amber); color: var(--navy);
+      font-family: var(--font-display); font-size: 15px; font-weight: 700;
+      padding: 14px 40px; border-radius: 8px; border: none;
+      cursor: pointer; transition: filter 150ms;
+      min-height: 48px;
+    }
+    #pw-btn:hover { filter: brightness(1.08); }
+    #pw-error {
+      display: none; color: #E57373;
+      font-family: var(--font-body); font-size: 13px;
+      margin-bottom: 16px;
+    }
+    .pw-footer {
+      font-size: 12px; color: var(--muted); margin-top: 24px;
+    }
+
+    /* ══ STICKY NAV ═════════════════════════════════ */
+    .sticky-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(200,146,42,0.15);
+      padding: 12px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .sticky-nav-left { display: flex; flex-direction: column; gap: 2px; }
+    .sticky-nav-logo { height: 40px; width: auto; }
+    .sticky-nav-slogan {
+      font-family: var(--font-body); font-size: 12px; font-weight: 400;
+      font-style: italic; color: rgba(200,146,42,0.7);
+    }
+    .sticky-nav-right {
+      font-family: var(--font-body); font-size: 12px; color: var(--muted);
+    }
+
+    /* ══ S4.5 · ESCENARIOS ══════════════════════════ */
+    #escenarios { background: var(--bg); padding: 88px 24px; }
+    .sec-inner  { max-width: 1140px; margin: 0 auto; }
+    .sec-label {
+      font-family: var(--font-display); font-size: 12px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 12px;
+    }
+    .sec-title {
+      font-family: var(--font-display); font-size: clamp(28px,4vw,42px);
+      font-weight: 800; color: var(--navy); line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .sec-sub {
+      font-size: 17px; color: var(--muted);
+      max-width: 660px; line-height: 1.65; margin-bottom: 20px;
+    }
+    .aspiracional {
+      margin-bottom: 48px; padding: 24px 28px;
+      background: var(--navy); border-radius: 10px;
+      border-left: 4px solid var(--amber);
+    }
+    .aspiracional-title {
+      font-family: var(--font-display); font-size: 14px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 8px;
+    }
+    .aspiracional p { font-size: 14px; color: rgba(255,255,255,.80); line-height: 1.7; }
+    .aspiracional strong { color: white; }
+    .legend {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      margin-bottom: 40px; padding: 16px 22px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--muted); }
+    .dot { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
+    .dot-ant  { background: var(--amber); }
+    .dot-com  { background: var(--navy); }
+    .dot-pm   { background: var(--pmblue); }
+    .cards-grid { display: flex; flex-direction: column; gap: 18px; margin-bottom: 52px; }
+    .sc-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden; transition: box-shadow .2s;
+    }
+    .sc-card:hover { box-shadow: 0 4px 22px rgba(26,31,46,.09); }
+    .sc-head { display: grid; grid-template-columns: 220px 1fr; align-items: stretch; }
+    .sc-id {
+      background: var(--navy); padding: 20px 22px;
+      display: flex; flex-direction: column; justify-content: center; gap: 4px;
+    }
+    .sc-capex { font-family: var(--font-display); font-size: 20px; font-weight: 800; color: var(--amber); }
+    .sc-tipo  { font-size: 11px; color: rgba(255,255,255,.55); }
+    .sc-dur {
+      display: inline-block; margin-top: 6px;
+      font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--navy); background: var(--amber); border-radius: 4px; padding: 2px 7px;
+      width: fit-content;
+    }
+    .sc-nums { display: flex; padding: 16px 22px; flex-wrap: wrap; gap: 0; }
+    .sc-num {
+      flex: 1; min-width: 100px;
+      border-right: 1px solid var(--border);
+      padding-right: 18px; margin-right: 18px;
+    }
+    .sc-num:last-child { border-right: none; margin-right: 0; }
+    .sc-num-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 3px; }
+    .sc-num-val   { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--navy); }
+    .sc-num-val.amber { color: var(--amber); }
+    .sc-num-sub   { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .com-badge {
+      display: inline-block; margin-top: 3px;
+      font-size: 11px; font-weight: 700;
+      color: white; border-radius: 4px; padding: 1px 7px;
+    }
+    .sc-timeline-wrap { padding: 14px 22px 18px; border-top: 1px solid var(--border); }
+    .sc-tl-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 9px; }
+    .sc-tl {
+      display: flex; width: 100%; height: 36px;
+      border-radius: 6px; overflow: hidden; gap: 3px;
+    }
+    .tl-ant {
+      width: 120px; flex-shrink: 0; background: var(--amber);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--navy); white-space: nowrap;
+    }
+    .tl-gap {
+      width: 28px; flex-shrink: 0; background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; color: var(--muted);
+    }
+    .tl-com {
+      width: 100px; flex-shrink: 0; background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: white; white-space: nowrap;
+    }
+    .tl-pm {
+      flex: 1; background: var(--pmblue);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: white; min-width: 80px;
+    }
+    .sc-ticks { display: flex; justify-content: space-between; margin-top: 5px; padding: 0 2px; }
+    .sc-tick { font-size: 10px; color: var(--muted); }
+    .sc-payments {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      padding: 10px 22px 18px; border-top: 1px solid var(--border);
+    }
+    .pay-pill {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 5px 11px; font-size: 12px; color: var(--navy);
+    }
+    .pay-dot  { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+    .pay-moment { font-weight: 700; }
+    .pay-desc   { color: var(--muted); }
+    .resumen-title {
+      font-family: var(--font-display); font-size: 22px; font-weight: 800;
+      color: var(--navy); margin-bottom: 18px;
+    }
+    .tbl-wrap { overflow-x: auto; }
+    #escenarios table {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+      background: var(--surface); border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    #escenarios thead tr { background: var(--navy); }
+    #escenarios thead th {
+      font-family: var(--font-display); font-size: 11px; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: rgba(255,255,255,.7); padding: 13px 14px; text-align: right;
+    }
+    #escenarios thead th:first-child { text-align: left; }
+    #escenarios tbody tr:nth-child(even) { background: #FAFAF8; }
+    #escenarios tbody tr:hover { background: #F3EFE8; }
+    #escenarios td {
+      padding: 12px 14px; color: var(--navy);
+      text-align: right; border-bottom: 1px solid var(--border);
+    }
+    #escenarios td:first-child { text-align: left; font-weight: 700; }
+    #escenarios td.amber  { color: var(--amber); font-weight: 700; }
+    #escenarios td.muted  { color: var(--muted); font-size: 12px; }
+    #escenarios td.center { text-align: center; }
+    .com-tag {
+      display: inline-block; border-radius: 4px; padding: 2px 8px;
+      font-size: 11px; font-weight: 700; color: white;
+    }
+    #escenarios tbody tr:last-child td { border-bottom: none; }
+    .tbl-note {
+      font-size: 12px; color: var(--muted);
+      margin-top: 11px; font-style: italic; line-height: 1.55;
+    }
+    .nota-clave {
+      margin-top: 44px; padding: 26px 30px;
+      background: var(--navy); border-radius: 12px;
+      display: flex; gap: 18px; align-items: flex-start;
+    }
+    .nota-icon { font-size: 26px; flex-shrink: 0; margin-top: 3px; }
+    .nota-text h4 {
+      font-family: var(--font-display); font-size: 17px; font-weight: 800;
+      color: var(--amber); margin-bottom: 8px;
+    }
+    .nota-text p { font-size: 14px; color: rgba(255,255,255,.8); line-height: 1.65; }
+    .nota-text strong { color: white; }
+
+    /* ══ Responsive ═════════════════════════════════ */
+    @media (max-width: 1024px) {
+      #hero h1 { font-size: 42px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-card { max-width: 400px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .plans-grid { grid-template-columns: repeat(2, 1fr); }
+      .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      #hero h1 { font-size: 36px; }
+      .hero-text { font-size: 16px; }
+      .section-heading h2 { font-size: 30px; }
+      .diag-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .plans-grid { grid-template-columns: 1fr; }
+      .plan-card { max-width: 400px; margin: 0 auto; width: 100%; }
+      .diff-grid { grid-template-columns: 1fr; }
+      .steps-row { grid-template-columns: 1fr; gap: 32px; }
+      .steps-row::before { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-prop-info { text-align: left; }
+      .metrics-grid { grid-template-columns: 1fr; gap: 40px; }
+      .metric-number { font-size: 48px; }
+      /* escenarios responsive */
+      #escenarios { padding: 56px 16px; }
+      .sc-head { grid-template-columns: 1fr; }
+      .sc-nums { padding: 13px 16px; }
+      .sc-num  { min-width: 80px; padding-right: 12px; margin-right: 12px; }
+      .sc-tl   { height: 32px; }
+      .tl-ant  { width: 88px; font-size: 10px; }
+      .tl-com  { width: 78px; font-size: 10px; }
+      .nota-clave { flex-direction: column; padding: 20px 18px; }
+      .legend { gap: 14px; }
+      /* sticky nav responsive */
+      .sticky-nav { padding: 10px 16px; }
+      .sticky-nav-right { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      #hero { padding: 48px 0; }
+      .hero-grid { padding: 0 16px; }
+      .hero-buttons { flex-direction: column; }
+      .hero-buttons .btn { width: 100%; }
+      .services-grid { grid-template-columns: 1fr; }
+      .modal-container { padding: 24px; }
+      .modal-header h3 { font-size: 22px; }
+      .container { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ PASSWORD OVERLAY ═══════════════════════════ -->
+  <div id="pw-overlay">
+    <div class="pw-box">
+      <svg class="pw-logo" viewBox="0 0 300 60" role="img" aria-label="Taller Mayor Consultoría">
+        <g transform="translate(4, 4) scale(0.52)">
+          <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+          <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+          <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.4"/>
+          <g stroke="#C8922A" stroke-width="1" opacity="0.4"><line x1="30" y1="41" x2="30" y2="47"/><line x1="62" y1="41" x2="62" y2="47"/></g>
+        </g>
+        <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity="0.35"/>
+        <text x="74" y="29" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+        <text x="74" y="45" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="9.5" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+      </svg>
+      <p class="pw-slogan">Ingeniería que ordena, Consultoría que escala</p>
+      <div class="pw-sep"></div>
+      <h2 class="pw-title">Documento confidencial</h2>
+      <p class="pw-sub">Ingresa la clave para acceder a la propuesta de Fabrinox.</p>
+      <input type="password" id="pw-input" placeholder="Contraseña de acceso" autocomplete="off">
+      <button id="pw-btn" type="button">Acceder</button>
+      <p id="pw-error">Contraseña incorrecta. Inténtalo de nuevo.</p>
+      <p class="pw-footer">Documento preparado para Víctor Campos · Fabrinox · Abril 2026</p>
+    </div>
+  </div>
+
+  <!-- ══ CONTENIDO PRINCIPAL ════════════════════════ -->
+  <div id="main-content">
+
+  <!-- ══ STICKY NAV ═════════════════════════════════ -->
+  <nav class="sticky-nav">
+    <div class="sticky-nav-left">
+      <svg class="sticky-nav-logo" viewBox="0 0 300 60" role="img" aria-label="Taller Mayor Consultoría">
+        <g transform="translate(4, 4) scale(0.52)">
+          <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+          <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+          <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.4"/>
+          <g stroke="#C8922A" stroke-width="1" opacity="0.4"><line x1="30" y1="41" x2="30" y2="47"/><line x1="62" y1="41" x2="62" y2="47"/></g>
+        </g>
+        <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity="0.35"/>
+        <text x="74" y="29" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+        <text x="74" y="45" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="9.5" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+      </svg>
+      <span class="sticky-nav-slogan">Ingeniería que ordena, Consultoría que escala</span>
+    </div>
+    <span class="sticky-nav-right">Propuesta confidencial · Fabrinox · Abril 2026</span>
+  </nav>
+
+  <!-- ══ S1 · HERO ══════════════════════════════════ -->
+  <header id="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="hero-pill">Propuesta Técnico-Comercial · Abril 2026</span>
+        <h1>Desarrollo comercial e ingeniería para Fabrinox en el sur</h1>
+        <p class="hero-text">Un modelo de trabajo que integra estrategia comercial, presencia digital, ingeniería de proceso y gestión de proyectos — todo en un retainer mensual sin cobros variables por cada actividad.</p>
+        <div class="hero-buttons">
+          <a href="#planes" class="btn btn-primary">Ver planes y precios</a>
+          <a href="#servicios" class="btn btn-secondary-light">Ver servicios</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-label">PREPARADO PARA</div>
+        <div class="hero-card-name">Víctor Campos</div>
+        <p class="hero-card-role">Fabrinox Campos y Salinas Ltda.</p>
+        <div class="hero-card-sep"></div>
+        <div class="hero-card-row"><i data-lucide="map-pin"></i> Región de Los Lagos · Aysén</div>
+        <div class="hero-card-row"><i data-lucide="calendar"></i> Vigencia: hasta el 30 de Abril de 2026</div>
+        <div class="hero-card-row"><i data-lucide="file-text"></i> Referencia: TMC-FAB-2026-001</div>
+        <div class="hero-card-sep"></div>
+        <p class="hero-card-conf">Documento confidencial. Uso exclusivo del destinatario.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ══ S2 · DIAGNÓSTICO ═══════════════════════════ -->
+    <section id="diagnostico">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Lo que Fabrinox necesita resolver</h2>
+          <p>Tres fricciones concretas que este modelo de trabajo elimina.</p>
+        </div>
+        <div class="diag-grid">
+          <div class="diag-card">
+            <i data-lucide="clock"></i>
+            <h3>Horas perdidas coordinando cada visita</h3>
+            <p>Cada salida a terreno genera una negociación de honorarios separada que consume tiempo gerencial y crea incertidumbre en el presupuesto. Con el retainer, los honorarios por visitas ya están incluidas.</p>
+          </div>
+          <div class="diag-card">
+            <i data-lucide="search"></i>
+            <h3>Licitaciones que se pierden por falta de seguimiento</h3>
+            <p>El mercado de licitaciones públicas y privadas del sector salmonero requiere monitoreo diario. Sin eso, Fabrinox llega tarde o directamente no se entera. TMC lo cubre de forma sistemática.</p>
+          </div>
+          <div class="diag-card">
+            <i data-lucide="trending-up"></i>
+            <h3>Baja visibilidad en el mercado objetivo</h3>
+            <p>Los tomadores de decisión del sector industrial investigan proveedores en LinkedIn antes de contactar. Fabrinox necesita presencia técnica activa ahí para ser considerado en la primera ronda.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ S3 · SERVICIOS ═════════════════════════════ -->
+    <section id="servicios">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Servicios que incluye la propuesta</h2>
+          <p>Haz clic en cualquier servicio para ver en detalle qué es, cómo lo hacemos y para qué le sirve a Fabrinox.</p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card" data-service="estrategia">
+            <i data-lucide="target"></i>
+            <h3>Estrategia Comercial</h3>
+            <span class="service-bajada">Plan mensual · KPIs · Posicionamiento sur</span>
+            <span class="service-link">Ver detalle →</span>
+          </div>
+          <div class="service-card" data-service="linkedin">
+            <i data-lucide="linkedin"></i>
+            <h3>Contenido y Presencia LinkedIn</h3>
+            <span class="service-bajada">4–8 publicaciones/mes · Perfil optimizado</span>
+            <span class="service-link">Ver detalle →</span>
+          </div>
+          <div class="service-card" data-service="licitaciones">
+            <i data-lucide="bell"></i>
+            <h3>Seguimiento de Licitaciones</h3>
+            <span class="service-bajada">Monitoreo diario · Alertas · Briefing semanal</span>
+            <span class="service-link">Ver detalle →</span>
+          </div>
+          <div class="service-card" data-service="visitas">
+            <i data-lucide="map-pin"></i>
+            <h3>Visitas Técnicas Comerciales</h3>
+            <span class="service-bajada">Terreno · Levantamiento · Informe 48h</span>
+            <span class="service-link">Ver detalle →</span>
+          </div>
+          <div class="service-card" data-service="ingenieria">
+            <i data-lucide="settings"></i>
+            <h3>Ingeniería de Proceso</h3>
+            <span class="service-bajada">Análisis técnico · Escenarios · Informes de decisión</span>
+            <span class="service-link">Ver detalle →</span>
+          </div>
+          <div class="service-card" data-service="pm">
+            <i data-lucide="clipboard-list"></i>
+            <h3>Gestión de Proyectos (PM)</h3>
+            <span class="service-bajada">Desde anteproyecto hasta cierre · Trazabilidad</span>
+            <span class="service-link">Ver detalle →</span>
+          </div>
+          <div class="service-card" data-service="layout">
+            <i data-lucide="layout-grid"></i>
+            <h3>Layout de Planta y Gestión de Planos</h3>
+            <span class="service-bajada">Distribución 2D/3D · Archivo activo de planos</span>
+            <span class="service-link">Ver detalle →</span>
+          </div>
+          <div class="service-card" data-service="render">
+            <i data-lucide="image"></i>
+            <h3>Render de Productos</h3>
+            <span class="service-bajada">Visualización técnica · Propuestas · Catálogo</span>
+            <span class="service-link">Ver detalle →</span>
+          </div>
+          <div class="service-card" data-service="portafolio">
+            <i data-lucide="plus-square"></i>
+            <h3>Ampliación de Portafolio de Productos</h3>
+            <span class="service-bajada">Nuevas líneas · Demanda no cubierta · Rentabilidad</span>
+            <span class="service-link">Ver detalle →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ S4 · PLANES Y PRECIOS ═════════════════════ -->
+    <section id="planes">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Elige el plan que se ajusta a Fabrinox</h2>
+          <p style="font-size:17px;">Todos los planes incluyen los servicios de la sección anterior. La diferencia está en la cantidad de visitas técnicas mensuales y los servicios de ingeniería disponibles.</p>
+        </div>
+        <div class="plans-grid">
+          <!-- T1 -->
+          <div class="plan-card">
+            <div class="plan-name">T1 Arranque</div>
+            <div class="plan-price">UF 30</div>
+            <div class="plan-clp">$1.195.230 CLP/mes</div>
+            <div class="plan-visits">1 visita media / mes</div>
+            <ul class="plan-features">
+              <li><span class="feat-check">✓</span> Estrategia + LinkedIn</li>
+              <li><span class="feat-check">✓</span> Seguimiento licitaciones</li>
+              <li><span class="feat-check">✓</span> Informe técnico post-visita</li>
+              <li><span class="feat-dash">—</span> Layout + planos</li>
+              <li><span class="feat-dash">—</span> Ingeniería de proceso</li>
+              <li><span class="feat-dash">—</span> PM proyecto</li>
+              <li><span class="feat-dash">—</span> Render</li>
+              <li><span class="feat-dash">—</span> Ampliación portafolio</li>
+            </ul>
+          </div>
+          <!-- T2 Recommended -->
+          <div class="plan-card recommended" id="plan-t2">
+            <span class="plan-badge">Recomendado</span>
+            <div class="plan-name">T2 Activo</div>
+            <div class="plan-price">UF 35</div>
+            <div class="plan-clp">$1.394.460 CLP/mes</div>
+            <div class="plan-visits">3 visitas medias / mes</div>
+            <ul class="plan-features">
+              <li><span class="feat-check">✓</span> Estrategia + LinkedIn</li>
+              <li><span class="feat-check">✓</span> Seguimiento licitaciones</li>
+              <li><span class="feat-check">✓</span> Informe técnico post-visita</li>
+              <li><span class="feat-check">✓</span> Layout + planos</li>
+              <li><span class="feat-dash">—</span> Ingeniería de proceso</li>
+              <li><span class="feat-dash">—</span> PM proyecto</li>
+              <li><span class="feat-dash">—</span> Render</li>
+              <li><span class="feat-dash">—</span> Ampliación portafolio</li>
+            </ul>
+          </div>
+          <!-- T3 -->
+          <div class="plan-card">
+            <div class="plan-name">T3 Intensivo</div>
+            <div class="plan-price">UF 50</div>
+            <div class="plan-clp">$1.992.050 CLP/mes</div>
+            <div class="plan-visits">4 visitas cortas / mes</div>
+            <ul class="plan-features">
+              <li><span class="feat-check">✓</span> Estrategia + LinkedIn</li>
+              <li><span class="feat-check">✓</span> Seguimiento licitaciones</li>
+              <li><span class="feat-check">✓</span> Informe técnico post-visita</li>
+              <li><span class="feat-check">✓</span> Layout + planos</li>
+              <li><span class="feat-extra">+UF 25 por informe</span> Ingeniería de proceso</li>
+              <li><span class="feat-extra">+UF 30 por proyecto</span> PM proyecto</li>
+              <li><span class="feat-extra">+UF 5 /render</span> Render</li>
+              <li><span class="feat-extra">cotizable</span> Ampliación portafolio</li>
+            </ul>
+          </div>
+          <!-- T4 -->
+          <div class="plan-card">
+            <div class="plan-name">T4 Full Sur</div>
+            <div class="plan-price">UF 58</div>
+            <div class="plan-clp">$2.310.778 CLP/mes</div>
+            <div class="plan-visits">4 visitas medias / mes</div>
+            <ul class="plan-features">
+              <li><span class="feat-check">✓</span> Estrategia + LinkedIn</li>
+              <li><span class="feat-check">✓</span> Seguimiento licitaciones</li>
+              <li><span class="feat-check">✓</span> Informe técnico post-visita</li>
+              <li><span class="feat-check">✓</span> Layout + planos</li>
+              <li><span class="feat-extra">+UF 25 por informe</span> Ingeniería de proceso</li>
+              <li><span class="feat-extra">+UF 30 por proyecto</span> PM proyecto</li>
+              <li><span class="feat-extra">+UF 5/render</span> Render</li>
+              <li><span class="feat-extra">cotizable</span> Ampliación portafolio</li>
+            </ul>
+          </div>
+        </div>
+        <p class="plans-note">Precios en UF + IVA. UF al valor vigente el día de facturación. UF de referencia: $39.841 CLP (Abril 2026). Equivalente de mercado (agencia B2B + representante comercial sur): UF 76 – 110/mes.</p>
+        <div class="plans-cta">
+          <a href="mailto:ososa@tallermayor.cl" class="btn btn-primary">Coordinar reunión</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ S4.5 · ESCENARIOS ════════════════════════ -->
+    <section id="escenarios">
+    <div class="sec-inner">
+
+      <p class="sec-label">Estructura de ingresos TMC · Fabrinox</p>
+      <h2 class="sec-title">Escenarios según el tamaño del proyecto</h2>
+      <p class="sec-sub">
+        A mayor escala de proyecto, la comisión de TMC disminuye progresivamente.
+        El fee de PM mantiene la alineación durante toda la ejecución — TMC
+        gana cuando Fabrinox ejecuta bien.
+      </p>
+
+      <!-- ASPIRACIONAL -->
+      <div class="aspiracional">
+        <div class="aspiracional-title">Escenarios aspiracionales TMC · Fabrinox</div>
+        <p>
+          Estos números son una <strong>proyección de referencia</strong>, no compromisos fijos.
+          Cada proyecto tiene su propia naturaleza — su plazo real, su complejidad técnica y
+          su contexto de negociación. Los porcentajes y los tiempos son siempre una conversación
+          entre Fabrinox y TMC, ajustada caso a caso.
+          <strong>Lo que no cambia es la lógica: TMC gana cuando Fabrinox cierra.</strong>
+        </p>
+      </div>
+
+      <!-- LEGEND -->
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-ant"></div>
+          <span><strong>Anteproyecto</strong> — Fee fijo UF 32.5 al encargar el estudio. Se descuenta de la comisión si el proyecto cierra.</span>
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-com"></div>
+          <span><strong>Comisión comercial</strong> — Se cobra al firmar contrato. El % disminuye a mayor CAPEX.</span>
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-pm"></div>
+          <span><strong>Fee PM 2.5%</strong> — Mensual durante ejecución. Se prorratea en cuotas.</span>
+        </div>
+      </div>
+
+      <!-- CARDS -->
+      <div class="cards-grid" id="cards-container"></div>
+
+      <!-- TABLA RESUMEN -->
+      <div>
+        <h3 class="resumen-title">Resumen de ingresos TMC por escenario</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Rango CAPEX</th>
+                <th>Tipo de proyecto</th>
+                <th>% Comisión</th>
+                <th>Anteproyecto</th>
+                <th>Comisión</th>
+                <th>Fee PM 2.5%</th>
+                <th>Duración</th>
+                <th>Total TMC</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-body"></tbody>
+          </table>
+        </div>
+        <p class="tbl-note">
+          * Comisión calculada sobre el punto medio del rango CAPEX. Fee PM 2.5% sobre el total del contrato,
+          prorrateado mensualmente durante la ejecución. Anteproyecto UF 32.5 = $1.295.333 CLP
+          (UF $39.841 · Abril 2026). Si el proyecto no cierra, TMC retiene el fee de anteproyecto íntegro.
+          En proyectos sobre $500M CLP la comisión puede estructurarse en 2 cuotas (50% firma · 50% inicio ejecución).
+        </p>
+      </div>
+
+      <!-- NOTA CLAVE -->
+      <div class="nota-clave">
+        <div class="nota-icon">⚖️</div>
+        <div class="nota-text">
+          <h4>Descuento del anteproyecto — cómo funciona</h4>
+          <p>
+            El fee de anteproyecto <strong>no es un costo adicional al proyecto</strong>:
+            cuando el contrato se firma, ese monto se descuenta directamente de la comisión comercial.
+            Fabrinox no paga dos veces. Si el proyecto no avanza, TMC recupera el costo
+            de su trabajo técnico y Fabrinox no paga comisión.<br><br>
+            <strong>La lógica es simple:</strong> el anteproyecto financia la prospección de TMC.
+            El cierre del proyecto remunera el resultado.
+          </p>
+        </div>
+      </div>
+
+    </div>
+    </section>
+
+    <!-- ══ S5 · NÚMEROS PARA FABRINOX ════════════════ -->
+    <section id="numeros">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Lo que representa esta inversión para Fabrinox</h2>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-block">
+            <div class="metric-number">643%</div>
+            <div class="metric-label">ROI estimado año 1</div>
+            <div class="metric-detail">Sobre una base conservadora de 1.5 cierres anuales</div>
+          </div>
+          <div class="metric-block">
+            <div class="metric-number">1.6</div>
+            <div class="metric-label">Meses de payback</div>
+            <div class="metric-detail">El retainer se paga solo antes del segundo mes</div>
+          </div>
+          <div class="metric-block">
+            <div class="metric-number">$137M</div>
+            <div class="metric-label">CLP en valor capturado / año</div>
+            <div class="metric-detail">Ingresos nuevos + costos evitados + beneficio fiscal</div>
+          </div>
+        </div>
+        <p class="metrics-context">Estos números incluyen el margen sobre nuevos clientes habilitados por la estrategia comercial, el tiempo gerencial que deja de destinarse a tareas operativas, y las licitaciones que hoy se pierden por falta de monitoreo. Los supuestos detallados están disponibles bajo solicitud.</p>
+      </div>
+    </section>
+
+    <!-- ══ S6 · DIFERENCIADORES TMC ══════════════════ -->
+    <section id="diferenciadores">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Por qué Taller Mayor Consultoría</h2>
+        </div>
+        <div class="diff-grid">
+          <div class="diff-block">
+            <div class="diff-num">01</div>
+            <h3>Especialización sectorial sin intermediarios</h3>
+            <p>Conocimiento directo del mercado salmonero, acuícola e industrial del sur de Chile. No es conocimiento de libro: es resultado de años de trabajo en terreno con empresas del rubro.</p>
+          </div>
+          <div class="diff-block">
+            <div class="diff-num">02</div>
+            <h3>Ingeniería y comercio en el mismo equipo</h3>
+            <p>La mayoría de las consultoras separan el área técnica del área comercial. En TMC, el mismo profesional que hace el análisis de ingeniería es el que acompaña la propuesta comercial. Sin traducción, sin pérdida de precisión técnica.</p>
+          </div>
+          <div class="diff-block">
+            <div class="diff-num">03</div>
+            <h3>Sin estructura de agencia. Sin overhead innecesario.</h3>
+            <p>TMC opera sin la estructura de costos de una agencia de 10 personas. Eso se traduce directamente en precio competitivo y en tiempo de respuesta que una agencia convencional no puede ofrecer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ S7 · PRÓXIMOS PASOS ═══════════════════════ -->
+    <section id="pasos">
+      <div class="container">
+        <div class="section-heading">
+          <h2>¿Qué sigue?</h2>
+        </div>
+        <div class="steps-row">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <h3>Revisar esta propuesta</h3>
+            <p>Hoy — leer los servicios y elegir el plan de interés.</p>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <h3>Llamada de 20 minutos</h3>
+            <p>Esta semana — resolver dudas y ajustar el alcance si es necesario.</p>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <h3>Kickoff en 48 horas</h3>
+            <p>Desde la firma del acuerdo — el servicio inicia de inmediato.</p>
+          </div>
+        </div>
+        <div class="steps-cta">
+          <a href="mailto:ososa@tallermayor.cl" class="btn btn-navy">Escribir a Oswaldo</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ S8 · FOOTER ════════════════════════════════ -->
+  <footer id="footer-section">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <!-- Logo TMC — variante clara (sobre navy) -->
+          <svg width="160" height="32" viewBox="0 0 300 60" role="img" aria-label="Taller Mayor Consultoría">
+            <g transform="translate(4, 4) scale(0.52)">
+              <path d="M 4,18 L 42,18 L 42,26 L 27,26 L 27,68 L 23,72 L 21,72 L 17,68 L 17,26 L 4,26 Z" fill="#E8E6E1"/>
+              <path d="M 54,76 L 54,22 L 58,18 L 63,18 L 75,44 L 87,18 L 92,18 L 96,22 L 96,76 Z" fill="#E8E6E1"/>
+              <line x1="4" y1="44" x2="96" y2="44" stroke="#C8922A" stroke-width="1.4"/>
+              <g stroke="#C8922A" stroke-width="1" opacity="0.4"><line x1="30" y1="41" x2="30" y2="47"/><line x1="62" y1="41" x2="62" y2="47"/></g>
+            </g>
+            <line x1="62" y1="10" x2="62" y2="50" stroke="#C8922A" stroke-width="0.75" opacity="0.35"/>
+            <text x="74" y="29" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="17" font-weight="800" letter-spacing="2.2" fill="#E8E6E1">TALLER MAYOR</text>
+            <text x="74" y="45" font-family="'Cabinet Grotesk','Helvetica Neue',sans-serif" font-size="9.5" font-weight="500" letter-spacing="4.5" fill="#8A8F9E">CONSULTORÍA</text>
+          </svg>
+          <p class="footer-tagline">Ingeniería · Estrategia Comercial · Gestión de Proyectos</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-contact-row"><i data-lucide="mail"></i> <a href="mailto:ososa@tallermayor.cl">ososa@tallermayor.cl</a></div>
+          <div class="footer-contact-row"><i data-lucide="phone"></i> <a href="tel:+56976588640">+56 9 7658 8640</a></div>
+          <div class="footer-contact-row"><i data-lucide="globe"></i> <a href="https://www.tallermayor.cl" target="_blank" rel="noopener noreferrer">www.tallermayor.cl</a></div>
+          <div class="footer-contact-row"><i data-lucide="map-pin"></i> Chonchi, X Región de Los Lagos</div>
+        </div>
+        <div class="footer-col footer-prop-info">
+          <p>Referencia: TMC-FAB-2026-001</p>
+          <p>Válida hasta: 30 de Abril de 2026</p>
+          <p>Preparado para: Víctor Campos / Fabrinox</p>
+          <p>Documento confidencial</p>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Taller Mayor Consultoría · Todos los derechos reservados</div>
+    </div>
+  </footer>
+
+  </div><!-- /main-content -->
+
+  <!-- ══ MODAL ══════════════════════════════════════ -->
+  <div class="modal-overlay" id="service-modal" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <button class="modal-close" id="modal-close-btn" aria-label="Cerrar">×</button>
+      <div class="modal-header">
+        <i id="modal-icon"></i>
+        <h3 id="modal-title"></h3>
+      </div>
+      <div class="modal-label">¿Qué es?</div>
+      <p class="modal-text" id="modal-que"></p>
+      <div class="modal-sep"></div>
+      <div class="modal-label">¿Cómo lo hacemos?</div>
+      <ul class="modal-list" id="modal-como"></ul>
+      <div class="modal-sep"></div>
+      <div class="modal-label">¿Para qué sirve a Fabrinox?</div>
+      <div class="modal-highlight" id="modal-paraque"></div>
+      <div class="modal-footer">
+        <button class="btn btn-navy" id="modal-close-footer">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Lucide Icons ══════════════════════════════ -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    /* ── Service Modal Data ─────────────────────── */
+    var SERVICES = {
+      estrategia: {
+        icon: 'target',
+        title: 'Estrategia Comercial',
+        que: 'Plan mensual de posicionamiento y desarrollo de negocio para Fabrinox en el mercado salmonero, acuícola e industrial del sur de Chile. Define dónde compite Fabrinox, con qué propuesta de valor y qué acciones concretas ejecuta cada mes.',
+        como: [
+          'Análisis mensual de competencia y movimientos del mercado objetivo.',
+          'Definición y actualización del perfil de cliente ideal (ICP).',
+          'Plan de acción mensual con responsables, plazos y recursos.',
+          'Tablero de KPIs comerciales con seguimiento quincenal.',
+          'Reunión de revisión cada dos semanas con Víctor o su equipo.'
+        ],
+        paraque: 'Fabrinox opera con una dirección comercial clara en lugar de reaccionar al mercado. Víctor sabe cada mes exactamente dónde está, qué ganó, qué perdió y qué viene. El tiempo gerencial deja de gastarse en definir el rumbo y se enfoca en ejecutar.'
+      },
+      linkedin: {
+        icon: 'linkedin',
+        title: 'Contenido y Presencia LinkedIn',
+        que: 'Gestión editorial del perfil LinkedIn de Fabrinox con publicaciones de valor técnico-comercial para el sector industrial del sur. Incluye el perfil corporativo y el perfil personal de Víctor Campos como referente del rubro.',
+        como: [
+          'Calendario editorial mensual definido con 10 días de anticipación.',
+          'Redacción de 4 a 8 publicaciones especializadas con lenguaje técnico-comercial apropiado para el sector.',
+          'Optimización continua del perfil: titular, about, experiencia, skills.',
+          'Análisis de métricas de alcance, impresiones y engagement mensual.',
+          'Propuesta de contenido basada en proyectos reales de Fabrinox (con aprobación previa de Víctor).'
+        ],
+        paraque: 'Fabrinox aparece donde los tomadores de decisión buscan proveedores antes de contactar a nadie. Una presencia técnica activa en LinkedIn genera visibilidad continua ante salmoneras, plantas procesadoras y empresas del rubro — sin que Víctor tenga que escribir una sola línea.'
+      },
+      licitaciones: {
+        icon: 'bell',
+        title: 'Seguimiento de Licitaciones',
+        que: 'Monitoreo sistemático de oportunidades de licitación en Mercado Público y portales privados del sector industrial, con evaluación de conveniencia y coordinación de postulación para Fabrinox.',
+        como: [
+          'Configuración de alertas por categorías de interés: maestranza, equipamiento acero inoxidable, automatización, estructuras industriales.',
+          'Revisión diaria de nuevas licitaciones publicadas.',
+          'Briefing semanal con resumen de oportunidades activas y estado.',
+          'Evaluación técnica y comercial de conveniencia para postular.',
+          'Coordinación y apoyo en la preparación de antecedentes de postulación.'
+        ],
+        paraque: 'Fabrinox deja de perder licitaciones por no enterarse a tiempo o por falta de recursos para monitorear. El seguimiento activo puede representar 2 a 3 oportunidades formales adicionales al año que hoy simplemente no se están capturando.'
+      },
+      visitas: {
+        icon: 'map-pin',
+        title: 'Visitas Técnicas Comerciales',
+        que: 'Presencia de TMC junto a Fabrinox en terreno para levantamiento de condiciones, diagnóstico de proyectos y representación comercial ante clientes en la zona sur.',
+        como: [
+          'Coordinación previa con la contraparte técnica del cliente.',
+          'Levantamiento de planos, medidas y condiciones operativas en sitio.',
+          'Registro fotográfico y documental de la visita.',
+          'Informe de diagnóstico técnico post-visita entregado en 48 horas hábiles.',
+          'Propuesta de alcance preliminar para el proyecto identificado.'
+        ],
+        paraque: 'Fabrinox llega a sus clientes con un diagnóstico técnico formal, no solo con un cotizador. Eso diferencia la propuesta de Fabrinox frente a la competencia y aumenta la tasa de cierre en proyectos donde el cliente necesita justificar la inversión.'
+      },
+      ingenieria: {
+        icon: 'settings',
+        title: 'Ingeniería de Proceso',
+        que: 'Análisis técnico de procesos industriales y elaboración de informes de ingeniería para la toma de decisiones en proyectos de inversión. Aplica a salas de proceso, líneas de producción y talleres de manufactura del sector acuícola e industrial.',
+        como: [
+          'Revisión de condiciones actuales de proceso (flujos, capacidades, cuellos de botella, normativa aplicable).',
+          'Evaluación de alternativas técnicas para el objetivo del proyecto.',
+          'Simulación de escenarios operativos comparando distintas soluciones.',
+          'Informe ejecutivo con recomendaciones técnicas, alternativas evaluadas y criterios de decisión.'
+        ],
+        paraque: 'Permite respaldar propuestas de inversión con análisis de ingeniería formal. Los clientes de Fabrinox que deben justificar el gasto ante un directorio o una junta de socios tienen el sustento técnico necesario. Eso acorta el ciclo de aprobación y fortalece la posición de Fabrinox como proveedor de soluciones, no solo de equipos.'
+      },
+      pm: {
+        icon: 'clipboard-list',
+        title: 'Gestión de Proyectos (PM)',
+        que: 'Administración activa de proyectos de inversión desde el anteproyecto técnico hasta el cierre formal y entrega al cliente final. Incluye coordinación entre Fabrinox, el cliente y los proveedores involucrados.',
+        como: [
+          'Apertura de expediente de proyecto con alcance, plazo y presupuesto.',
+          'Cronograma de actividades con hitos críticos.',
+          'Coordinación entre el equipo de Fabrinox y la contraparte del cliente.',
+          'Seguimiento de avance semanal y gestión de desviaciones.',
+          'Gestión de cambios de alcance con documentación formal.',
+          'Acta de entrega y cierre documentado del proyecto.'
+        ],
+        paraque: 'Fabrinox puede ejecutar proyectos más grandes y de mayor complejidad con trazabilidad profesional, sin sobrecargar su equipo técnico interno. Los clientes reciben un proyecto administrado con estándares formales — eso abre puertas a contratos con empresas que exigen metodología del PMI como requisito de entrada.'
+      },
+      layout: {
+        icon: 'layout-grid',
+        title: 'Layout de Planta y Gestión de Planos',
+        que: 'Diseño y actualización de la distribución de planta (layout) en 2D y 3D, con gestión continua del archivo de planos de la empresa cliente.',
+        como: [
+          'Levantamiento de distribución actual con medición en terreno.',
+          'Propuesta de layout optimizado según flujo de producción y normativa.',
+          'Generación de planos en 2D y modelo 3D referencial.',
+          'Actualización del archivo de planos ante cambios de infraestructura.',
+          'Entrega de planos en formatos editables y en PDF para uso operativo.'
+        ],
+        paraque: 'Fabrinox puede ofrecer el diseño de planta como servicio diferenciador a sus clientes, separándose de maestranzas que solo fabrican equipos. Además, mantener el archivo de planos actualizado reduce errores en proyectos futuros y permite responder a auditorías o certificaciones sin preparación adicional.'
+      },
+      render: {
+        icon: 'image',
+        title: 'Render de Productos',
+        que: 'Visualización técnica y comercial de productos y equipos industriales en formato 3D fotorrealista, para uso en propuestas comerciales, catálogos y presentaciones ante clientes.',
+        como: [
+          'Modelado 3D basado en planos técnicos o sketches del producto.',
+          'Generación de render fotorrealista en vistas definidas por Fabrinox (isométrica, frontal, detalle, ambientada en contexto de uso).',
+          'Entrega en formatos PNG alta resolución y PDF para propuesta.',
+          'Revisión de una iteración incluida en el precio del render.'
+        ],
+        paraque: 'Permite mostrar un equipo o solución antes de fabricarlo. Reduce objeciones del cliente sobre diseño y acabado, acelera la aprobación de propuestas y eleva la percepción de calidad de Fabrinox frente a competidores que solo presentan planos técnicos o fotos de obras previas.'
+      },
+      portafolio: {
+        icon: 'plus-square',
+        title: 'Ampliación de Portafolio de Productos',
+        que: 'Desarrollo estratégico de nuevas líneas de productos y soluciones para que Fabrinox amplíe su oferta al mercado sin requerir grandes inversiones adicionales en infraestructura o equipo.',
+        como: [
+          'Análisis de demanda no cubierta en el mercado objetivo de Fabrinox.',
+          'Identificación de oportunidades de producto compatibles con la capacidad instalada actual del taller.',
+          'Diseño conceptual del producto o línea propuesta.',
+          'Evaluación de factibilidad técnica y de fabricación.',
+          'Plan de lanzamiento con propuesta de valor, precio y canal.'
+        ],
+        paraque: 'Fabrinox crece en facturación sin depender de los mismos clientes ni de los mismos productos de siempre. Nuevas líneas abren fuentes de ingreso usando el equipo, el taller y el conocimiento técnico que Fabrinox ya tiene.'
+      }
+    };
+
+    /* ── Modal Logic ───────────────────────────────── */
+    var modal = document.getElementById('service-modal');
+    var modalTitle = document.getElementById('modal-title');
+    var modalIcon = document.getElementById('modal-icon');
+    var modalQue = document.getElementById('modal-que');
+    var modalComo = document.getElementById('modal-como');
+    var modalParaque = document.getElementById('modal-paraque');
+
+    function openModal(slug) {
+      var s = SERVICES[slug];
+      if (!s) return;
+      modalTitle.textContent = s.title;
+      modalIcon.setAttribute('data-lucide', s.icon);
+      modalQue.textContent = s.que;
+      modalComo.innerHTML = s.como.map(function(item) {
+        return '<li>' + item + '</li>';
+      }).join('');
+      modalParaque.textContent = s.paraque;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons({ nodes: [modalIcon] });
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    /* Card clicks */
+    document.querySelectorAll('.service-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        openModal(this.getAttribute('data-service'));
+      });
+    });
+
+    /* Close: button X */
+    document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+
+    /* Close: footer button */
+    document.getElementById('modal-close-footer').addEventListener('click', closeModal);
+
+    /* Close: overlay click */
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+
+    /* Close: Escape key */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    /* ── T2 Pulse after 1800ms ─────────────────────── */
+    setTimeout(function() {
+      var t2 = document.getElementById('plan-t2');
+      if (t2) {
+        t2.classList.add('pulse');
+        t2.addEventListener('animationend', function() {
+          t2.classList.remove('pulse');
+        }, { once: true });
+      }
+    }, 1800);
+
+    /* ── Initialize Lucide Icons ───────────────────── */
+    lucide.createIcons();
+
+    /* ── Escenarios: Build Cards & Table ───────────── */
+    var UF  = 39841;
+    var ANT = 32.5 * UF;
+
+    var scenarios = [
+      { label:"$30M – $80M",    capex:55e6,   tipo:"Taller / Equipamiento",       com:0.07, dur:2,  durLabel:"1 – 3 meses",  comColor:"#27AE60" },
+      { label:"$80M – $150M",   capex:115e6,  tipo:"Sala proceso / Línea nueva",  com:0.065,dur:4,  durLabel:"2 – 4 meses",  comColor:"#2980B9" },
+      { label:"$150M – $300M",  capex:225e6,  tipo:"Planta procesadora mediana",  com:0.06, dur:5,  durLabel:"3 – 6 meses",  comColor:"#8E44AD" },
+      { label:"$300M – $500M",  capex:400e6,  tipo:"Planta grande / Integral",    com:0.055,dur:6,  durLabel:"4 – 6 meses",  comColor:"#E67E22" },
+      { label:"$500M – $800M",  capex:650e6,  tipo:"Proyecto mayor / Expansión",  com:0.05, dur:9,  durLabel:"6 – 9 meses",  comColor:"#E74C3C" },
+      { label:"$800M – $1.000M",capex:900e6,  tipo:"Mega proyecto / Planta completa",com:0.04,dur:12,durLabel:"9 – 12 meses",comColor:"#C0392B" }
+    ];
+
+    function fmt(n){
+      if(n>=1e9) return "$"+(n/1e9).toFixed(2)+"B";
+      if(n>=1e6) return "$"+Math.round(n/1e6)+"M";
+      return "$"+Math.round(n).toLocaleString("es-CL");
+    }
+
+    function buildCard(sc){
+      var com      = sc.capex * sc.com;
+      var pm       = sc.capex * 0.025;
+      var total    = com + pm;
+      var pmMes    = pm / sc.dur;
+      var comPct   = Math.round(sc.com*100*10)/10 + "%";
+
+      var pills = [
+        { bg:"var(--amber)",  txt:"var(--navy)", moment:"Mes 0",     desc:"Anteproyecto — " + fmt(ANT) },
+        { bg:"var(--navy)",   txt:"white",       moment:"Al cierre", desc:"Comisión " + comPct + " — " + fmt(com) },
+        { bg:"#3D5A80",       txt:"white",       moment:"Ejecución", desc:"PM " + fmt(pmMes) + "/mes × " + sc.dur + "m = " + fmt(pm) }
+      ];
+      var pillsHTML = pills.map(function(p){
+        return '<div class="pay-pill">' +
+          '<div class="pay-dot" style="background:'+p.bg+'"></div>' +
+          '<span class="pay-moment">'+p.moment+'</span>' +
+          '<span class="pay-desc">— '+p.desc+'</span>' +
+          '</div>';
+      }).join("");
+
+      var ticks = [];
+      var step = sc.dur<=3?1:sc.dur<=6?2:3;
+      for(var m=0;m<=sc.dur;m+=step) ticks.push('<span class="sc-tick">M'+m+'</span>');
+
+      return '<div class="sc-card">' +
+        '<div class="sc-head">' +
+          '<div class="sc-id">' +
+            '<div class="sc-capex">'+sc.label+'</div>' +
+            '<div class="sc-tipo">'+sc.tipo+'</div>' +
+            '<span class="sc-dur">'+sc.durLabel+'</span>' +
+          '</div>' +
+          '<div class="sc-nums">' +
+            '<div class="sc-num"><div class="sc-num-label">Anteproyecto</div><div class="sc-num-val amber">'+fmt(ANT)+'</div><div class="sc-num-sub">UF 32.5 · desc. al cierre</div></div>' +
+            '<div class="sc-num"><div class="sc-num-label">% Comisión</div><div class="sc-num-val">'+comPct+'</div><div class="sc-com-pill"><span class="com-badge" style="background:'+sc.comColor+'">'+comPct+' sobre CAPEX</span></div></div>' +
+            '<div class="sc-num"><div class="sc-num-label">Comisión total</div><div class="sc-num-val">'+fmt(com)+'</div><div class="sc-num-sub">Al firmar contrato</div></div>' +
+            '<div class="sc-num"><div class="sc-num-label">Fee PM 2.5%</div><div class="sc-num-val">'+fmt(pm)+'</div><div class="sc-num-sub">'+fmt(pmMes)+'/mes × '+sc.dur+'m</div></div>' +
+            '<div class="sc-num"><div class="sc-num-label">Total TMC</div><div class="sc-num-val amber">'+fmt(total)+'</div><div class="sc-num-sub">Com. + PM</div></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="sc-timeline-wrap">' +
+          '<div class="sc-tl-label">Flujo de ingreso en el tiempo →</div>' +
+          '<div class="sc-tl">' +
+            '<div class="tl-ant">Anteproyecto</div>' +
+            '<div class="tl-gap">···</div>' +
+            '<div class="tl-com">Comisión '+comPct+'</div>' +
+            '<div class="tl-pm">Fee PM mensual — '+sc.durLabel+'</div>' +
+          '</div>' +
+          '<div class="sc-ticks">'+ticks.join("")+'</div>' +
+        '</div>' +
+        '<div class="sc-payments">'+pillsHTML+'</div>' +
+      '</div>';
+    }
+
+    var cardsContainer = document.getElementById("cards-container");
+    if (cardsContainer) {
+      cardsContainer.innerHTML = scenarios.map(buildCard).join("");
+    }
+
+    var tablaBody = document.getElementById("tabla-body");
+    if (tablaBody) {
+      tablaBody.innerHTML = scenarios.map(function(sc){
+        var com   = sc.capex * sc.com;
+        var pm    = sc.capex * 0.025;
+        var total = com + pm;
+        var pct   = Math.round(sc.com*100*10)/10 + "%";
+        return '<tr>' +
+          '<td>'+sc.label+'</td>' +
+          '<td class="muted">'+sc.tipo+'</td>' +
+          '<td class="center"><span class="com-tag" style="background:'+sc.comColor+'">'+pct+'</span></td>' +
+          '<td>'+fmt(ANT)+'</td>' +
+          '<td>'+fmt(com)+'</td>' +
+          '<td>'+fmt(pm)+'</td>' +
+          '<td class="muted center">'+sc.durLabel+'</td>' +
+          '<td class="amber">'+fmt(total)+'</td>' +
+        '</tr>';
+      }).join("");
+    }
+
+    /* ── Password Gate ─────────────────────────────── */
+    var PASS = "victor0426";
+
+    function checkPassword() {
+      var input = document.getElementById("pw-input").value;
+      if (input === PASS) {
+        document.getElementById("pw-overlay").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
+        document.body.style.overflow = "auto";
+      } else {
+        document.getElementById("pw-error").style.display = "block";
+        document.getElementById("pw-input").value = "";
+        document.getElementById("pw-input").focus();
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("main-content").style.display = "none";
+      document.body.style.overflow = "hidden";
+      document.getElementById("pw-input")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Enter") checkPassword();
+        });
+      document.getElementById("pw-btn")
+        .addEventListener("click", checkPassword);
+    });
+  </script>
+</body>
+</html>
