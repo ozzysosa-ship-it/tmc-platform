@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/fabrinox",
+      "destination": "/fabrinox.html"
+    }
+  ]
+}
