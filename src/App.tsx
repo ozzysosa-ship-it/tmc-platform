@@ -204,7 +204,7 @@ function App() {
       </nav>
 
       {/* Section 1: Hero */}
-      <section ref={heroRef} className="min-h-screen relative flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8">
+      <section ref={heroRef} className="min-h-screen relative flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Hero background image + Navy overlay */}
         <img
           src="/images/hero-bg.webp"
@@ -253,11 +253,11 @@ function App() {
             </div>
             
             {/* Right panel - Hero services isometric */}
-            <div className="hero-panel-right hidden lg:flex items-center justify-center">
+            <div className="hero-panel-right hidden lg:flex items-end justify-center pb-4">
               <img
                 src="/images/hero-services-iso.webp"
                 alt="Las seis líneas de servicio de Taller Mayor Consultoría"
-                className="w-full max-w-[560px] object-contain drop-shadow-2xl"
+                className="w-full max-w-[560px] max-h-[60vh] object-contain drop-shadow-2xl rounded-3xl"
                 loading="eager"
                 fetchPriority="high"
               />
@@ -465,16 +465,14 @@ function App() {
               </a>
             </div>
             
-            {/* Right - Team photo */}
+            {/* Right - Founder photo */}
             <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-navy-light border border-white/10">
               <img
-                src="/images/nosotros-equipo.webp"
-                alt="Equipo de Taller Mayor Consultoría revisando planos de ingeniería en taller industrial"
-                className="absolute inset-0 w-full h-full object-cover"
+                src="/foto_creador.png"
+                alt="Fundador de Taller Mayor Consultoría"
+                className="absolute inset-0 w-full h-full object-cover object-top"
                 loading="lazy"
               />
-              {/* Borde decorativo ámbar */}
-              <div className="absolute -bottom-3 -right-3 w-full h-full border border-[#C8922A]/30 rounded-lg -z-10" />
             </div>
           </div>
         </div>
