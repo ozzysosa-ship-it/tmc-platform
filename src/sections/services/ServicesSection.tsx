@@ -132,6 +132,8 @@ const SERVICES: ServiceData[] = [
     ],
     pricingAmount: 'desde 4% del CAPEX total',
     pricingLabel: '% del CAPEX',
+    image: '/images/servicio-layout-planta.webp',
+    imageAlt: 'Layout de planta industrial: distribución de equipos y líneas de proceso en sala de producción',
   },
 ];
 
