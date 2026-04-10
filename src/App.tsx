@@ -205,7 +205,14 @@ function App() {
 
       {/* Section 1: Hero */}
       <section ref={heroRef} className="min-h-screen relative flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 bg-gradient-radial from-navy-light/30 via-navy to-navy" />
+        {/* Hero background image + Navy overlay */}
+        <img
+          src="/images/hero-bg.webp"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#1A1F2E]/[0.68]" />
         
         <div className="relative z-10 max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center min-h-[70vh]">
@@ -225,7 +232,7 @@ function App() {
               </p>
               
               <p className="hero-subtext text-gray-cool leading-relaxed mb-8 max-w-md">
-                Ayudamos a maestranzas y fábricas de equipos para salas de proceso a crecer con estructura, propuesta de valor clara y herramientas reales.
+                Ayudamos a maestranzas y fábricantes de equipos para salas de proceso a crecer con estructura, propuesta de valor clara y herramientas reales.
               </p>
               
               <div className="hero-subtext flex flex-wrap gap-4">
@@ -245,17 +252,15 @@ function App() {
               </div>
             </div>
             
-            {/* Right panel - Image */}
-            <div className="hero-panel-right relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden">
-              <img 
-                src="/hero_factory.jpg" 
-                alt="Industrial factory interior" 
-                className="absolute inset-0 w-full h-full object-cover"
+            {/* Right panel - Hero services isometric */}
+            <div className="hero-panel-right hidden lg:flex items-center justify-center">
+              <img
+                src="/images/hero-services-iso.webp"
+                alt="Las seis líneas de servicio de Taller Mayor Consultoría"
+                className="w-full max-w-[560px] object-contain drop-shadow-2xl"
+                loading="eager"
+                fetchPriority="high"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent" />
-              <p className="absolute bottom-6 right-6 text-sm text-gray-cool">
-                Para la industria salmonera chilena
-              </p>
             </div>
           </div>
         </div>
@@ -460,13 +465,16 @@ function App() {
               </a>
             </div>
             
-            {/* Right - Founder photo */}
+            {/* Right - Team photo */}
             <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-navy-light border border-white/10">
               <img
-                src="/foto_creador.png"
-                alt="Fundador de Taller Mayor Consultoría"
-                className="absolute inset-0 w-full h-full object-cover object-top"
+                src="/images/nosotros-equipo.webp"
+                alt="Equipo de Taller Mayor Consultoría revisando planos de ingeniería en taller industrial"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
               />
+              {/* Borde decorativo ámbar */}
+              <div className="absolute -bottom-3 -right-3 w-full h-full border border-[#C8922A]/30 rounded-lg -z-10" />
             </div>
           </div>
         </div>

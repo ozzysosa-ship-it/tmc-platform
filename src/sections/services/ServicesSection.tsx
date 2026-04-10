@@ -13,6 +13,8 @@ interface ServiceData {
   deliverables: string[];
   pricingAmount: string;
   pricingLabel: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 const SERVICES: ServiceData[] = [
@@ -32,6 +34,8 @@ const SERVICES: ServiceData[] = [
     ],
     pricingAmount: 'desde UF 20 / mes',
     pricingLabel: 'Retainer mensual',
+    image: '/images/servicio-branding-tecnico.webp',
+    imageAlt: 'Transformación de identidad industrial: placa de equipo antes y después del branding técnico de TMC',
   },
   {
     id: 'panel-02',
@@ -50,6 +54,8 @@ const SERVICES: ServiceData[] = [
     ],
     pricingAmount: 'desde UF 8 / proyecto',
     pricingLabel: 'Por proyecto',
+    image: '/images/servicio-ingenieria-procesos.webp',
+    imageAlt: 'Sala de proceso de salmón con líneas de trabajo en acero inoxidable',
   },
   {
     id: 'panel-03',
@@ -67,6 +73,8 @@ const SERVICES: ServiceData[] = [
     ],
     pricingAmount: 'desde UF 8 / entregable',
     pricingLabel: 'Por entregable',
+    image: '/images/servicio-automatizacion-ia.webp',
+    imageAlt: 'Panel de control PLC con automatización industrial para planta de proceso',
   },
   {
     id: 'panel-04',
@@ -78,12 +86,14 @@ const SERVICES: ServiceData[] = [
       'Formulamos y gestionamos proyectos de I+D ante CORFO y/u otras instituciones. Convertimos el gasto en innovación de tu empresa en retorno tributario real, y te acompañamos en el proceso de registro de patentes cuando corresponde.',
     deliverables: [
       'Formulación de proyectos CORFO (FON, FNDR, concursos sectoriales)',
-      'Gestión Fi Group — beneficio tributario 35% sobre inversión en I+D',
+      'Gestión externa — beneficio tributario 35% sobre inversión en I+D',
       'Asesoría en patentes y registro de propiedad intelectual',
       'Seguimiento de ejecución y rendiciones',
     ],
     pricingAmount: 'desde UF 30 / proyecto + fee de éxito',
     pricingLabel: 'Por proyecto',
+    image: '/images/servicio-pm-externo.webp',
+    imageAlt: 'Gestión de proyectos en planta salmonera: revisión de diagrama de flujo de producción',
   },
   {
     id: 'panel-05',
@@ -102,6 +112,8 @@ const SERVICES: ServiceData[] = [
     ],
     pricingAmount: 'desde UF 15 / proyecto',
     pricingLabel: 'Por proyecto',
+    image: '/images/servicio-roi-maquinaria.webp',
+    imageAlt: 'Evaluación técnica de maquinaria: componentes de precisión y planos de ingeniería',
   },
   {
     id: 'panel-06',
@@ -127,6 +139,33 @@ function ServicePanel({ service }: { service: ServiceData }) {
   const titleLines = service.title.split('\n');
   return (
     <div className="panel-content">
+      {/* Service image */}
+      {service.image ? (
+        <div className="relative h-48 overflow-hidden rounded-lg mb-6">
+          <img
+            src={service.image}
+            alt={service.imageAlt || ''}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          {/* Overlay ámbar sutil en hover — skip for S3 (automatización) */}
+          {service.id !== 'panel-03' && (
+            <div className={`absolute inset-0 transition-colors duration-300 ${
+              service.id === 'panel-05'
+                ? 'bg-[#1A1F2E]/10'
+                : 'bg-[#C8922A]/0 group-hover:bg-[#C8922A]/10'
+            }`} />
+          )}
+        </div>
+      ) : (
+        /* Placeholder L6 — imagen pendiente */
+        <div className="h-48 bg-[#222838] rounded-lg flex items-center justify-center border border-[#C8922A]/20 mb-6">
+          <span className="text-[#4A4F5E] text-sm font-mono">
+            {/* TODO: imagen servicio-layout-planta.png */}
+            layout-planta · imagen pendiente
+          </span>
+        </div>
+      )}
       <span className="panel-num" aria-hidden="true">
         {service.num}
       </span>
